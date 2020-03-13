@@ -2,14 +2,9 @@ package ie.ucdconnect.sep;
 
 import com.opencsv.CSVReader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 
 /**
@@ -21,8 +16,14 @@ public class TestCaseGenerator {
 
 	private Random random = new Random(System.currentTimeMillis());
 
+	private ArrayList<Student> students;
+
+
 	public static void main(String[] args) throws IOException {
-		new TestCaseGenerator().generate();
+		TestCaseGenerator testCaseGenerator = new TestCaseGenerator();
+		testCaseGenerator.generate();
+		testCaseGenerator.generateStudents();
+
 	}
 
 	/**
@@ -106,6 +107,40 @@ public class TestCaseGenerator {
 		return prefixes;
 	}
 
+	private ArrayList<Student> generateStudents() {
+		students = new ArrayList<>();
+		File names = new File("./names.txt");
+		try{
+			Scanner scanner = new Scanner(names);
+			while(scanner.hasNext()){
+				Student student = new Student();
+				student.name = scanner.nextLine();
+				int sNumber = (random.nextInt((90000000-10000000)+1)+10000000);
+				student.studentNumber = Integer.toString(sNumber);
+				student.focus = studentFocus();
+
+				System.out.println(student.name + " " + student.studentNumber + " " + student.focus);
+				students.add(student);
+			}
+		}
+		catch (FileNotFoundException e){
+			e.printStackTrace();
+			System.err.println("Could not find file");
+		}
+		return students;
+	}
+
+	/* 60% to be CS and 40% for DS */
+	private String studentFocus(){
+		int r = random.nextInt(100);
+		if(r <= 60){
+			return "CS";
+		}
+		else{
+			return "DS";
+		}
+	}
+
 	private static class Project {
 		private enum Type {
 			CS,
@@ -122,5 +157,12 @@ public class TestCaseGenerator {
 		public String[] researchActivities, researchAreas;
 		// True if is only DS, otherwise false
 		public boolean specialFocus;
+	}
+
+	private static class Student {
+		public String name;
+		public String studentNumber;
+		public String focus;
+		public String[] preferences;
 	}
 }
