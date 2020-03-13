@@ -4,7 +4,6 @@ import com.opencsv.CSVReader;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 
 /**
@@ -23,7 +22,6 @@ public class TestCaseGenerator {
 		TestCaseGenerator testCaseGenerator = new TestCaseGenerator();
 		testCaseGenerator.generate();
 		testCaseGenerator.generateStudents();
-
 	}
 
 	/**
@@ -34,7 +32,7 @@ public class TestCaseGenerator {
 		ArrayList<StaffMember> staffMembers = loadStaffMembers();
 		List<Project> projects = generateProjects(staffMembers, prefixes);
 		for (Project project : projects) {
-			System.out.println(project.supervisor + ":" + project.title + ":" + project.type.toString());
+			System.out.println(project.getSupervisor() + ":" + project.getTitle() + ":" + project.getType());
 		}
 	}
 
@@ -57,16 +55,16 @@ public class TestCaseGenerator {
 			StaffMember supervisor;
 			if (projectType < 0.5) {
 				supervisor = pickRandomElement(csOnly);
-				project.type = Project.Type.CS;
+				project.setType(Project.Type.CS);
 			} else if (projectType < 70) {
-				project.type = Project.Type.CSDS;
+				project.setType(Project.Type.CSDS);
 				supervisor = pickRandomElement(csOnly);
 			} else {
-				project.type = Project.Type.DS;
+				project.setType(Project.Type.DS);
 				supervisor = pickRandomElement(dsOnly);
 			}
-			project.supervisor = supervisor.name;
-			project.title = pickRandomElement(prefixes) + " " + pickRandomElement(supervisor.researchActivities);
+			project.setSupervisor(supervisor.name);
+			project.setTitle(pickRandomElement(prefixes) + " " + pickRandomElement(supervisor.researchActivities));
 			projects.add(project);
 		}
 		return projects;
@@ -139,17 +137,6 @@ public class TestCaseGenerator {
 		else{
 			return "DS";
 		}
-	}
-
-	private static class Project {
-		private enum Type {
-			CS,
-			CSDS,
-			DS;
-		}
-
-		public String supervisor, title;
-		public Type type;
 	}
 
 	private static class StaffMember {
