@@ -19,7 +19,7 @@ public class TestCaseGenerator {
 
 	private Random random = new Random(System.currentTimeMillis());
 	private ArrayList<Student> students;
-	
+
 	public static void main(String[] args) throws IOException {
 		TestCaseGenerator testCaseGenerator = new TestCaseGenerator();
 		testCaseGenerator.generate();
@@ -41,7 +41,7 @@ public class TestCaseGenerator {
 	private ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
 		// DS projects can only be made by CS supervisors. We need to separate the staff members.
 		ArrayList<Project> projects = new ArrayList<>(NUM_PROJECTS);
-		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.specialFocus));
+		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
 		List<StaffMember> csOnly = partition.get(false); // Proposes CS or CS+DS
 		List<StaffMember> dsOnly = partition.get(true); // Proposes DS
 		/**
@@ -65,8 +65,8 @@ public class TestCaseGenerator {
 				project.setType(Project.Type.DS);
 				supervisor = pickRandomElement(dsOnly);
 			}
-			project.setSupervisor(supervisor.name);
-			project.setTitle(pickRandomElement(prefixes) + " " + pickRandomElement(supervisor.researchActivities));
+			project.setSupervisor(supervisor.getName());
+			project.setTitle(pickRandomElement(prefixes) + " " + pickRandomElement(supervisor.getResearchActivities()));
 			projects.add(project);
 		}
 		return projects;
@@ -87,10 +87,10 @@ public class TestCaseGenerator {
 		List<String[]> rows = csvReader.readAll();
 		for (String[] row : rows) {
 			StaffMember staffMember = new StaffMember();
-			staffMember.name = row[0];
-			staffMember.researchActivities = row[1].split(", ");
-			staffMember.researchAreas = row[2].split(", ");
-			staffMember.specialFocus = row.length >= 4 && row[3].equals(DAGON_STUDIES);
+			staffMember.setName(row[0]);
+			staffMember.setResearchActivities(row[1].split(", "));
+			staffMember.setResearchAreas(row[2].split(", "));
+			staffMember.setSpecialFocus(row.length >= 4 && row[3].equals(DAGON_STUDIES));
 			staffMembers.add(staffMember);
 		}
 		return staffMembers;
@@ -139,13 +139,6 @@ public class TestCaseGenerator {
 		else{
 			return "DS";
 		}
-	}
-
-	private static class StaffMember {
-		public String name;
-		public String[] researchActivities, researchAreas;
-		// True if is only DS, otherwise false
-		public boolean specialFocus;
 	}
 
 	private static class Student {
