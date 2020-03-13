@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 public class TestCaseGenerator {
 
 	private static final int NUM_PROJECTS = 500;
+	private final String DAGON_STUDIES = "Dagon Studies";
+	private final String STAFF_MEMBERS_FILE = "./Miskatonic Staff Members.csv";
+	private final String PREFIXES_FILE = "./prefixes.txt";
+	private final String NAMES_FILE = "./names.txt";
 
 	private Random random = new Random(System.currentTimeMillis());
-
 	private ArrayList<Student> students;
-
-
+	
 	public static void main(String[] args) throws IOException {
 		TestCaseGenerator testCaseGenerator = new TestCaseGenerator();
 		testCaseGenerator.generate();
@@ -79,7 +81,7 @@ public class TestCaseGenerator {
 	}
 
 	private ArrayList<StaffMember> loadStaffMembers() throws IOException {
-		File file = new File("./Miskatonic Staff Members.csv");
+		File file = new File(STAFF_MEMBERS_FILE);
 		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
 		CSVReader csvReader = new CSVReader(new FileReader(file));
 		List<String[]> rows = csvReader.readAll();
@@ -88,14 +90,14 @@ public class TestCaseGenerator {
 			staffMember.name = row[0];
 			staffMember.researchActivities = row[1].split(", ");
 			staffMember.researchAreas = row[2].split(", ");
-			staffMember.specialFocus = row.length >= 4 && row[3].equals("Dagon Studies");
+			staffMember.specialFocus = row.length >= 4 && row[3].equals(DAGON_STUDIES);
 			staffMembers.add(staffMember);
 		}
 		return staffMembers;
 	}
 
 	private ArrayList<String> loadPrefixes() throws IOException {
-		File file = new File("./prefixes.txt");
+		File file = new File(PREFIXES_FILE);
 		ArrayList<String> prefixes = new ArrayList<String>();
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		String line = "";
@@ -107,7 +109,7 @@ public class TestCaseGenerator {
 
 	private ArrayList<Student> generateStudents() {
 		students = new ArrayList<>();
-		File names = new File("./names.txt");
+		File names = new File(NAMES_FILE);
 		try{
 			Scanner scanner = new Scanner(names);
 			while(scanner.hasNext()){
