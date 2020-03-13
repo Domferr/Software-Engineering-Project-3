@@ -58,7 +58,7 @@ public class TestCaseGenerator {
 			if (projectType < 0.5) {
 				supervisor = pickRandomElement(csOnly);
 				project.setType(Project.Type.CS);
-			} else if (projectType < 70) {
+			} else if (projectType < 0.7) {
 				project.setType(Project.Type.CSDS);
 				supervisor = pickRandomElement(csOnly);
 			} else {
