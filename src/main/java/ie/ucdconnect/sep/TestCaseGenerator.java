@@ -12,24 +12,22 @@ import java.util.stream.Collectors;
 public class TestCaseGenerator {
 
 	private static final int NUM_PROJECTS = 500;
-	private final String DAGON_STUDIES = "Dagon Studies";
-	private final String STAFF_MEMBERS_FILE = "./Miskatonic Staff Members.csv";
-	private final String PREFIXES_FILE = "./prefixes.txt";
-	private final String NAMES_FILE = "./names.txt";
+	private static final String DAGON_STUDIES = "Dagon Studies";
+	private static final String STAFF_MEMBERS_FILE = "./Miskatonic Staff Members.csv";
+	private static final String PREFIXES_FILE = "./prefixes.txt";
+	private static final String NAMES_FILE = "./names.txt";
 
-	private Random random = new Random(System.currentTimeMillis());
-	private ArrayList<Student> students;
+	private static Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) throws IOException {
-		TestCaseGenerator testCaseGenerator = new TestCaseGenerator();
-		testCaseGenerator.generate();
-		testCaseGenerator.generateStudents();
+		generate();
+		generateStudents();
 	}
 
 	/**
 	 * Generates test cases and outputs the generated tests.
 	 */
-	public void generate() throws IOException {
+	public static void generate() throws IOException {
 		ArrayList<String> prefixes = loadPrefixes();
 		ArrayList<StaffMember> staffMembers = loadStaffMembers();
 		List<Project> projects = generateProjects(staffMembers, prefixes);
@@ -38,7 +36,7 @@ public class TestCaseGenerator {
 		}
 	}
 
-	private ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
+	private static ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
 		// DS projects can only be made by CS supervisors. We need to separate the staff members.
 		ArrayList<Project> projects = new ArrayList<>(NUM_PROJECTS);
 		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
@@ -72,15 +70,15 @@ public class TestCaseGenerator {
 		return projects;
 	}
 
-	private <T> T pickRandomElement(T[] haystack) {
+	private static <T> T pickRandomElement(T[] haystack) {
 		return haystack[random.nextInt(haystack.length)];
 	}
 
-	private <T> T pickRandomElement(List<T> haystack) {
+	private static <T> T pickRandomElement(List<T> haystack) {
 		return haystack.get(random.nextInt(haystack.size()));
 	}
 
-	private ArrayList<StaffMember> loadStaffMembers() throws IOException {
+	private static ArrayList<StaffMember> loadStaffMembers() throws IOException {
 		File file = new File(STAFF_MEMBERS_FILE);
 		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
 		CSVReader csvReader = new CSVReader(new FileReader(file));
@@ -96,7 +94,7 @@ public class TestCaseGenerator {
 		return staffMembers;
 	}
 
-	private ArrayList<String> loadPrefixes() throws IOException {
+	private static ArrayList<String> loadPrefixes() throws IOException {
 		File file = new File(PREFIXES_FILE);
 		ArrayList<String> prefixes = new ArrayList<String>();
 		BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -107,8 +105,8 @@ public class TestCaseGenerator {
 		return prefixes;
 	}
 
-	private ArrayList<Student> generateStudents() {
-		students = new ArrayList<>();
+	private static ArrayList<Student> generateStudents() {
+		ArrayList<Student> students = new ArrayList<>();
 		File names = new File(NAMES_FILE);
 		try{
 			Scanner scanner = new Scanner(names);
@@ -131,7 +129,7 @@ public class TestCaseGenerator {
 	}
 
 	/* 60% to be CS and 40% for DS */
-	private Student.Focus studentFocus(){
+	private static Student.Focus studentFocus(){
 		int r = random.nextInt(100);
 		if(r <= 60){
 			return Student.Focus.CS;
