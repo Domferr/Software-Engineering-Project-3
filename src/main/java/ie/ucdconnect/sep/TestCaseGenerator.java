@@ -114,12 +114,12 @@ public class TestCaseGenerator {
 			Scanner scanner = new Scanner(names);
 			while(scanner.hasNext()){
 				Student student = new Student();
-				student.name = scanner.nextLine();
+				student.setName(scanner.nextLine());
 				int sNumber = (random.nextInt((90000000-10000000)+1)+10000000);
-				student.studentNumber = Integer.toString(sNumber);
-				student.focus = studentFocus();
+				student.setStudentNumber(Integer.toString(sNumber));
+				student.setFocus(studentFocus());
 
-				System.out.println(student.name + " " + student.studentNumber + " " + student.focus);
+				System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus());
 				students.add(student);
 			}
 		}
@@ -139,12 +139,5 @@ public class TestCaseGenerator {
 		else{
 			return "DS";
 		}
-	}
-
-	private static class Student {
-		public String name;
-		public String studentNumber;
-		public String focus;
-		public String[] preferences;
 	}
 }
