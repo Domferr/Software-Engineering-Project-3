@@ -1,9 +1,14 @@
 package ie.ucdconnect.sep;
 
 public class Student {
+    public enum Focus {
+        CS,
+        DS
+    }
+
     private String name;
     private String studentNumber;
-    private String focus;
+    private Focus focus;
     private String[] preferences;
 
     public String getName() {
@@ -22,11 +27,11 @@ public class Student {
         this.studentNumber = studentNumber;
     }
 
-    public String getFocus() {
+    public Focus getFocus() {
         return focus;
     }
 
-    public void setFocus(String focus) {
+    public void setFocus(Focus focus) {
         this.focus = focus;
     }
 

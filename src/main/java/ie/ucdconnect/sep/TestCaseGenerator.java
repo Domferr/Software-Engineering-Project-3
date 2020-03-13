@@ -131,13 +131,13 @@ public class TestCaseGenerator {
 	}
 
 	/* 60% to be CS and 40% for DS */
-	private String studentFocus(){
+	private Student.Focus studentFocus(){
 		int r = random.nextInt(100);
 		if(r <= 60){
-			return "CS";
+			return Student.Focus.CS;
 		}
 		else{
-			return "DS";
+			return Student.Focus.DS;
 		}
 	}
 }
