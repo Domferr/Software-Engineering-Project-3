@@ -7,19 +7,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Hello world!
+ * This class generates a test case
  */
 public class TestCaseGenerator {
 
 	private static final int NUM_PROJECTS = 500;
 	private static final String DAGON_STUDIES = "Dagon Studies";
-	private static final String STAFF_MEMBERS_FILE = "./Miskatonic Staff Members.csv";
-	private static final String PREFIXES_FILE = "./prefixes.txt";
-	private static final String NAMES_FILE = "./names.txt";
 
 	private static Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) throws IOException {
+		//Config.getInstance().save("resources", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
 		generate();
 		generateStudents();
 	}
@@ -79,9 +77,8 @@ public class TestCaseGenerator {
 	}
 
 	private static ArrayList<StaffMember> loadStaffMembers() throws IOException {
-		File file = new File(STAFF_MEMBERS_FILE);
 		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
-		CSVReader csvReader = new CSVReader(new FileReader(file));
+		CSVReader csvReader = new CSVReader(new FileReader(Config.getInstance().getStaffMembersFile()));
 		List<String[]> rows = csvReader.readAll();
 		for (String[] row : rows) {
 			StaffMember staffMember = new StaffMember();
@@ -95,9 +92,8 @@ public class TestCaseGenerator {
 	}
 
 	private static ArrayList<String> loadPrefixes() throws IOException {
-		File file = new File(PREFIXES_FILE);
 		ArrayList<String> prefixes = new ArrayList<String>();
-		BufferedReader reader = new BufferedReader(new FileReader(file));
+		BufferedReader reader = new BufferedReader(new FileReader(Config.getInstance().getPrefixesFile()));
 		String line = "";
 		while ((line = reader.readLine()) != null) {
 			prefixes.add(line);
@@ -107,9 +103,8 @@ public class TestCaseGenerator {
 
 	private static ArrayList<Student> generateStudents() {
 		ArrayList<Student> students = new ArrayList<>();
-		File names = new File(NAMES_FILE);
 		try{
-			Scanner scanner = new Scanner(names);
+			Scanner scanner = new Scanner(Config.getInstance().getNamesFile());
 			while(scanner.hasNext()){
 				Student student = new Student();
 				student.setName(scanner.nextLine());
