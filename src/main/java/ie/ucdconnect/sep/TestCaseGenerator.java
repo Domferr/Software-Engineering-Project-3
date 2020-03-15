@@ -16,10 +16,11 @@ public class TestCaseGenerator {
 
 	private static Random random = new Random(System.currentTimeMillis());
 
+
 	public static void main(String[] args) throws IOException {
 		//Config.getInstance().save("resources", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
 		generate();
-		generateStudents();
+
 	}
 
 	/**
@@ -32,6 +33,10 @@ public class TestCaseGenerator {
 		for (Project project : projects) {
 			System.out.println(project.getSupervisor() + ":" + project.getTitle() + ":" + project.getType());
 		}
+		List<Student> students = generateStudents(projects);
+		System.out.println("STUDENTS: " + students.size());
+		System.out.println("Projects: " + projects.size());
+		System.out.println("Staff: " + staffMembers.size());
 	}
 
 	private static ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
@@ -101,18 +106,22 @@ public class TestCaseGenerator {
 		return prefixes;
 	}
 
-	private static ArrayList<Student> generateStudents() {
+	private static ArrayList<Student> generateStudents(List<Project> projects) {
+		final int MAX_NUM = 90000000;
+		final int MIN_NUM = 10000000;
+
 		ArrayList<Student> students = new ArrayList<>();
 		try{
 			Scanner scanner = new Scanner(Config.getInstance().getNamesFile());
 			while(scanner.hasNext()){
 				Student student = new Student();
 				student.setName(scanner.nextLine());
-				int sNumber = (random.nextInt((90000000-10000000)+1)+10000000);
+				int sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
 				student.setStudentNumber(Integer.toString(sNumber));
 				student.setFocus(studentFocus());
+				student.setPreferences(assignPreferences(projects));
 
-				System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus());
+				System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus() + " " + student.getPreferences());
 				students.add(student);
 			}
 		}
@@ -132,5 +141,17 @@ public class TestCaseGenerator {
 		else{
 			return Student.Focus.DS;
 		}
+	}
+
+	private static List<String> assignPreferences(List<Project> projects){
+		final int MAX_PREFERENCES = 10;
+
+		List<String> projectPreferences = new ArrayList<>();
+		for (int i = 0; i < MAX_PREFERENCES; i++){
+			int rand = random.nextInt(500);
+			projectPreferences.add(projects.get(rand).getTitle());
+		}
+		return projectPreferences;
+
 	}
 }

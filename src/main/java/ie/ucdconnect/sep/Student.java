@@ -1,5 +1,7 @@
 package ie.ucdconnect.sep;
 
+import java.util.List;
+
 public class Student {
     public enum Focus {
         CS,
@@ -9,7 +11,7 @@ public class Student {
     private String name;
     private String studentNumber;
     private Focus focus;
-    private String[] preferences;
+    private List<String> preferences;
 
     public String getName() {
         return name;
@@ -35,11 +37,11 @@ public class Student {
         this.focus = focus;
     }
 
-    public String[] getPreferences() {
+    public List<String> getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(String[] preferences) {
+    public void setPreferences(List<String> preferences) {
         this.preferences = preferences;
     }
 }
