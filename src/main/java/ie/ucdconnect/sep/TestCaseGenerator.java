@@ -4,44 +4,40 @@ import com.opencsv.CSVReader;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.stream.Collectors;
 
 /**
- * Hello world!
+ * This class generates a test case
  */
 public class TestCaseGenerator {
 
 	private static final int NUM_PROJECTS = 500;
+	private static final String DAGON_STUDIES = "Dagon Studies";
 
-	private Random random = new Random(System.currentTimeMillis());
-
-	private ArrayList<Student> students;
-
+	private static Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) throws IOException {
-		TestCaseGenerator testCaseGenerator = new TestCaseGenerator();
-		testCaseGenerator.generate();
-		testCaseGenerator.generateStudents();
-
+		//Config.getInstance().save("resources", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
+		generate();
+		generateStudents();
 	}
 
 	/**
 	 * Generates test cases and outputs the generated tests.
 	 */
-	public void generate() throws IOException {
+	public static void generate() throws IOException {
 		ArrayList<String> prefixes = loadPrefixes();
 		ArrayList<StaffMember> staffMembers = loadStaffMembers();
 		List<Project> projects = generateProjects(staffMembers, prefixes);
 		for (Project project : projects) {
-			System.out.println(project.supervisor + ":" + project.title + ":" + project.type.toString());
+			System.out.println(project.getSupervisor() + ":" + project.getTitle() + ":" + project.getType());
 		}
 	}
 
-	private ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
+	private static ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
 		// DS projects can only be made by CS supervisors. We need to separate the staff members.
 		ArrayList<Project> projects = new ArrayList<>(NUM_PROJECTS);
-		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.specialFocus));
+		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
 		List<StaffMember> csOnly = partition.get(false); // Proposes CS or CS+DS
 		List<StaffMember> dsOnly = partition.get(true); // Proposes DS
 		/**
@@ -57,49 +53,47 @@ public class TestCaseGenerator {
 			StaffMember supervisor;
 			if (projectType < 0.5) {
 				supervisor = pickRandomElement(csOnly);
-				project.type = Project.Type.CS;
-			} else if (projectType < 70) {
-				project.type = Project.Type.CSDS;
+				project.setType(Project.Type.CS);
+			} else if (projectType < 0.7) {
+				project.setType(Project.Type.CSDS);
 				supervisor = pickRandomElement(csOnly);
 			} else {
-				project.type = Project.Type.DS;
+				project.setType(Project.Type.DS);
 				supervisor = pickRandomElement(dsOnly);
 			}
-			project.supervisor = supervisor.name;
-			project.title = pickRandomElement(prefixes) + " " + pickRandomElement(supervisor.researchActivities);
+			project.setSupervisor(supervisor.getName());
+			project.setTitle(pickRandomElement(prefixes) + " " + pickRandomElement(supervisor.getResearchActivities()));
 			projects.add(project);
 		}
 		return projects;
 	}
 
-	private <T> T pickRandomElement(T[] haystack) {
+	private static <T> T pickRandomElement(T[] haystack) {
 		return haystack[random.nextInt(haystack.length)];
 	}
 
-	private <T> T pickRandomElement(List<T> haystack) {
+	private static <T> T pickRandomElement(List<T> haystack) {
 		return haystack.get(random.nextInt(haystack.size()));
 	}
 
-	private ArrayList<StaffMember> loadStaffMembers() throws IOException {
-		File file = new File("./Miskatonic Staff Members.csv");
+	private static ArrayList<StaffMember> loadStaffMembers() throws IOException {
 		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
-		CSVReader csvReader = new CSVReader(new FileReader(file));
+		CSVReader csvReader = new CSVReader(new FileReader(Config.getInstance().getStaffMembersFile()));
 		List<String[]> rows = csvReader.readAll();
 		for (String[] row : rows) {
 			StaffMember staffMember = new StaffMember();
-			staffMember.name = row[0];
-			staffMember.researchActivities = row[1].split(", ");
-			staffMember.researchAreas = row[2].split(", ");
-			staffMember.specialFocus = row.length >= 4 && row[3].equals("Dagon Studies");
+			staffMember.setName(row[0]);
+			staffMember.setResearchActivities(row[1].split(", "));
+			staffMember.setResearchAreas(row[2].split(", "));
+			staffMember.setSpecialFocus(row.length >= 4 && row[3].equals(DAGON_STUDIES));
 			staffMembers.add(staffMember);
 		}
 		return staffMembers;
 	}
 
-	private ArrayList<String> loadPrefixes() throws IOException {
-		File file = new File("./prefixes.txt");
+	private static ArrayList<String> loadPrefixes() throws IOException {
 		ArrayList<String> prefixes = new ArrayList<String>();
-		BufferedReader reader = new BufferedReader(new FileReader(file));
+		BufferedReader reader = new BufferedReader(new FileReader(Config.getInstance().getPrefixesFile()));
 		String line = "";
 		while ((line = reader.readLine()) != null) {
 			prefixes.add(line);
@@ -107,19 +101,18 @@ public class TestCaseGenerator {
 		return prefixes;
 	}
 
-	private ArrayList<Student> generateStudents() {
-		students = new ArrayList<>();
-		File names = new File("./names.txt");
+	private static ArrayList<Student> generateStudents() {
+		ArrayList<Student> students = new ArrayList<>();
 		try{
-			Scanner scanner = new Scanner(names);
+			Scanner scanner = new Scanner(Config.getInstance().getNamesFile());
 			while(scanner.hasNext()){
 				Student student = new Student();
-				student.name = scanner.nextLine();
+				student.setName(scanner.nextLine());
 				int sNumber = (random.nextInt((90000000-10000000)+1)+10000000);
-				student.studentNumber = Integer.toString(sNumber);
-				student.focus = studentFocus();
+				student.setStudentNumber(Integer.toString(sNumber));
+				student.setFocus(studentFocus());
 
-				System.out.println(student.name + " " + student.studentNumber + " " + student.focus);
+				System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus());
 				students.add(student);
 			}
 		}
@@ -131,38 +124,13 @@ public class TestCaseGenerator {
 	}
 
 	/* 60% to be CS and 40% for DS */
-	private String studentFocus(){
+	private static Student.Focus studentFocus(){
 		int r = random.nextInt(100);
 		if(r <= 60){
-			return "CS";
+			return Student.Focus.CS;
 		}
 		else{
-			return "DS";
+			return Student.Focus.DS;
 		}
-	}
-
-	private static class Project {
-		private enum Type {
-			CS,
-			CSDS,
-			DS;
-		}
-
-		public String supervisor, title;
-		public Type type;
-	}
-
-	private static class StaffMember {
-		public String name;
-		public String[] researchActivities, researchAreas;
-		// True if is only DS, otherwise false
-		public boolean specialFocus;
-	}
-
-	private static class Student {
-		public String name;
-		public String studentNumber;
-		public String focus;
-		public String[] preferences;
 	}
 }

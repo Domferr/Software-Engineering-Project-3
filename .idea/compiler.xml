@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Software-Engineering-Project-3" />
+        <module name="miskatonic-project-matcher" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Software-Engineering-Project-3" target="8" />
+      <module name="miskatonic-project-matcher" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
