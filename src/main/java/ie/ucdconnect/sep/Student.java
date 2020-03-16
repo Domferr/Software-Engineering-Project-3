@@ -11,7 +11,7 @@ public class Student {
     private String name;
     private String studentNumber;
     private Focus focus;
-    private List<String> preferences;
+    private List<Project> preferences;
 
     public String getName() {
         return name;
@@ -37,11 +37,16 @@ public class Student {
         this.focus = focus;
     }
 
-    public List<String> getPreferences() {
+    public List<Project> getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(List<String> preferences) {
+    public void setPreferences(List<Project> preferences) {
         this.preferences = preferences;
+    }
+
+    @Override
+    public String toString() {
+        return name+" "+studentNumber+" "+focus+" "+preferences.toString();
     }
 }

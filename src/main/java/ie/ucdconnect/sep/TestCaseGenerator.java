@@ -12,15 +12,15 @@ import java.util.stream.Collectors;
 public class TestCaseGenerator {
 
 	private static final int NUM_PROJECTS = 500;
+	private static final int CS_FREQUENCY = 60;
+    private static final int MAX_STUDENT_PREFERENCES = 10;
 	private static final String DAGON_STUDIES = "Dagon Studies";
 
-	private static Random random = new Random(System.currentTimeMillis());
-
+    private static Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) throws IOException {
 		//Config.getInstance().save("resources", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
 		generate();
-
 	}
 
 	/**
@@ -121,13 +121,14 @@ public class TestCaseGenerator {
 				student.setFocus(studentFocus());
 				student.setPreferences(assignPreferences(projects));
 
-				System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus() + " " + student.getPreferences());
+				System.out.println(student);
+				//System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus() + " " + student.getPreferences());
 				students.add(student);
 			}
 		}
 		catch (FileNotFoundException e){
 			e.printStackTrace();
-			System.err.println("Could not find file");
+			System.err.println("Could not find names file");
 		}
 		return students;
 	}
@@ -135,23 +136,19 @@ public class TestCaseGenerator {
 	/* 60% to be CS and 40% for DS */
 	private static Student.Focus studentFocus(){
 		int r = random.nextInt(100);
-		if(r <= 60){
+		if (r <= CS_FREQUENCY) {
 			return Student.Focus.CS;
-		}
-		else{
+		} else {
 			return Student.Focus.DS;
 		}
 	}
 
-	private static List<String> assignPreferences(List<Project> projects){
-		final int MAX_PREFERENCES = 10;
-
-		List<String> projectPreferences = new ArrayList<>();
-		for (int i = 0; i < MAX_PREFERENCES; i++){
-			int rand = random.nextInt(500);
-			projectPreferences.add(projects.get(rand).getTitle());
+	private static List<Project> assignPreferences(List<Project> projects) {
+		List<Project> projectPreferences = new ArrayList<>();
+		for (int i = 0; i < MAX_STUDENT_PREFERENCES; i++){
+			int rand = random.nextInt(NUM_PROJECTS);
+			projectPreferences.add(projects.get(rand));
 		}
 		return projectPreferences;
-
 	}
 }
