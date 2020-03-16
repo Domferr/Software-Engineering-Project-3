@@ -21,9 +21,16 @@ public class TestCaseGenerator {
 	public static void main(String[] args) throws IOException {
 		Config.getInstance().save("resources", "testcases", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
 
+		/**
+		 * Generates test cases and outputs the generated tests.
+		 */
 		ArrayList<String> prefixes = loadPrefixes();
         ArrayList<StaffMember> staffMembers = loadStaffMembers();
         List<Project> projects = generateProjects(staffMembers, prefixes);
+
+		for (Project project : projects) {
+			System.out.println(project.getSupervisor() + ":" + project.getTitle() + ":" + project.getType());
+		}
 
         /* Generating the different number of required students i.e. 60, 120, 240 and 500*/
 		int[] testSetsStudents = {60, 120, 240, 500};
@@ -43,7 +50,6 @@ public class TestCaseGenerator {
 				System.out.println(student);
 			}
         }
-
 
         System.out.println("Projects: " + projects.size());
         System.out.println("Staff: " + staffMembers.size());
@@ -74,18 +80,6 @@ public class TestCaseGenerator {
             e.printStackTrace();
         }
     }
-
-    /**
-	 * Generates test cases and outputs the generated tests.
-	 */
-	public static void generate() throws IOException {
-		ArrayList<String> prefixes = loadPrefixes();
-		ArrayList<StaffMember> staffMembers = loadStaffMembers();
-		List<Project> projects = generateProjects(staffMembers, prefixes);
-		for (Project project : projects) {
-			System.out.println(project.getSupervisor() + ":" + project.getTitle() + ":" + project.getType());
-		}
-	}
 
 	private static ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
 		// DS projects can only be made by CS supervisors. We need to separate the staff members.
