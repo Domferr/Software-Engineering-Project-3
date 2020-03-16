@@ -8,6 +8,7 @@ import java.io.*;
  *  2) Name of the file with student names
  *  3) Name of the supervisor .csv file
  *  4) Name of the file with project prefixes
+ *  5) Name of the directory that contains generated test cases
  *
  *  N.B: Each element is written in one row.
  * */
@@ -17,6 +18,7 @@ public class Config {
     private static final String CONFIG_FILENAME = "config.txt"; //Name of the file with config stuffs
 
     private static String FILES_DIR_NAME;   //Name of the directory that contains the files
+    private static String TESTCASE_DIR_NAME;//Name of the directory with generated testcases
     private static File NAMES_FILE;         //File with student names
     private static File STAFF_MEMBERS_FILE; //File csv with supervisors
     private static File PREFIXES_FILE;      //File with custom project prefixes
@@ -56,6 +58,8 @@ public class Config {
                     break;
                 case 3: PREFIXES_FILE = new File(filesDirPath+line);
                     break;
+                case 4: TESTCASE_DIR_NAME = "./"+line+"/";
+                    break;
             }
             lineIndex++;
         }
@@ -64,18 +68,20 @@ public class Config {
     }
 
     /** Overwrite field strings and then write into config file */
-    public void save(String filesDirName, String namesFileName, String staffMembersFileName, String prefixesFileName) throws IOException {
+    public void save(String filesDirName, String testCaseDir, String namesFileName, String staffMembersFileName, String prefixesFileName) throws IOException {
         String filesDirPath = "./"+filesDirName+"/";
         FILES_DIR_NAME = filesDirName;
         NAMES_FILE = new File(filesDirPath + namesFileName);
         STAFF_MEMBERS_FILE = new File(filesDirPath + staffMembersFileName);
         PREFIXES_FILE = new File(filesDirPath + prefixesFileName);
+        TESTCASE_DIR_NAME = "./"+testCaseDir+"/";
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILENAME));
         writer.append(filesDirName+"\n");
         writer.append(namesFileName+"\n");
         writer.append(staffMembersFileName+"\n");
         writer.append(prefixesFileName+"\n");
+        writer.append(testCaseDir+"\n");
         writer.close();
     }
 
@@ -89,5 +95,9 @@ public class Config {
 
     public File getPrefixesFile() {
         return PREFIXES_FILE;
+    }
+
+    public String getTestcaseDirName() {
+        return TESTCASE_DIR_NAME;
     }
 }

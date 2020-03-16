@@ -1,0 +1,500 @@
+Creating a web interface for teaching magic
+Building a service to help cooking British food
+Creating a web interface for promoting political causes
+Creating an app for inventing superheroes
+Creating a web interface for fighting the resistance
+Building a REST API for living amongst apes
+Creating a web interface for fighting for worker's rights
+Building a REST API for singing multipart harmonies
+Building a REST API for fighting barbarian hordes
+Building a REST API for ranting about liberals
+Creating a web interface for investing money
+Building a service to help writing TV comedies
+Building a service to help burying dead hamsters
+Creating a web interface for writing plays
+Creating an app for cross-dressing in women's clothes
+Creating a web interface for terrorizing employees
+Creating a web interface for publishing soft pornography
+Building a service to help teaching philosophy
+Building a REST API for going senile
+Creating an app for milking coconuts
+Building a service to help running a software company
+Building a service to help fighting for civil rights
+Building a REST API for fighting with swords
+Building a service to help interviewing celebrities
+Creating an app for designing modern buildings
+Creating an app for coasting on past glories
+Building a service to help plotting criminal schemes
+Creating a web interface for planning adultery
+Creating a web interface for winning boxing matches
+Creating a web interface for making topiary sculptures
+Creating a web interface for playing rock piano
+Creating an app for writing pop songs
+Creating an app for singing melancholy songs
+Building a REST API for falling in love
+Creating an app for surviving a shipwreck
+Building a service to help plotting against family members
+Building a REST API for complaining about everything
+Building a REST API for starring in comedies
+Creating a web interface for managing large development projects
+Creating a web interface for exploring darkest Africa
+Creating an app for promoting liberal values
+Building a service to help fighting the forces of good
+Building a service to help running an empire
+Creating an app for cooking dinners
+Creating an app for reporting the news
+Creating an app for solving riddles
+Building a service to help causing mayhem
+Creating an app for directing violent movies
+Creating an app for fighting with swords
+Building a service to help studying mathematics
+Creating a web interface for painting colorful pictures
+Creating a web interface for foiling the schemes of evil villains
+Building a service to help playing the clarinet
+Building a REST API for causing mayhem
+Building a REST API for leaking state secrets
+Building a REST API for throwing fund-raisers for Parkinson's disease
+Creating an app for doing stand-up
+Building a REST API for directing comedies
+Creating a web interface for chasing after women
+Building a service to help bridging cultures 
+Building a REST API for playing soccer
+Building a service to help fighting with swords
+Creating an app for making prank calls
+Building a service to help making vague predictions
+Building a service to help promoting conservative values
+Building a service to help promoting diversity
+Building a REST API for making insipid musicals
+Creating an app for pushing the hardline
+Building a REST API for designing modern buildings
+Building a service to help running a school for gifted teens
+Building a REST API for launching cultural revolutions
+Building a service to help drawing whimsical cartoons
+Building a service to help campaigning for world peace
+Building a service to help winning swimming competitions
+Creating an app for planting evidence
+Creating a web interface for writing pop songs
+Building a service to help rooting out facts
+Building a REST API for recording pop songs
+Building a REST API for performing stand-up
+Building a REST API for starring in Hollywood movies
+Creating a web interface for writing up case notes
+Building a REST API for defending freedom
+Creating an app for winning gold medals
+Building a REST API for avoiding retirement
+Building a REST API for consolidating an empire
+Building a REST API for explaining natural selection
+Building a service to help attending cotillion balls
+Building a REST API for divorcing husbands
+Building a service to help solving mysteries
+Creating an app for looking for love
+Creating a web interface for testing new technologies
+Creating an app for starring in sit-coms
+Creating a web interface for watching the sun rise
+Creating an app for cross-dressing in women's clothes
+Building a REST API for doing stand-up
+Creating an app for studying linguistics
+Building a service to help publishing soft pornography,running gentleman's clubs
+Building a REST API for rescuing prisoners of war
+Creating an app for abusing power
+Building a service to help looking after children
+Building a REST API for looking for sex
+Creating a web interface for writing modern poetry
+Building a REST API for running a technology company
+Building a service to help campaigning for democracy
+Creating a web interface for spreading philosophy
+Creating an app for running a bureaucracy
+Creating a web interface for studying mathematics
+Creating a web interface for pursuing criminals
+Building a service to help starring in comedies
+Creating a web interface for enjoying money
+Building a service to help grilling interviewees
+Creating a web interface for writing pot-boilers
+Building a REST API for making topiary sculptures
+Building a REST API for inventing electrical marvels
+Creating an app for playing rock music
+Creating an app for  fighting for democracy
+Building a service to help writing Russian novels
+Creating a web interface for writing pop songs
+Creating a web interface for manipulating ingenues
+Building a REST API for chain-smoking Gauloises Bleues
+Building a service to help drinking tea
+Creating an app for starring in Hollywood movies
+Building a service to help playing drums
+Creating a web interface for flying airplanes
+Creating a web interface for cross-dressing in women's clothes
+Building a service to help teaching philosophy
+Building a REST API for tempting fate
+Creating an app for starring in action movies
+Creating an app for promoting boxing fights
+Creating an app for selling out
+Building a service to help starring in Hollywood movies
+Building a REST API for wearing a batsuit
+Building a service to help ranting about conservatives
+Creating a web interface for writing blues songs
+Creating a web interface for winning heavyweight titles
+Building a REST API for recording pop songs
+Building a REST API for hosting reality TV shows
+Building a REST API for escaping from reality
+Building a service to help singing pop songs
+Building a service to help signing sports memorabilia
+Creating an app for riding a bicycle
+Building a service to help writing for pulp magazines
+Building a service to help changing privacy settings
+Creating a web interface for promoting openness
+Creating a web interface for starring in romantic comedies
+Building a service to help living amongst apes
+Creating a web interface for doing slapstick comedy
+Creating a web interface for winning battles
+Creating an app for building an army
+Building a REST API for winning tennis grand slams
+Building a service to help assassinating presidents
+Creating an app for writing poetry
+Building a REST API for planning orgies
+Creating a web interface for patenting new technologies 
+Building a REST API for keeping a diary
+Creating an app for promoting humanism
+Building a service to help exploring darkest Africa
+Building a REST API for starring in pornographic movies
+Building a service to help starring in romantic comedies
+Creating a web interface for playing God
+Building a REST API for teaching the next generation
+Building a service to help pioneering new technologies
+Creating a web interface for starring in romantic comedies
+Building a service to help losing weight
+Building a REST API for slapping soldiers
+Building a service to help crushing dissent
+Building a service to help writing on wax tablets
+Creating an app for writing TV comedies
+Building a service to help creating optical illusions
+Creating a web interface for making dumb comedies
+Building a REST API for writing pop songs
+Building a REST API for entertaining teenagers
+Building a REST API for changing privacy settings
+Creating a web interface for starring in action movies
+Creating an app for inventing superheroes
+Building a REST API for terrorizing citizens
+Building a REST API for writing pot-boilers
+Building a REST API for running a criminal enterprise
+Creating a web interface for entertaining teenagers
+Building a service to help building rocket ships
+Creating an app for playing intense characters
+Creating a web interface for slapping soldiers
+Creating a web interface for selling consumer goods
+Building a REST API for promoting conservative values
+Building a service to help communicating with animals
+Building a REST API for starring in Hollywood movies
+Building a REST API for working with nuclear materials
+Creating an app for ordering wire-taps
+Building a REST API for fighting with the mob
+Creating a web interface for piloting the Millenium Falcon
+Creating an app for playing baseball
+Creating a web interface for bodybuilding
+Building a service to help test-driving cars
+Creating an app for devising evil schemes
+Building a REST API for nurturing sibling rivalry
+Building a REST API for playing guitar
+Creating a web interface for racking up marriages
+Building a service to help hunting aliens
+Creating a web interface for promoting conservative values
+Building a service to help  fighting for democracy
+Creating a web interface for delivering forehand slams
+Building a REST API for defending plaintiffs
+Creating an app for climbing down chimneys
+Building a REST API for pioneering new technologies
+Building a service to help chasing terrorists
+Creating a web interface for building giant walls
+Building a service to help running an empire
+Building a REST API for clinging to past dreams
+Building a service to help running a technology company
+Building a service to help insulting minorities
+Building a service to help promoting conservative values
+Building a REST API for performing kung-fu moves
+Building a service to help performing magic tricks
+Creating a web interface for composing classical music
+Building a service to help eating people
+Building a REST API for performing magic tricks
+Building a service to help terrorizing employees
+Creating an app for starring in comedies
+Creating a web interface for running a clandestine spy organization
+Building a service to help starring in Hollywood movies
+Building a service to help avoiding retirement
+Creating an app for singing rock songs
+Building a service to help running a propaganda machine
+Building a REST API for 
+Building a REST API for running races
+Creating a web interface for  shopping for shoes
+Building a REST API for running a smuggling business
+Building a service to help writing cook books
+Building a REST API for singing melancholy songs
+Creating an app for probing the mind
+Creating a web interface for writing poetry
+Creating an app for  fighting for democracy
+Building a service to help writing science fiction
+Building a REST API for starring in Hollywood movies
+Building a REST API for signing sports memorabilia
+Creating an app for guarding the galaxy
+Building a service to help engaging in hapless hijinks
+Building a service to help promoting science
+Creating an app for carving magnificent statues
+Building a REST API for starring in Hollywood movies
+Building a service to help promoting new technologies
+Creating a web interface for murdering astronauts
+Building a REST API for recruiting dissidents
+Building a service to help ruling over subjects
+Building a service to help hosting anodyne game shows
+Building a REST API for painting melancholy pictures
+Creating a web interface for fighting with the mob
+Building a REST API for chasing flappers
+Creating a web interface for reporting the news
+Creating a web interface for writing plays about the middle classes
+Building a REST API for doing the Kessel run
+Building a REST API for insulting minorities
+Creating an app for campaigning for world peace
+Building a REST API for writing modern fiction
+Building a service to help ranting about liberals
+Building a service to help singing torch songs
+Creating a web interface for reporting the news
+Building a service to help promoting racial harmony
+Creating a web interface for writing cook books
+Creating a web interface for singing pop songs
+Building a REST API for forming new social connections
+Creating an app for starring in action movies
+Building a REST API for brokering peace deals
+Building a service to help hunting aliens
+Building a REST API for running a kingdom
+Creating a web interface for defending the Earth
+Creating an app for promoting conservative values
+Creating a web interface for campaigning for the senate
+Creating an app for writing pop songs
+Creating an app for promoting communism
+Building a service to help chasing criminals
+Building a REST API for making action movies
+Creating an app for winning gold medals
+Building a REST API for recording pop songs
+Creating a web interface for promoting new technologies
+Creating a web interface for painting magazine covers
+Building a REST API for surviving in a post-apocalyptic world
+Creating a web interface for delivering forehand slams
+Creating a web interface for arresting criminals 
+Creating a web interface for painting melancholy pictures
+Creating a web interface for attacking paparazzi
+Building a service to help composing classical music
+Building a REST API for running a criminal empire
+Building a REST API for campaigning for democracy
+Building a service to help currying favour
+Creating an app for singing pop songs
+Creating an app for campaigning for consumer rights
+Building a REST API for rescuing damsels in distress
+Creating an app for moaning about men
+Creating an app for starring in Hollywood movies
+Creating an app for gyrating hips
+Creating a web interface for cross-dressing in women's clothes
+Building a service to help solving mysteries,using gadgets
+Creating an app for publishing soft pornography,running gentleman's clubs
+Creating an app for chasing after women
+Building a service to help assassinating presidents
+Building a service to help wallowing in mud
+Creating a web interface for writing comic books
+Creating a web interface for talking up the economy
+Creating an app for singing pop songs
+Creating a web interface for playing jazz saxophone
+Creating a web interface for 
+Creating an app for starring in action movies
+Creating a web interface for studying symbols
+Creating a web interface for making bizarre movies,
+Building a REST API for playing the piano
+Creating a web interface for going senile
+Building a service to help starring in Hollywood movies
+Creating an app for winning tennis grand slams
+Building a REST API for promoting Objectivism
+Building a service to help promoting capitalism
+Creating a web interface for interpreting evidence
+Building a REST API for avoiding taxes
+Building a service to help doing the Charleston
+Building a REST API for fighting for civil rights
+Creating an app for offering advice
+Creating an app for campaigning for social causes
+Creating a web interface for playing quidditch
+Creating a web interface for scandalizing polite society
+Building a service to help writing political tracts
+Creating an app for making unauthorized sex tapes
+Creating an app for terrorizing Earth
+Creating an app for teaching the next generation
+Building a service to help singing Hipbop songs
+Building a REST API for cooking fancy food
+Creating a web interface for adopting children
+Building a service to help testing new technologies
+Building a REST API for making vulgar jokes
+Creating a web interface for making fantasy movies
+Creating an app for commanding a pirate ship
+Creating a web interface for teaching the next generation
+Creating an app for devising evil schemes
+Building a service to help wielding political power
+Creating an app for singing pop songs
+Creating an app for painting dark pictures
+Building a service to help promoting liberal values
+Creating an app for guarding the galaxy
+Creating an app for hunting serial killers
+Creating an app for losing control
+Creating an app for rescuing kids
+Creating a web interface for solving riddles
+Creating a web interface for campaigning for world peace
+Creating an app for promoting circus attractions
+Building a REST API for selling illegal alcohol
+Building a REST API for pulling dirty political tricks
+Building a service to help singing torch songs
+Creating an app for starring in action movies
+Building a REST API for coasting on past glories
+Building a REST API for interpreting evidence
+Creating an app for interviewing celebrities
+Building a REST API for fighting for justice
+Building a REST API for playing ice hockey
+Building a REST API for  fighting for democracy
+Creating a web interface for modeling clothes
+Building a REST API for  climbing social ladders
+Creating a web interface for cracking the whip
+Building a REST API for running an empire
+Building a service to help delivering forehand slams
+Creating an app for developing new technologies
+Creating an app for eluding the FBI
+Creating an app for making movies
+Building a REST API for starring in pornographic movies
+Creating an app for running an empire
+Building a REST API for starring in Hollywood movies
+Creating an app for making fantasy movies
+Building a REST API for inventing time machines
+Creating an app for running a media empire
+Creating a web interface for providing comic relief
+Creating a web interface for drawing whimsical cartoons
+Building a service to help making patronising comments
+Creating an app for coining sparkling witticisms
+Building a service to help watching TV
+Building a REST API for hiding from the public
+Building a REST API for transforming into vehicles
+Building a REST API for chasing terrorists
+Creating a web interface for singing country music
+Creating a web interface for promoting conservative values
+Building a service to help treating the injured
+Creating a web interface for testing new technologies
+Creating an app for jumping on couches
+Creating an app for casting magic spells
+Creating an app for starring in Hollywood movies
+Building a service to help giving speeches
+Building a service to help starring in Hollywood movies
+Building a REST API for promoting Darwinism
+Creating an app for writing comic books
+Building a service to help writing pop songs
+Creating a web interface for proving math theorems
+Creating a web interface for running a media empire
+Creating a web interface for searching for a new world
+Building a service to help throwing lavish parties
+Building a REST API for making kitsch
+Creating an app for composing classical music
+Creating an app for hunting wabbits
+Building a REST API for wielding political power
+Building a REST API for over-acting
+Building a service to help writing modern fiction
+Building a REST API for seducing emperors
+Creating an app for running a multinational corporation
+Building a service to help avenging loved ones
+Creating a web interface for promoting conservative values
+Building a service to help promoting conservative values
+Creating an app for ranting about liberals
+Creating a web interface for playing aggressive chess
+Building a service to help playing jazz saxophone
+Creating an app for looking after mother
+Building a REST API for writing poetry
+Creating an app for publishing soft pornography,running gentleman's clubs
+Creating an app for making dunk shots
+Creating an app for campaigning for social causes
+Creating a web interface for starring in Hollywood movies
+Building a service to help insulting minorities
+Creating an app for coining sententious maxims
+Building a service to help advising on foreign affairs
+Creating a web interface for writing modern fiction
+Building a service to help writing modern fiction
+Creating a web interface for punishing criminals
+Creating an app for  frowning at errant husbands
+Building a REST API for developing military strategies
+Creating an app for singing romantic songs
+Creating a web interface for composing classical music
+Creating a web interface for recruiting disaffected youths
+Building a REST API for plotting terrorist outrages
+Creating a web interface for causing mayhem
+Building a REST API for starring in Hollywood movies
+Building a service to help promoting conservative values
+Building a service to help reporting the news
+Creating an app for singing country music
+Creating a web interface for licking frogs
+Building a service to help cheating clients
+Building a REST API for pioneering new technologies
+Creating an app for selling comic books
+Creating a web interface for killing people in ingenious ways
+Building a REST API for running a criminal empire
+Creating a web interface for solving mysteries
+Creating an app for writing plays about the middle classes
+Creating an app for chasing old women
+Creating a web interface for guarding the galaxy
+Creating an app for starring in pornographic movies
+Creating an app for starring in action movies
+Building a REST API for solving mysteries
+Creating an app for foiling the schemes of evil villains
+Building a REST API for doing stand-up
+Building a service to help modeling clothes
+Creating a web interface for promoting conservative values
+Building a service to help promoting conservative values
+Creating a web interface for playing the clarinet
+Building a service to help writing blues songs
+Building a REST API for 
+Building a service to help living amongst apes
+Creating a web interface for gyrating hips
+Creating an app for cross-dressing in women's clothes
+Creating an app for devising evil schemes
+Building a REST API for promoting Catholic values,
+Building a service to help hosting a late night chat show
+Creating a web interface for writing pop songs
+Creating an app for starring in Hollywood movies
+Building a service to help foiling the schemes of evil villains
+Building a REST API for singing rock songs
+Creating a web interface for rescuing kids
+Building a service to help creating optical illusions
+Building a service to help writing political tracts
+Building a REST API for guarding the galaxy
+Building a service to help chasing after women
+Building a service to help promoting the Dark Side
+Building a REST API for solving crimes
+Creating an app for coining sparkling witticisms
+Creating a web interface for painting colorful pictures
+Building a REST API for playing God
+Building a REST API for rescuing aristocrats
+Creating a web interface for telling affable jokes
+Building a REST API for duelling acrobatically
+Creating an app for campaigning for environmental causes
+Creating a web interface for starring in madcap comedies
+Creating a web interface for fighting civil wars
+Creating an app for finding clues
+Building a REST API for starring in action movies
+Building a service to help singing country music
+Creating an app for studying science
+Creating an app for trimming bushes
+Creating a web interface for starring in Hollywood movies,
+Creating a web interface for finding clues
+Creating a web interface for proving math theorems
+Creating a web interface for selling self-help books
+Creating a web interface for creating monsters
+Creating an app for preaching tolerance
+Creating an app for 
+Creating a web interface for wearing tights
+Building a REST API for cross-dressing in women's clothes
+Building a REST API for posing for photographs
+Creating a web interface for complaining about everything
+Creating an app for interviewing celebrities
+Creating an app for directing action movies
+Creating an app for advising on foreign affairs
+Creating an app for performing stand-up
+Building a service to help teaching the next generation
+Building a service to help writing about manly pursuits
+Building a REST API for performing household chores
+Building a service to help promoting conservative values
+Building a service to help winning boxing matches

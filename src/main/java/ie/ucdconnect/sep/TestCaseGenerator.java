@@ -19,11 +19,47 @@ public class TestCaseGenerator {
     private static Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) throws IOException {
-		//Config.getInstance().save("resources", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
-		generate();
+		Config.getInstance().save("resources", "testcases", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
+
+		ArrayList<String> prefixes = loadPrefixes();
+        ArrayList<StaffMember> staffMembers = loadStaffMembers();
+
+        List<Project> projects = generateProjects(staffMembers, prefixes);
+        List<Student> students = generateStudents(projects);
+
+        for (Student student: students) {
+            System.out.println(student);
+        }
+
+        System.out.println("STUDENTS: " + students.size());
+        System.out.println("Projects: " + projects.size());
+        System.out.println("Staff: " + staffMembers.size());
+
+        saveGeneratedTestcase("students.txt", students, "Couldn't write into students file");
+        saveGeneratedTestcase("projects.txt", projects, "Couldn't write into projects file");
 	}
 
-	/**
+	/** Write the given list into specified file.  */
+    private static void saveGeneratedTestcase(String filename, List list, String err) {
+		String dirName = Config.getInstance().getTestcaseDirName();
+	    //Create dir if it doesn't exist
+	    File testCaseDir = new File(dirName);
+	    if (!testCaseDir.exists())
+	    	testCaseDir.mkdir();
+        //Finally write into file
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+filename));
+            for (Object elem : list) {
+                writer.append(elem.toString()+"\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.err.print(err);
+            e.printStackTrace();
+        }
+    }
+
+    /**
 	 * Generates test cases and outputs the generated tests.
 	 */
 	public static void generate() throws IOException {
@@ -120,8 +156,6 @@ public class TestCaseGenerator {
 				student.setStudentNumber(Integer.toString(sNumber));
 				student.setFocus(studentFocus());
 				student.setPreferences(assignPreferences(projects));
-
-				System.out.println(student);
 				//System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus() + " " + student.getPreferences());
 				students.add(student);
 			}
