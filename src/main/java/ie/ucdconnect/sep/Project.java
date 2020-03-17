@@ -1,20 +1,26 @@
 package ie.ucdconnect.sep;
 
 public class Project implements CSVRow {
-    public enum Type {
+	public enum Type {
         CS,
         CSDS,
         DS;
-    }
 
+    }
     private StaffMember supervisor;
+
     private String title;
     private Type type;
-
     public Project(String title, StaffMember supervisor, Type type) {
         this.title = title;
         this.supervisor = supervisor;
         this.type = type;
+    }
+
+    public boolean matchesFocus(Student.Focus studentFocus) {
+        return (type.equals(Project.Type.CS) && studentFocus.equals(Student.Focus.CS))
+                || (type.equals(Project.Type.DS) && studentFocus.equals(Student.Focus.DS))
+                || type.equals(Project.Type.CSDS);
     }
 
     @Override

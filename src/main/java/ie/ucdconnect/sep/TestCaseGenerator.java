@@ -186,19 +186,19 @@ public class TestCaseGenerator {
 
 	private static List<Project> assignPreferences(List<Project> projects, Student.Focus studentFocus) {
 		List<Project> projectPreferences = new ArrayList<>();
-		List<Project> projectsCopy = new ArrayList<>(projects);
-
-		int i = 0;
-		while (i < MAX_STUDENT_PREFERENCES) {
-			int randIndex = random.nextInt(projectsCopy.size());
-			Project randomProject = projectsCopy.get(randIndex);
-			if ((randomProject.getType().equals(Project.Type.CS) && studentFocus.equals(Student.Focus.CS))
-					|| (randomProject.getType().equals(Project.Type.DS) && studentFocus.equals(Student.Focus.DS))
-					|| randomProject.getType().equals(Project.Type.CSDS)) {
-
+		while (projectPreferences.size() < MAX_STUDENT_PREFERENCES) {
+			// https://stackoverflow.com/questions/54712600/what-is-the-true-maximum-and-minimum-value-of-random-nextgaussian
+			// This stackoverflow answer calculated the min/max values of nextGaussian().
+			// There is a slight inaccuracy here, to fix use z-scores to find probability P, the calculate index as 'P * projects.size()'.
+			double randDistribution = random.nextGaussian(); // Generates a randomly distributed double, with mean zero and SD 1.
+			double positiveRandDistribution = 8 + randDistribution;
+			int projectIndex = (int)(positiveRandDistribution / 16d * projects.size());
+			Project randomProject = projects.get(projectIndex);
+			if (randomProject.matchesFocus(studentFocus)) {
+				if (projectPreferences.contains(randomProject)) {
+					continue;
+				}
 				projectPreferences.add(randomProject);
-				projectsCopy.remove(randIndex);
-				i++;
 			}
 		}
 
