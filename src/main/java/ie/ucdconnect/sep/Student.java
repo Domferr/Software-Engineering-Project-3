@@ -47,6 +47,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return name+" "+studentNumber+" "+focus+" "+preferences.toString();
+        return name+" "+studentNumber+" "+focus+" "+ preferences.toString();
     }
 }

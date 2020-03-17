@@ -32,8 +32,9 @@ public class TestCaseGenerator {
 			System.out.println(project.getSupervisor() + ":" + project.getTitle() + ":" + project.getType());
 		}
 
-        /* Generating the different number of required students i.e. 60, 120, 240 and 500*/
+        /** Generating the different number of required students i.e. 60, 120, 240 and 500*/
 		int[] testSetsStudents = {60, 120, 240, 500};
+
 		List<List<Student>>  studentsTestData = new ArrayList<>();
 		for (int i = 0; i < testSetsStudents.length; i++){
 			List<Student> students = generateStudents(testSetsStudents[i], projects);
@@ -54,10 +55,11 @@ public class TestCaseGenerator {
         System.out.println("Projects: " + projects.size());
         System.out.println("Staff: " + staffMembers.size());
 
-		saveGeneratedTestcase("students60.txt", studentsTestData.get(0), "Couldn't write into students file");
-		saveGeneratedTestcase("students120.txt", studentsTestData.get(1), "Couldn't write into students file");
-		saveGeneratedTestcase("students240.txt", studentsTestData.get(2), "Couldn't write into students file");
-		saveGeneratedTestcase("students500.txt", studentsTestData.get(3), "Couldn't write into students file");
+		String[] testSets = {"students60.txt", "students120.txt", "students240.txt", "students500.txt"};
+        for(int i = 0; i < testSets.length; i++){
+			saveGeneratedTestcase(testSets[i], studentsTestData.get(i), "Couldn't write into students file");
+		}
+
         saveGeneratedTestcase("projects.txt", projects, "Couldn't write into projects file");
 	}
 
@@ -161,7 +163,7 @@ public class TestCaseGenerator {
 				int sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
 				student.setStudentNumber(Integer.toString(sNumber));
 				student.setFocus(studentFocus());
-				student.setPreferences(assignPreferences(projects));
+				student.setPreferences(assignPreferences(projects, student));
 				//System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus() + " " + student.getPreferences());
 				students.add(student);
 			}
@@ -183,12 +185,21 @@ public class TestCaseGenerator {
 		}
 	}
 
-	private static List<Project> assignPreferences(List<Project> projects) {
+	private static List<Project> assignPreferences(List<Project> projects, Student student) {
 		List<Project> projectPreferences = new ArrayList<>();
-		for (int i = 0; i < MAX_STUDENT_PREFERENCES; i++){
+		int i = 0;
+		while (i < MAX_STUDENT_PREFERENCES){
 			int rand = random.nextInt(NUM_PROJECTS);
-			projectPreferences.add(projects.get(rand));
+			Project randomProject = projects.get(rand);
+			if((randomProject.getType().equals(Project.Type.CS) && student.getFocus().equals(Student.Focus.CS))
+					||(randomProject.getType().equals(Project.Type.DS) && student.getFocus().equals(Student.Focus.DS))
+					|| randomProject.getType().equals(Project.Type.CSDS) ){
+
+				projectPreferences.add(randomProject);
+				i++;
+			}
 		}
+
 		return projectPreferences;
 	}
 }

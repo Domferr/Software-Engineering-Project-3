@@ -37,6 +37,6 @@ public class Project {
 
     @Override
     public String toString() {
-        return title;
+        return getTitle()+" "+getType();
     }
 }
