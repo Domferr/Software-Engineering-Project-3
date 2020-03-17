@@ -7,9 +7,15 @@ public class Project {
         DS;
     }
 
-    private String supervisor;
+    private StaffMember supervisor;
     private String title;
     private Type type;
+
+    public Project(String title, StaffMember supervisor, Type type) {
+        this.title = title;
+        this.supervisor = supervisor;
+        this.type = type;
+    }
 
     public Type getType() {
         return type;
@@ -19,24 +25,16 @@ public class Project {
         this.type = type;
     }
 
-    public String getSupervisor() {
-        return supervisor;
-    }
+    public StaffMember getSupervisor() { return supervisor; }
 
-    public void setSupervisor(String supervisor) {
-        this.supervisor = supervisor;
-    }
+    public void setSupervisor(StaffMember supervisor) { this.supervisor = supervisor; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { this.title = title; }
 
     @Override
     public String toString() {
-        return getTitle()+" "+getType();
+        return supervisor.getName()+" "+title+" "+type;
     }
 }

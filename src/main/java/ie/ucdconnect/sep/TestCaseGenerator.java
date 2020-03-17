@@ -19,7 +19,7 @@ public class TestCaseGenerator {
     private static Random random = new Random(System.currentTimeMillis());
 
 	public static void main(String[] args) throws IOException {
-		Config.getInstance().save("resources", "testcases", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
+		//Config.getInstance().save("resources", "testcases", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
 
 		/**
 		 * Generates test cases and outputs the generated tests.
@@ -83,7 +83,59 @@ public class TestCaseGenerator {
         }
     }
 
-	private static ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
+	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
+		ArrayList<Project> projects = new ArrayList<>(NUM_PROJECTS);
+		ArrayList<StaffMember> staffCopy = new ArrayList<>(staffMembers);
+		Map<Boolean, List<StaffMember>> partition = staffCopy.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
+		List<StaffMember> csAndDs = partition.get(false); // Proposes CS or CS+DS
+		List<StaffMember> dsOnly = partition.get(true); // Proposes DS
+		/**
+		 * CS vs. CS+DS = 60 vs. 40
+		 * As such, I'll generate projects as follows:
+		 * 0-49: CS
+		 * 50-69: CS+DS
+		 * 70-100: DS
+		 */
+		System.out.println(csAndDs.size());
+		System.out.println(dsOnly.size());
+		for (int i = 0; i < NUM_PROJECTS; i++) {
+			Project.Type randomType = pickRandomType();
+			Project newProject;
+			if (randomType == Project.Type.DS) {
+				newProject = generateOneProject(dsOnly, prefixes, randomType);
+			} else {
+				newProject = generateOneProject(csAndDs, prefixes, randomType);
+			}
+
+			projects.add(newProject);
+		}
+		System.out.println(csAndDs.size());
+		System.out.println(dsOnly.size());
+		return projects;
+	}
+
+	private static Project generateOneProject(List<StaffMember> staffList, List<String> prefixes, Project.Type type) {
+		int staffIndex = random.nextInt(staffList.size());
+		StaffMember supervisor = staffList.get(staffIndex);
+		String title = supervisor.proposeResearch();
+		if (!supervisor.hasMoreToPropose())
+			staffList.remove(staffIndex);
+		String prefix = prefixes.get(random.nextInt(prefixes.size()));
+
+		return new Project(prefix+" "+title, supervisor, type);
+	}
+
+	private static Project.Type pickRandomType() {
+		double projectType = random.nextDouble();
+		if (projectType < 0.5) {
+			return Project.Type.CS;
+		} else if (projectType < 0.7) {
+			return Project.Type.CSDS;
+		}
+		return Project.Type.DS;
+	}
+
+	/*private static ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
 		// DS projects can only be made by CS supervisors. We need to separate the staff members.
 		ArrayList<Project> projects = new ArrayList<>(NUM_PROJECTS);
 		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
@@ -96,7 +148,7 @@ public class TestCaseGenerator {
 		 * 50-69: CS+DS
 		 * 70-100: DS
 		 */
-		for (int i = 0; i < NUM_PROJECTS; i++) {
+		/*for (int i = 0; i < NUM_PROJECTS; i++) {
 			double projectType = random.nextDouble();
 			Project project = new Project();
 			StaffMember supervisor;
@@ -115,15 +167,7 @@ public class TestCaseGenerator {
 			projects.add(project);
 		}
 		return projects;
-	}
-
-	private static <T> T pickRandomElement(T[] haystack) {
-		return haystack[random.nextInt(haystack.length)];
-	}
-
-	private static <T> T pickRandomElement(List<T> haystack) {
-		return haystack.get(random.nextInt(haystack.size()));
-	}
+	}*/
 
 	private static ArrayList<StaffMember> loadStaffMembers() throws IOException {
 		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
