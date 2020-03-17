@@ -61,7 +61,7 @@ public class TestCaseGenerator {
         for(int i = 0; i < testSets.length; i++){
 			saveGeneratedTestcase(testSets[i], studentsTestData.get(i), "Couldn't write into students file", studentPrinter);
 		}
-        
+
 		Function <Project, String> projectPrinter = project -> project.getSupervisor().getName()+" "+project.getTitle()+" "+project.getType();
         saveGeneratedTestcase("projects.txt", projects, "Couldn't write into projects file", projectPrinter);
 	}
@@ -173,7 +173,9 @@ public class TestCaseGenerator {
 			Scanner scanner = new Scanner(Config.getInstance().getNamesFile());
 			while(scanner.hasNext() && students.size() < noStudents){
 				Student student = new Student();
-				student.setName(scanner.nextLine());
+				String first = scanner.next();
+				String last = scanner.next();
+				student.setFullName(first, last);
 				int sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
 				student.setStudentNumber(Integer.toString(sNumber));
 				student.setFocus(studentFocus());

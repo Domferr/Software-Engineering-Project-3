@@ -8,17 +8,15 @@ public class Student {
         DS
     }
 
-    private String name;
+    private String firstName;
+    private String lastName;
     private String studentNumber;
     private Focus focus;
     private List<Project> preferences;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getStudentNumber() {
@@ -47,6 +45,6 @@ public class Student {
 
     @Override
     public String toString() {
-        return name+" "+studentNumber+" "+focus+" "+ preferences.toString();
+        return firstName+" "+lastName+" "+studentNumber+" "+focus+" "+ preferences.toString();
     }
 }
