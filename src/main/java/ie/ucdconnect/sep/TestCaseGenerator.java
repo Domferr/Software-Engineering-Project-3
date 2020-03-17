@@ -4,7 +4,6 @@ import com.opencsv.CSVReader;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public class TestCaseGenerator {
 
-	private static final int[] TEST_SETS_STUDENTS = {60, 120, 240, 500};
+	private static final int[] TEST_SETS_STUDENTS_SIZE = {60, 120, 240, 500};
 	private static final int CS_FREQUENCY = 60;
 	private static final int AVERAGE_PROPOSAL = 3;	//each staff member proposes, on average, 3 projects
     private static final int MAX_STUDENT_PREFERENCES = 10;
@@ -27,60 +26,45 @@ public class TestCaseGenerator {
 		List<List<Student>> studentsTestData = new ArrayList<>();
 		List<List<Project>> projectsTestData = new ArrayList<>();
 		/** Generating the different number of required students i.e. 60, 120, 240 and 500*/
-		for (int i = 0; i < TEST_SETS_STUDENTS.length; i++) {
+		for (int i = 0; i < TEST_SETS_STUDENTS_SIZE.length; i++) {
 			/**
 			 * Generates test cases and outputs the generated tests.
 			 */
-			System.out.println((TEST_SETS_STUDENTS[i]/2)*AVERAGE_PROPOSAL);
-			List<Project> projects = generateProjects(staffMembers, prefixes, (TEST_SETS_STUDENTS[i]/2)*AVERAGE_PROPOSAL);
-			List<Student> students = generateStudents(TEST_SETS_STUDENTS[i], projects);
+			System.out.println("Generating " + (TEST_SETS_STUDENTS_SIZE[i]/2)*AVERAGE_PROPOSAL + " projects for " + TEST_SETS_STUDENTS_SIZE[i] + " students.");
+			List<Project> projects = generateProjects(staffMembers, prefixes, (TEST_SETS_STUDENTS_SIZE[i]/2)*AVERAGE_PROPOSAL);
+			List<Student> students = generateStudents(TEST_SETS_STUDENTS_SIZE[i], projects);
 			studentsTestData.add(students);
 			projectsTestData.add(projects);
 		}
 
-		for(List<Student> student : studentsTestData){
-			System.out.println("Students Test Set: " + student.size());
-		}
-
-        /*for (List<Student> students: studentsTestData) {
-			System.out.println("Students: " + students.size());
-        	for(Student student : students){
-				System.out.println(student);
-			}
-        }*/
-
-		Function <Student, String> studentPrinter = student -> student.toString();
 		String[] studentsTestSets = {"students60.txt", "students120.txt", "students240.txt", "students500.txt"};
         for(int i = 0; i < studentsTestSets.length; i++) {
-			saveGeneratedTestcase(studentsTestSets[i], studentsTestData.get(i), "Couldn't write into students file", studentPrinter);
+			saveGeneratedTestcase(studentsTestSets[i], studentsTestData.get(i));
 		}
 
 		String[] projectsTestSets = {"projectsFor60Students.txt", "projectsFor120Students.txt", "projectsFor240Students.txt", "projectsFor500Students.txt"};
-		Function <Project, String> projectPrinter = project -> project.getSupervisor().getName()+" "+project.getTitle()+" "+project.getType();
 		for(int i = 0; i < studentsTestSets.length; i++) {
-			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i), "Couldn't write into projects file", projectPrinter);
+			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i));
 		}
 	}
 
 	/** Write the given list into specified file.  */
-    private static <T> void saveGeneratedTestcase(String filename, List<T> list, String err, Function<T, String> rowFun) {
+	private static void saveGeneratedTestcase(String filename, List<? extends CSVRow> list) {
 		String dirName = Config.getInstance().getTestcaseDirName();
-	    //Create dir if it doesn't exist
-	    File testCaseDir = new File(dirName);
-	    if (!testCaseDir.exists())
-	    	testCaseDir.mkdir();
-        //Finally write into file
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+filename));
-            for (T elem : list) {
-                writer.append(rowFun.apply(elem)+"\n");
-            }
-            writer.close();
-        } catch (IOException e) {
-            System.err.print(err);
-            e.printStackTrace();
-        }
-    }
+		File testCaseDir = new File(dirName);
+		if (!testCaseDir.exists())
+			testCaseDir.mkdir();
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+filename));
+			for (CSVRow row : list) {
+				writer.write(row.toCSVRow());
+				writer.newLine();
+			}
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes, int howManyProjects) {
 		ArrayList<Project> projects = new ArrayList<>(howManyProjects);

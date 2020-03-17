@@ -2,7 +2,7 @@ package ie.ucdconnect.sep;
 
 import java.util.List;
 
-public class Student {
+public class Student implements CSVRow {
     public enum Focus {
         CS,
         DS
@@ -13,6 +13,24 @@ public class Student {
     private String studentNumber;
     private Focus focus;
     private List<Project> preferences;
+
+    @Override
+    public String toCSVRow() {
+        return String.join(",", studentNumber, firstName, lastName, focus.toString(), createPreferencesCSVEntry());
+    }
+
+    private String createPreferencesCSVEntry() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\"");
+        for (int i = 0; i < preferences.size(); i++) {
+            if (i != 0) {
+                sb.append(",");
+            }
+            sb.append(preferences.get(i).getTitle());
+        }
+        sb.append("\"");
+        return sb.toString();
+    }
 
     public void setFullName(String firstName, String lastName) {
         this.firstName = firstName;
