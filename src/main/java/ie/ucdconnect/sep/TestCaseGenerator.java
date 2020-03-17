@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +46,21 @@ public class TestCaseGenerator {
 		String[] projectsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("projectsFor%dStudents.csv", i)).toArray(String[]::new);
 		for(int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i));
+			//printProjectFrequency(projectsTestData.get(i));
+		}
+	}
+
+	private static void printProjectFrequency(List<Project> projects) {
+		Map<Integer, Long> frequency = projects.stream().map(project -> project.totalPicks).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+		List<Map.Entry<Integer, Long>> sortedEntries = new ArrayList<>(frequency.entrySet());
+		sortedEntries.sort(new Comparator<Map.Entry<Integer, Long>>() {
+			@Override
+			public int compare(Map.Entry<Integer, Long> integerLongEntry, Map.Entry<Integer, Long> t1) {
+				return Integer.compare(integerLongEntry.getKey(), t1.getKey());
+			}
+		});
+		for (Map.Entry<Integer, Long> entry : sortedEntries) {
+			System.out.println(entry.getKey() + ": " + entry.getValue());
 		}
 	}
 
@@ -190,14 +206,14 @@ public class TestCaseGenerator {
 			// https://stackoverflow.com/questions/54712600/what-is-the-true-maximum-and-minimum-value-of-random-nextgaussian
 			// This stackoverflow answer calculated the min/max values of nextGaussian().
 			// There is a slight inaccuracy here, to fix use z-scores to find probability P, the calculate index as 'P * projects.size()'.
-			double randDistribution = random.nextGaussian(); // Generates a randomly distributed double, with mean zero and SD 1.
-			double positiveRandDistribution = 8 + randDistribution;
-			int projectIndex = (int)(positiveRandDistribution / 16d * projects.size());
+			double sd = 1;
+			double maxOutput = 8 * sd;
+			double randDistribution = random.nextGaussian() * sd; // Generates a randomly distributed double, with mean zero and SD 1.
+			double positiveRandDistribution = maxOutput + randDistribution;
+			int projectIndex = (int)(positiveRandDistribution / (maxOutput * 2) * projects.size());
 			Project randomProject = projects.get(projectIndex);
 			if (randomProject.matchesFocus(studentFocus)) {
-				if (projectPreferences.contains(randomProject)) {
-					continue;
-				}
+				randomProject.totalPicks++;
 				projectPreferences.add(randomProject);
 			}
 		}
