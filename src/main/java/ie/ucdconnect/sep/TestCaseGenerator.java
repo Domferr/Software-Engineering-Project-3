@@ -37,12 +37,12 @@ public class TestCaseGenerator {
 			projectsTestData.add(projects);
 		}
 
-		String[] studentsTestSets = {"students60.txt", "students120.txt", "students240.txt", "students500.txt"};
-        for(int i = 0; i < studentsTestSets.length; i++) {
+		String[] studentsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("students%d.csv", i)).toArray(String[]::new);
+		for(int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(studentsTestSets[i], studentsTestData.get(i));
 		}
 
-		String[] projectsTestSets = {"projectsFor60Students.txt", "projectsFor120Students.txt", "projectsFor240Students.txt", "projectsFor500Students.txt"};
+		String[] projectsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("projectsFor%dStudents.csv", i)).toArray(String[]::new);
 		for(int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i));
 		}
