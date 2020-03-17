@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -55,16 +56,18 @@ public class TestCaseGenerator {
         System.out.println("Projects: " + projects.size());
         System.out.println("Staff: " + staffMembers.size());
 
+		Function <Student, String> studentPrinter = student -> student.toString();
 		String[] testSets = {"students60.txt", "students120.txt", "students240.txt", "students500.txt"};
         for(int i = 0; i < testSets.length; i++){
-			saveGeneratedTestcase(testSets[i], studentsTestData.get(i), "Couldn't write into students file");
+			saveGeneratedTestcase(testSets[i], studentsTestData.get(i), "Couldn't write into students file", studentPrinter);
 		}
-
-        saveGeneratedTestcase("projects.txt", projects, "Couldn't write into projects file");
+        
+		Function <Project, String> projectPrinter = project -> project.getSupervisor().getName()+" "+project.getTitle()+" "+project.getType();
+        saveGeneratedTestcase("projects.txt", projects, "Couldn't write into projects file", projectPrinter);
 	}
 
 	/** Write the given list into specified file.  */
-    private static void saveGeneratedTestcase(String filename, List list, String err) {
+    private static <T> void saveGeneratedTestcase(String filename, List<T> list, String err, Function<T, String> rowFun) {
 		String dirName = Config.getInstance().getTestcaseDirName();
 	    //Create dir if it doesn't exist
 	    File testCaseDir = new File(dirName);
@@ -73,8 +76,8 @@ public class TestCaseGenerator {
         //Finally write into file
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+filename));
-            for (Object elem : list) {
-                writer.append(elem.toString()+"\n");
+            for (T elem : list) {
+                writer.append(rowFun.apply(elem)+"\n");
             }
             writer.close();
         } catch (IOException e) {
@@ -96,8 +99,6 @@ public class TestCaseGenerator {
 		 * 50-69: CS+DS
 		 * 70-100: DS
 		 */
-		System.out.println(csAndDs.size());
-		System.out.println(dsOnly.size());
 		for (int i = 0; i < NUM_PROJECTS; i++) {
 			Project.Type randomType = pickRandomType();
 			Project newProject;
@@ -114,6 +115,9 @@ public class TestCaseGenerator {
 		return projects;
 	}
 
+	/** Returns a project and ensures that the staff member will not be picked in the future if it has proposed
+	 *  all of its researches.
+	 * */
 	private static Project generateOneProject(List<StaffMember> staffList, List<String> prefixes, Project.Type type) {
 		int staffIndex = random.nextInt(staffList.size());
 		StaffMember supervisor = staffList.get(staffIndex);
@@ -134,40 +138,6 @@ public class TestCaseGenerator {
 		}
 		return Project.Type.DS;
 	}
-
-	/*private static ArrayList<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
-		// DS projects can only be made by CS supervisors. We need to separate the staff members.
-		ArrayList<Project> projects = new ArrayList<>(NUM_PROJECTS);
-		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
-		List<StaffMember> csOnly = partition.get(false); // Proposes CS or CS+DS
-		List<StaffMember> dsOnly = partition.get(true); // Proposes DS
-		/**
-		 * CS vs. CS+DS = 60 vs. 40
-		 * As such, I'll generate projects as follows:
-		 * 0-49: CS
-		 * 50-69: CS+DS
-		 * 70-100: DS
-		 */
-		/*for (int i = 0; i < NUM_PROJECTS; i++) {
-			double projectType = random.nextDouble();
-			Project project = new Project();
-			StaffMember supervisor;
-			if (projectType < 0.5) {
-				supervisor = pickRandomElement(csOnly);
-				project.setType(Project.Type.CS);
-			} else if (projectType < 0.7) {
-				project.setType(Project.Type.CSDS);
-				supervisor = pickRandomElement(csOnly);
-			} else {
-				project.setType(Project.Type.DS);
-				supervisor = pickRandomElement(dsOnly);
-			}
-			project.setSupervisor(supervisor.getName());
-			project.setTitle(pickRandomElement(prefixes) + " " + pickRandomElement(supervisor.getResearchActivities()));
-			projects.add(project);
-		}
-		return projects;
-	}*/
 
 	private static ArrayList<StaffMember> loadStaffMembers() throws IOException {
 		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
@@ -207,8 +177,7 @@ public class TestCaseGenerator {
 				int sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
 				student.setStudentNumber(Integer.toString(sNumber));
 				student.setFocus(studentFocus());
-				student.setPreferences(assignPreferences(projects, student));
-				//System.out.println(student.getName() + " " + student.getStudentNumber() + " " + student.getFocus() + " " + student.getPreferences());
+				student.setPreferences(assignPreferences(projects, student.getFocus()));
 				students.add(student);
 			}
 		}
@@ -229,17 +198,20 @@ public class TestCaseGenerator {
 		}
 	}
 
-	private static List<Project> assignPreferences(List<Project> projects, Student student) {
+	private static List<Project> assignPreferences(List<Project> projects, Student.Focus studentFocus) {
 		List<Project> projectPreferences = new ArrayList<>();
+		List<Project> projectsCopy = new ArrayList<>(projects);
+
 		int i = 0;
-		while (i < MAX_STUDENT_PREFERENCES){
-			int rand = random.nextInt(NUM_PROJECTS);
-			Project randomProject = projects.get(rand);
-			if((randomProject.getType().equals(Project.Type.CS) && student.getFocus().equals(Student.Focus.CS))
-					||(randomProject.getType().equals(Project.Type.DS) && student.getFocus().equals(Student.Focus.DS))
-					|| randomProject.getType().equals(Project.Type.CSDS) ){
+		while (i < MAX_STUDENT_PREFERENCES) {
+			int randIndex = random.nextInt(projectsCopy.size());
+			Project randomProject = projectsCopy.get(randIndex);
+			if ((randomProject.getType().equals(Project.Type.CS) && studentFocus.equals(Student.Focus.CS))
+					|| (randomProject.getType().equals(Project.Type.DS) && studentFocus.equals(Student.Focus.DS))
+					|| randomProject.getType().equals(Project.Type.CSDS)) {
 
 				projectPreferences.add(randomProject);
+				projectsCopy.remove(randIndex);
 				i++;
 			}
 		}

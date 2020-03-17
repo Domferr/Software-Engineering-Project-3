@@ -35,6 +35,6 @@ public class Project {
 
     @Override
     public String toString() {
-        return supervisor.getName()+" "+title+" "+type;
+        return title;
     }
 }
