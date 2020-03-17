@@ -1,6 +1,6 @@
 package ie.ucdconnect.sep;
 
-public class Project {
+public class Project implements CSVRow {
     public enum Type {
         CS,
         CSDS,
@@ -15,6 +15,11 @@ public class Project {
         this.title = title;
         this.supervisor = supervisor;
         this.type = type;
+    }
+
+    @Override
+    public String toCSVRow() {
+        return String.join(",", supervisor.getName(), type.toString(), title);
     }
 
     public Type getType() {
