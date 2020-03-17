@@ -1,90 +1,90 @@
-Babe Ruth Building a service to help hitting home runs CS
-Kate Moss Building a REST API for modeling clothes CS
-Clarice Starling Building a REST API for hunting serial killers DS
-Jeff Bezos Building a service to help selling consumer goods CSDS
-Aung San Suu Kyi Creating an app for campaigning for democracy CS
-Frank Underwood Creating an app for wielding political power DS
-Pope Francis Creating a web interface for promoting Catholic values CSDS
-Richard Branson Creating a web interface for running a multinational corporation CS
-Tina Fey Creating a web interface for writing comedy CS
-John McEnroe Creating an app for winning tennis tournaments CS
-Jamie Oliver Creating a web interface for promoting healthy eating CS
-Xena Creating an app for fighting for justice DS
-Emperor Caligula Building a service to help terrorizing citizens CS
-Chuck Norris Building a service to help starring in action movies CSDS
-Rosa Parks Building a REST API for fighting for civil rights CS
-Benedict Arnold Creating a web interface for stabbing in the back CS
-Bane Building a REST API for devising evil schemes DS
-Savonarola Building a REST API for promoting conservative values CS
-Jean-Luc Picard Creating a web interface for making strategic decisions DS
-James Dean Building a service to help starring in Hollywood movies CS
-Gandalf the Grey Building a service to help studying magic DS
-Eleanor Rigby Building a REST API for performing household chores CSDS
-Harvey Weinstein Building a REST API for making movies CS
-Samuel Johnson Creating an app for creating dictionaries CS
-Tupac Shakur Building a service to help singing Hipbop songs CSDS
-George Washington Building a service to help leading revolutions CSDS
-Clint Eastwood Creating an app for starring in action movies CS
-Confucius Creating a web interface for teaching the next generation CSDS
-Bob Woodward Building a REST API for reporting the news CS
-Michael O'Leary Creating a web interface for promoting air travel CS
-Mark Fuhrman Creating an app for commiting perjury CS
-Bobby Fischer Creating an app for playing aggressive chess CS
-Zac Efron Building a service to help starring in Hollywood movies CS
-Frank Sinatra Creating a web interface for crooning love songs CS
-Emma Bovary Building a service to help planning adultery DS
-Pontius Pilate Creating a web interface for obsessively washing hands CSDS
-Stan Lee Creating a web interface for writing comic books CSDS
-Green Lantern Creating an app for foiling the schemes of evil villains DS
-Tony DiNozzo Creating an app for solving crimes DS
-Frank Lloyd Wright Creating a web interface for designing modern buildings CS
-Stephen Colbert Building a service to help promoting conservative values CS
-Edward Hopper Creating an app for painting melancholy pictures CSDS
-Henry James Creating a web interface for writing modern fiction CSDS
-Ringo Starr Creating a web interface for playing drums CS
-Johann von Goethe Creating a web interface for writing poetry CSDS
-Franz Liszt Creating an app for playing classical piano CS
-Gustavo Fring Building a service to help running a criminal empire DS
-Wayne Rooney Creating an app for playing soccer CS
-Dirty Harry Callahan Building a REST API for preventing crime DS
-Anton Chekov Building a service to help writing plays about the middle classes CS
-Daniel Boone Creating a web interface for hunting raccoons CSDS
-Seth MacFarlane Creating an app for making vulgar jokes CSDS
-Groucho Marx Creating a web interface for starring in madcap comedies CS
-Dan Brown Creating a web interface for writing pot-boilers CS
-Dian Fossey Building a service to help studying gorillas up close CS
-Dean Winchester Creating an app for eating bacon cheeseburgers DS
-John F. Kennedy Building a REST API for chasing starlets CS
-Cameron Diaz Building a REST API for starring in romantic comedies CS
-Che Guevara Building a REST API for promoting socialism CSDS
-Stanley Kowalski Creating a web interface for moaning about women DS
-Polonius Creating an app for coining sententious maxims DS
-Colonel Kurtz Creating an app for waging a secret war DS
-Merlin Building a REST API for casting magic spells DS
-Cher Building a REST API for singing pop songs CSDS
-Antonio Vivaldi Creating an app for composing classical music CSDS
-Dr. Henry Jekyll Building a REST API for suppressing violent urges DS
-John Lennon Creating a web interface for campaigning for world peace CS
-Mister Magoo Building a service to help causing mayhem DS
-Matt "Daredevil" Murdock Creating an app for extracting confessions DS
+Simone de Beauvoir Creating a web interface for promoting feminism CS
+Bob Dylan Building a service to help singing protest songs, CSDS
+Conchita Wurst Building a service to help singing pop songs CS
+Richie Rich Building a service to help squandering money DS
+Don Draper Creating a web interface for developing advertising campaigns DS
+Dorian Gray Building a service to help practicing good skin care DS
+Lord Voldemort Creating a web interface for striving for world domination DS
+Carl Von Clausewitz Creating an app for developing military strategies CS
+Lisbeth Salander Creating an app for hacking into corporate mainframes DS
+Rocky Balboa Building a service to help knocking out opponents DS
+Theodore Roosevelt Creating an app for campaigning for environmental causes CS
+Dean Martin Creating an app for recording pop songs CS
+Arthur Dent Building a service to help drinking tea DS
+Kim Kardashian Creating a web interface for starring in reality TV shows CS
+Barbra Streisand Building a service to help singing torch songs CS
+Friedrich Nietzsche Creating a web interface for teaching philosophy CS
+Don Draper Building a service to help creating adverts DS
+Porky Pig Building a REST API for  DS
+Borat Building a REST API for interviewing politicians DS
+Heath Ledger Creating an app for starring in Hollywood movies CS
+Iggy Pop Creating an app for doing raunchy stage acts CSDS
+Nelson Muntz Building a REST API for bullying schoolkids DS
+Bridget Jones Creating an app for smoking cigarettes DS
+Cicero Creating an app for giving speeches CS
+Buffy Summers Building a REST API for hunting monsters DS
+Adam West Building a REST API for wearing tights CSDS
+Christiane Amanpour Building a service to help interviewing celebrities CS
+Jackie Chan Building a service to help starring in action movies CS
+Obi-wan Kenobi Building a REST API for rescuing damsels in distress DS
+Oprah Winfrey Building a service to help interviewing politicians CS
+Johnny Cash Building a REST API for singing country music CS
+Gandalf the Grey Creating an app for studying magic DS
+Marlon Brando Creating a web interface for starring in Hollywood movies CS
+Ernest Hemingway Creating an app for writing modern fiction CS
+Emmanuel Macron Building a REST API for campaigning for the presidency CS
+Ted Cruz Creating an app for promoting conservative values CSDS
+Mickey Rourke Building a REST API for getting plastic surgery CS
+Salvador Dali Creating a web interface for painting surreal pictures CS
+Hugh Jackman Building a service to help starring in Hollywood movies CS
+Erasmus Building a REST API for promoting humanism CS
+William the Conqueror Building a REST API for leading armies into battle CS
+Kim Jung-un Building a REST API for amassing nuclear weapons CS
+Bruce Springsteen Creating an app for singing rock songs CSDS
+Ellen Ripley Creating a web interface for hunting aliens DS
+Emmanuel Macron Building a REST API for giving speeches CSDS
+Jerry Lewis Building a service to help starring in comedies CSDS
+Wesley Crusher Building a service to help studying science DS
+Noah Building a REST API for surviving large-scale floods CSDS
+Scott Evil Creating a web interface for squabbling on television DS
+Joseph McCarthy Building a REST API for fighting for democracy CS
+Bob Woodward Building a service to help reporting the news CS
+Le Chiffre Building a REST API for cheating at poker DS
+Weird Al Yankovic Building a REST API for singing parody songs CSDS
+Reince Priebus Building a service to help promoting conservative values CS
+Jabba the Hutt Building a service to help running a crime family DS
+Nicolas Cage Creating a web interface for over-acting CSDS
+Kim Philby Building a REST API for changing sides CS
+Robert Redford Creating an app for starring in Hollywood movies CSDS
+Wayne Rooney Building a REST API for playing soccer CS
+Bill Murray Creating a web interface for starring in indy movies CS
+Michael Bay Building a service to help entertaining teenagers CS
+Virginia Woolf Building a service to help writing modern fiction CS
+Jane Austen Creating a web interface for writing romantic fiction CS
+Julius Caesar Creating a web interface for running an empire CSDS
+Captain William Bligh Creating an app for barking orders at subordinates CS
+Dante Alighieri Building a service to help writing poetry CS
+Steve Ballmer Building a service to help running a software company CSDS
+Elmer Fudd Building a REST API for hunting rabbits DS
+Howard Stern Creating a web interface for shocking radio listeners CS
+Mr. Krabs Creating an app for selling fast food DS
+Merlin Creating an app for brewing magican potions DS
+Philip Marlowe Creating an app for solving mysteries DS
 Eliza Doolittle Creating an app for handing out flowers DS
-Rainier Luftwaffe Wolfcastle Building a REST API for making action movies DS
-Judas Iscariot Building a REST API for selling out CS
-Kate Moss Building a service to help selling cosmetics, CS
-Christopher Hitchens Creating an app for ranting about politics CS
-Larry Flynt Building a REST API for publishing soft pornography,running gentleman's clubs CSDS
-Ming The Merciless Building a REST API for running an empire DS
-King Richard III Building a REST API for devising evil schemes CS
-Helen of Troy Building a REST API for worrying about adultery DS
-Mr. Darcy Creating a web interface for looking for love DS
-Conchita Wurst Building a service to help singing pop songs CSDS
-Charlie Brown Creating an app for playing baseball DS
-Wayne Gretzky Building a service to help playing ice hockey CS
-Jerry Springer Building a service to help hosting reality TV shows CS
-Tom Cruise Creating an app for starring in Hollywood movies CS
-Keyser Söze Building a REST API for running a criminal enterprise DS
-Julia Child Creating an app for cooking dinners CSDS
-Emperor Caligula Building a service to help abusing power CS
-Wesley Crusher Creating an app for studying science DS
-Tyra Banks Building a REST API for modeling clothes CSDS
-Kurt Vonnegut Creating an app for writing science fiction CS
+Winnie the Pooh Creating a web interface for cooking for friends DS
+Emperor Caligula Building a REST API for terrorizing citizens CS
+Jimmy Cagney Creating an app for starring in Hollywood movies CS
+Albus Dumbledore Creating an app for running a school for gifted teens DS
+Colonel Kurtz Creating an app for waging a secret war DS
+Bruce Banner Building a service to help bursting out of shirts DS
+Sinead O'Connor Building a REST API for singing pop songs CS
+Scipio Africanus Creating an app for fighting barbarian hordes CS
+Don King Creating a web interface for promoting boxing fights CS
+O.J. Simpson Building a service to help making threatening phone calls CSDS
+Boris Johnson Building a REST API for promoting conservative values CSDS
+Lance Armstrong Creating a web interface for pedalling furiously CS
+James Franco Creating an app for starring in Hollywood movies CS
+Krusty the Clown Building a REST API for telling bad jokes DS
+Jay Gatsby Building a REST API for throwing lavish parties DS
+Winston Churchill Building a REST API for fighting for democracy CS
+Britney Spears Building a REST API for flirting with rednecks CS

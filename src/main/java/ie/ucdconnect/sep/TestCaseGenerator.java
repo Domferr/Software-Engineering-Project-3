@@ -57,7 +57,7 @@ public class TestCaseGenerator {
 
 		String[] projectsTestSets = {"projectsFor60Students.txt", "projectsFor120Students.txt", "projectsFor240Students.txt", "projectsFor500Students.txt"};
 		Function <Project, String> projectPrinter = project -> project.getSupervisor().getName()+" "+project.getTitle()+" "+project.getType();
-		for(int i = 0; i < projectsTestSets.length; i++) {
+		for(int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i), "Couldn't write into projects file", projectPrinter);
 		}
 	}
