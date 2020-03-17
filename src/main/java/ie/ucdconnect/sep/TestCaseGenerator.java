@@ -12,8 +12,9 @@ import java.util.stream.Collectors;
  */
 public class TestCaseGenerator {
 
-	private static final int NUM_PROJECTS = 500;
+	private static final int[] TEST_SETS_STUDENTS = {60, 120, 240, 500};
 	private static final int CS_FREQUENCY = 60;
+	private static final int AVERAGE_PROPOSAL = 3;	//each staff member proposes, on average, 3 projects
     private static final int MAX_STUDENT_PREFERENCES = 10;
 	private static final String DAGON_STUDIES = "Dagon Studies";
 
@@ -21,49 +22,44 @@ public class TestCaseGenerator {
 
 	public static void main(String[] args) throws IOException {
 		//Config.getInstance().save("resources", "testcases", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
-
-		/**
-		 * Generates test cases and outputs the generated tests.
-		 */
 		ArrayList<String> prefixes = loadPrefixes();
-        ArrayList<StaffMember> staffMembers = loadStaffMembers();
-        List<Project> projects = generateProjects(staffMembers, prefixes);
-
-		for (Project project : projects) {
-			System.out.println(project.getSupervisor() + ":" + project.getTitle() + ":" + project.getType());
-		}
-
-        /** Generating the different number of required students i.e. 60, 120, 240 and 500*/
-		int[] testSetsStudents = {60, 120, 240, 500};
-
-		List<List<Student>>  studentsTestData = new ArrayList<>();
-		for (int i = 0; i < testSetsStudents.length; i++){
-			List<Student> students = generateStudents(testSetsStudents[i], projects);
+		ArrayList<StaffMember> staffMembers = loadStaffMembers();
+		List<List<Student>> studentsTestData = new ArrayList<>();
+		List<List<Project>> projectsTestData = new ArrayList<>();
+		/** Generating the different number of required students i.e. 60, 120, 240 and 500*/
+		for (int i = 0; i < TEST_SETS_STUDENTS.length; i++) {
+			/**
+			 * Generates test cases and outputs the generated tests.
+			 */
+			System.out.println((TEST_SETS_STUDENTS[i]/2)*AVERAGE_PROPOSAL);
+			List<Project> projects = generateProjects(staffMembers, prefixes, (TEST_SETS_STUDENTS[i]/2)*AVERAGE_PROPOSAL);
+			List<Student> students = generateStudents(TEST_SETS_STUDENTS[i], projects);
 			studentsTestData.add(students);
+			projectsTestData.add(projects);
 		}
 
 		for(List<Student> student : studentsTestData){
 			System.out.println("Students Test Set: " + student.size());
 		}
 
-        for (List<Student> students: studentsTestData) {
+        /*for (List<Student> students: studentsTestData) {
 			System.out.println("Students: " + students.size());
         	for(Student student : students){
 				System.out.println(student);
 			}
-        }
-
-        System.out.println("Projects: " + projects.size());
-        System.out.println("Staff: " + staffMembers.size());
+        }*/
 
 		Function <Student, String> studentPrinter = student -> student.toString();
-		String[] testSets = {"students60.txt", "students120.txt", "students240.txt", "students500.txt"};
-        for(int i = 0; i < testSets.length; i++){
-			saveGeneratedTestcase(testSets[i], studentsTestData.get(i), "Couldn't write into students file", studentPrinter);
+		String[] studentsTestSets = {"students60.txt", "students120.txt", "students240.txt", "students500.txt"};
+        for(int i = 0; i < studentsTestSets.length; i++) {
+			saveGeneratedTestcase(studentsTestSets[i], studentsTestData.get(i), "Couldn't write into students file", studentPrinter);
 		}
 
+		String[] projectsTestSets = {"projectsFor60Students.txt", "projectsFor120Students.txt", "projectsFor240Students.txt", "projectsFor500Students.txt"};
 		Function <Project, String> projectPrinter = project -> project.getSupervisor().getName()+" "+project.getTitle()+" "+project.getType();
-        saveGeneratedTestcase("projects.txt", projects, "Couldn't write into projects file", projectPrinter);
+		for(int i = 0; i < studentsTestSets.length; i++) {
+			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i), "Couldn't write into projects file", projectPrinter);
+		}
 	}
 
 	/** Write the given list into specified file.  */
@@ -86,8 +82,8 @@ public class TestCaseGenerator {
         }
     }
 
-	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
-		ArrayList<Project> projects = new ArrayList<>(NUM_PROJECTS);
+	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes, int howManyProjects) {
+		ArrayList<Project> projects = new ArrayList<>(howManyProjects);
 		ArrayList<StaffMember> staffCopy = new ArrayList<>(staffMembers);
 		Map<Boolean, List<StaffMember>> partition = staffCopy.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
 		List<StaffMember> csAndDs = partition.get(false); // Proposes CS or CS+DS
@@ -99,7 +95,8 @@ public class TestCaseGenerator {
 		 * 50-69: CS+DS
 		 * 70-100: DS
 		 */
-		for (int i = 0; i < NUM_PROJECTS; i++) {
+        int i = 0;
+		while (i < howManyProjects) {
 			Project.Type randomType = pickRandomType();
 			Project newProject;
 			if (randomType == Project.Type.DS) {
@@ -107,11 +104,12 @@ public class TestCaseGenerator {
 			} else {
 				newProject = generateOneProject(csAndDs, prefixes, randomType);
 			}
-
-			projects.add(newProject);
+            if (newProject != null) {
+                projects.add(newProject);
+                i++;
+            }
 		}
-		System.out.println(csAndDs.size());
-		System.out.println(dsOnly.size());
+		
 		return projects;
 	}
 
@@ -121,6 +119,8 @@ public class TestCaseGenerator {
 	private static Project generateOneProject(List<StaffMember> staffList, List<String> prefixes, Project.Type type) {
 		int staffIndex = random.nextInt(staffList.size());
 		StaffMember supervisor = staffList.get(staffIndex);
+		if (!supervisor.hasMoreToPropose())
+		    return null;
 		String title = supervisor.proposeResearch();
 		if (!supervisor.hasMoreToPropose())
 			staffList.remove(staffIndex);

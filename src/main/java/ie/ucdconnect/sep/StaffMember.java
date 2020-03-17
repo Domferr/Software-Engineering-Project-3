@@ -46,8 +46,7 @@ public class StaffMember {
 
     public String proposeResearch() {
         Random random = new Random(System.currentTimeMillis());
-        String randomResearch = canBeProposed.remove(random.nextInt(canBeProposed.size()));
-        return randomResearch;
+        return canBeProposed.remove(random.nextInt(canBeProposed.size()));
     }
 
     public boolean hasMoreToPropose() {
