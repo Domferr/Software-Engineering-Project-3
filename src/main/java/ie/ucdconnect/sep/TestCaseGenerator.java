@@ -17,6 +17,7 @@ public class TestCaseGenerator {
 	private static final int AVERAGE_PROPOSAL = 3;	//each staff member proposes, on average, 3 projects
     private static final int MAX_STUDENT_PREFERENCES = 10;
 	private static final String DAGON_STUDIES = "Dagon Studies";
+	private static final double STUDENTS_STAFF_RATIO = 0.5;
 	private static HashMap<Integer, Integer> studentNumbers = new HashMap<>();
 
     private static Random random = new Random(System.currentTimeMillis());
@@ -32,22 +33,28 @@ public class TestCaseGenerator {
 			/**
 			 * Generates test cases and outputs the generated tests.
 			 */
-			System.out.println("Generating " + (TEST_SETS_STUDENTS_SIZE[i]/2)*AVERAGE_PROPOSAL + " projects for " + TEST_SETS_STUDENTS_SIZE[i] + " students.");
-			List<Project> projects = generateProjects(staffMembers, prefixes, (TEST_SETS_STUDENTS_SIZE[i]/2)*AVERAGE_PROPOSAL);
+			int numberOfStaffMembers = (int)(TEST_SETS_STUDENTS_SIZE[i]*STUDENTS_STAFF_RATIO);
+			ArrayList<StaffMember> staffCopy = new ArrayList<>();
+			for (int j = 0; j < numberOfStaffMembers; j++) {
+				int randomIndex = random.nextInt(staffMembers.size());
+				staffCopy.add(staffMembers.get(randomIndex));
+			}
+			List<Project> projects = generateProjects(staffCopy, prefixes, TEST_SETS_STUDENTS_SIZE[i]);
+			System.out.println("Generating "+projects.size()+" projects for " + TEST_SETS_STUDENTS_SIZE[i] + " students.");
 			List<Student> students = generateStudents(TEST_SETS_STUDENTS_SIZE[i], projects);
 			studentsTestData.add(students);
 			projectsTestData.add(projects);
 		}
 
 		String[] studentsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("students%d.csv", i)).toArray(String[]::new);
-		for(int i = 0; i < studentsTestSets.length; i++) {
+		for (int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(studentsTestSets[i], studentsTestData.get(i));
 		}
 
 		String[] projectsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("projectsFor%dStudents.csv", i)).toArray(String[]::new);
-		for(int i = 0; i < studentsTestSets.length; i++) {
+		for (int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i));
-			printProjectFrequency(projectsTestData.get(i));
+			//printProjectFrequency(projectsTestData.get(i));
 		}
 	}
 
@@ -83,10 +90,9 @@ public class TestCaseGenerator {
 		}
 	}
 
-	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes, int howManyProjects) {
-		ArrayList<Project> projects = new ArrayList<>(howManyProjects);
-		ArrayList<StaffMember> staffCopy = new ArrayList<>(staffMembers);
-		Map<Boolean, List<StaffMember>> partition = staffCopy.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
+	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes, int howManyStudents) {
+		int numberOfProjects = staffMembers.size()*AVERAGE_PROPOSAL;
+		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
 		List<StaffMember> csAndDs = partition.get(false); // Proposes CS or CS+DS
 		List<StaffMember> dsOnly = partition.get(true); // Proposes DS
 		/**
@@ -97,7 +103,9 @@ public class TestCaseGenerator {
 		 * 70-100: DS
 		 */
         int i = 0;
-		while (i < howManyProjects) {
+		ArrayList<Project> projects = new ArrayList<>(numberOfProjects);
+		HashMap<String, Boolean> titlesMap = new HashMap<>();
+		while (i < numberOfProjects) {
 			Project.Type randomType = pickRandomType();
 			Project newProject;
 			if (randomType == Project.Type.DS) {
@@ -105,7 +113,8 @@ public class TestCaseGenerator {
 			} else {
 				newProject = generateOneProject(csAndDs, prefixes, randomType);
 			}
-            if (newProject != null) {
+            if (!titlesMap.containsKey(newProject.getTitle())) {
+				titlesMap.put(newProject.getTitle(), true);
                 projects.add(newProject);
                 i++;
             }
@@ -114,20 +123,15 @@ public class TestCaseGenerator {
 		return projects;
 	}
 
-	/** Returns a project and ensures that the staff member will not be picked in the future if it has proposed
-	 *  all of its researches.
-	 * */
+	/** Returns a project */
 	private static Project generateOneProject(List<StaffMember> staffList, List<String> prefixes, Project.Type type) {
 		int staffIndex = random.nextInt(staffList.size());
-		StaffMember supervisor = staffList.get(staffIndex);
-		if (!supervisor.hasMoreToPropose())
-		    return null;
-		String title = supervisor.proposeResearch();
-		if (!supervisor.hasMoreToPropose())
-			staffList.remove(staffIndex);
+		StaffMember staffMember = staffList.get(staffIndex);
+		String[] research = staffMember.getResearchActivities();
 		String prefix = prefixes.get(random.nextInt(prefixes.size()));
+		String title = research[random.nextInt(research.length)];
 
-		return new Project(prefix+" "+title, supervisor, type);
+		return new Project(prefix+" "+title, staffMember, type);
 	}
 
 	private static Project.Type pickRandomType() {

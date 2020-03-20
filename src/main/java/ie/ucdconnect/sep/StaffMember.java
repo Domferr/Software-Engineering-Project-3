@@ -9,7 +9,6 @@ public class StaffMember {
     private String[] researchActivities;
     private String[] researchAreas;
     private boolean specialFocus;   // True if is only DS, otherwise false
-    private ArrayList<String> canBeProposed;
 
     public String getName() {
         return name;
@@ -33,7 +32,6 @@ public class StaffMember {
 
     public void setResearchActivities(String[] researchActivities) {
         this.researchActivities = researchActivities;
-        this.canBeProposed = new ArrayList<String>(Arrays.asList(researchActivities));
     }
 
     public String[] getResearchAreas() {
@@ -42,15 +40,6 @@ public class StaffMember {
 
     public void setResearchAreas(String[] researchAreas) {
         this.researchAreas = researchAreas;
-    }
-
-    public String proposeResearch() {
-        Random random = new Random(System.currentTimeMillis());
-        return canBeProposed.remove(random.nextInt(canBeProposed.size()));
-    }
-
-    public boolean hasMoreToPropose() {
-        return canBeProposed.size() > 0;
     }
 
     @Override
