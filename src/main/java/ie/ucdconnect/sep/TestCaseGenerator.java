@@ -17,6 +17,7 @@ public class TestCaseGenerator {
 	private static final int AVERAGE_PROPOSAL = 3;	//each staff member proposes, on average, 3 projects
     private static final int MAX_STUDENT_PREFERENCES = 10;
 	private static final String DAGON_STUDIES = "Dagon Studies";
+	private static HashMap<Integer, Integer> studentNumbers = new HashMap<>();
 
     private static Random random = new Random(System.currentTimeMillis());
 
@@ -46,7 +47,7 @@ public class TestCaseGenerator {
 		String[] projectsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("projectsFor%dStudents.csv", i)).toArray(String[]::new);
 		for(int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i));
-			//printProjectFrequency(projectsTestData.get(i));
+			printProjectFrequency(projectsTestData.get(i));
 		}
 	}
 
@@ -176,7 +177,13 @@ public class TestCaseGenerator {
 				String first = scanner.next();
 				String last = scanner.next();
 				student.setFullName(first, last);
+
 				int sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
+				while(studentNumbers.containsKey(sNumber)){
+					sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
+				}
+				studentNumbers.put(sNumber, 1);
+
 				student.setStudentNumber(Integer.toString(sNumber));
 				student.setFocus(studentFocus());
 				student.setPreferences(assignPreferences(projects, student.getFocus()));
