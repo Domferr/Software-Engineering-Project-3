@@ -1,6 +1,8 @@
 package ie.ucdconnect.sep;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Config file that contains important things needed for running TestCaseGenerator.
  *  Configuration file is written with the following order:
@@ -15,13 +17,14 @@ import java.io.*;
 public class Config {
     private static Config instance = null;  //Instance reference
 
-    private static final String CONFIG_FILENAME = "config.txt"; //Name of the file with config stuffs
+    private static final String CONFIG_FILENAME = "config.txt"; //Name of the file with config data
 
     private static String FILES_DIR_NAME;   //Name of the directory that contains the files
     private static String TESTCASE_DIR_NAME;//Name of the directory with generated testcases
     private static File NAMES_FILE;         //File with student names
     private static File STAFF_MEMBERS_FILE; //File csv with supervisors
     private static File PREFIXES_FILE;      //File with custom project prefixes
+    private static final int NUMBER_OF_ROWS = 5;
 
     private Config() {
         try {
@@ -32,6 +35,7 @@ public class Config {
         }
     }
 
+    /** Singleton implementation */
     public static Config getInstance() {
         if (instance == null)
             instance = new Config();
@@ -42,29 +46,27 @@ public class Config {
     private void load() throws IOException {
         File configFile = new File(CONFIG_FILENAME);
         BufferedReader reader = new BufferedReader(new FileReader(configFile));
-
+        ArrayList<String> fileRows = new ArrayList<>(NUMBER_OF_ROWS);
         String line = "";
-        int lineIndex = 0;
-        String filesDirPath = "";
+        //Reading from file
         while((line = reader.readLine()) != null) {
-            switch (lineIndex) {
-                case 0:
-                    FILES_DIR_NAME = line;
-                    filesDirPath = "./"+FILES_DIR_NAME+"/";
-                    break;
-                case 1: NAMES_FILE = new File(filesDirPath+line);
-                    break;
-                case 2: STAFF_MEMBERS_FILE = new File(filesDirPath+line);
-                    break;
-                case 3: PREFIXES_FILE = new File(filesDirPath+line);
-                    break;
-                case 4: TESTCASE_DIR_NAME = "./"+line+"/";
-                    break;
-            }
-            lineIndex++;
+            fileRows.add(line);
         }
-
         reader.close();
+        //If data is not missing then parse it
+        if (fileRows.size() == NUMBER_OF_ROWS) {
+            parseDataRead(fileRows);
+        }
+    }
+
+    /** Parse and save data read */
+    private void parseDataRead(List<String> fileRows) {
+        FILES_DIR_NAME = fileRows.get(0);
+        String filesDirPath = "./"+FILES_DIR_NAME+"/";
+        NAMES_FILE = new File(filesDirPath+fileRows.get(1));
+        STAFF_MEMBERS_FILE = new File(filesDirPath+fileRows.get(2));
+        PREFIXES_FILE = new File(filesDirPath+fileRows.get(3));
+        TESTCASE_DIR_NAME = "./"+filesDirPath+fileRows.get(4)+"/";
     }
 
     /** Overwrite field strings and then write into config file */
