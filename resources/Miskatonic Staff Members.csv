@@ -15,7 +15,7 @@ Alan Greenspan,talking up the economy,Economics,
 Alan Sugar,selling consumer goods,British business,
 Albert Einstein,revolutionizing physics,"Physics, Relativity",
 Alec Baldwin,attacking paparazzi,"Acting, Hollywood",
-Alfred Hitchcock,"making suspense movies, ","Directing, Suspense,",
+Alfred Hitchcock,"making suspense movies, ","Directing, Suspense",
 Allan Quatermain,exploring darkest Africa,Victorian literature,Dagon Studies
 Andrew Lloyd Webber,making insipid musicals,"Musicals, Musical Theatre",
 Andy Warhol,"painting over photographs, painting soup cans","Modern painting, Pop art",
@@ -23,7 +23,7 @@ Angelina Jolie,"adopting children, starring in Hollywood movies, ","Acting, Holl
 Ann Coulter,ranting about liberals,"the Right, the Republicans",
 Anna Karenina,worrying about adultery,Russian literature,Dagon Studies
 Emma Bovary,"planning adultery, climbing social ladders","Madame Bovary, the Middle Class",Dagon Studies
-Anthony Bourdain,"eating exotic foods, eating the inedible,","Cooking, the Kitchen",
+Anthony Bourdain,"eating exotic foods, eating the inedible","Cooking, the Kitchen",
 Anton Chekov,writing plays about the middle classes,Russian literature,
 Antonio Vivaldi,composing classical music,Classical music,
 Archie Bunker,"ranting about liberals, ranting about minorities","American culture, the Working Class",Dagon Studies
@@ -55,7 +55,7 @@ Bill Murray,"starring in indy movies, telling dry jokes","American comedy, Ameri
 Billy Bob Thornton,"playing intense characters, starring in indy movies","Acting, Hollywood",
 Billy Crystal,"doing stand-up, starring in comedies","American comedy, American culture, Comedy, Acting",
 Bing Crosby,singing middle-of-the-road songs,"Pop music, Love songs",
-Bob Dylan,"singing protest songs,","Folk music, Protest songs",
+Bob Dylan,"singing protest songs","Folk music, Protest songs",
 Leonard Cohen,"singing melancholy songs, ",Love songs,
 Bob Marley,"smoking herb, singing reggae songs","Reggae music, Pop Music, Carribean music",
 Boba Fett,"collecting bounties on runaways, tracking down fugitives",Star Wars,Dagon Studies
@@ -63,7 +63,6 @@ Bobby Fischer,playing aggressive chess,Chess,
 Bono,"singing rock songs, avoiding taxes, preaching to presidents","Rock music, ",
 Brad Pitt,"starring in Hollywood movies, ","Acting, Hollywood",
 Brian Wilson,"waxing a surfboard, singing multipart harmonies","Pop music, Love songs, the Beach Boys",
-Bridget Jones,"keeping a diary, moaning about men",British culture,Dagon Studies
 Britney Spears,"flirting with rednecks, having meltdowns in public","Pop music, Tweeny music",
 Bruce Lee,"performing kung-fu moves, starring in kung-fu movies","Martial Arts, Kung Fu",
 Bruce Springsteen,singing rock songs,"Rock music, ",
@@ -103,13 +102,13 @@ Chuck Norris,starring in action movies,"Hollywood, Acting, Action movies",
 Cicero,"giving speeches, defending plaintiffs","Oratory, Rhetoric, Ancient Rome, Roman politics",
 Clark Gable,"starring in Hollywood movies, ","Hollywood, Acting",
 Clark Kent,reporting for The Daily Planet,"DC Comics, Metropolis, the Daily Planet",Dagon Studies
-Cleopatra,seducing emperors,"Ancient Egypt,",
+Cleopatra,seducing emperors,"Ancient Egypt",
 Julius Caesar,running an empire,"Roman politics, Ancient Rome",
 Clint Eastwood,"starring in action movies, directing movies","Hollywood, Acting",
 Colin Farrell,"starring in Hollywood movies, starring in indy movies, womanizing, making unauthorized sex tapes","Hollywood, Acting",
 Colonel Sanders,"deep-frying chicken, selling fried chicken","KFC, Fried Chicken, Southern Food, Fast Food",
 Confucius,"teaching philosophy, spreading philosophy, teaching the next generation","Chinese philosophy, Eastern philosophy",
-Nicolaus Copernicus,"promoting Heliocentrism,","Astronomy, the Cosmos, Medieval science",
+Nicolaus Copernicus,"promoting Heliocentrism","Astronomy, the Cosmos, Medieval science",
 Cosmo Kramer,"mooching from neighbors, developing crazy schemes","The Seinfeld Chronicles, Comedy",Dagon Studies
 Courtney Love,playing grungy music,"Rock music, Alternative Rock",
 Croesus,"collecting treasures, ruining an empire, running an empire","Lydia, the Ancient world",
@@ -131,7 +130,7 @@ David Bowie,"singing pop songs, writing pop songs","Cross-Dressing, Pop music",
 David Byrne,"singing pop songs, writing pop songs",Pop music,
 David Caruso,"starring in TV shows, pouting on camera","Acting, CSI: Miami, Police Procedurals",
 David Hasselhoff,"starring in reality TV shows, constructing an ironic public image","Acting, Pop music, Baywatch, Knight Rider",
-Dave Lee Roth,singing rock songs,"Rock music,",
+Dave Lee Roth,singing rock songs,"Rock music",
 David Letterman,hosting a late night chat show,"Late-night TV, Chat Shows, CBS",
 David Lynch,"directing weird movies, writing weird movies","Movies, Twin Peaks",
 Dalton Trumbo,"writing scripts, writing compelling dialogue","Movies, Politics, Communism, the Left",
@@ -145,7 +144,7 @@ Dolly Parton,singing country music,Country music,
 Don Vito Corleone,"running a crime family, running an empire","the Mafia, The Godfather",Dagon Studies
 Don King,promoting boxing fights,Boxing,
 Donald Duck,"eating Peking duck, setting mousetraps",Walt Disney animation,Dagon Studies
-Donald Trump,"investing in real estate, developing real estate, building giant walls, postulating bizarre theories,","Real Estate, ",
+Donald Trump,"investing in real estate, developing real estate, building giant walls, postulating bizarre theories","Real Estate, ",
 Dorian Gray,"gadding about town, practicing good skin care, avoiding growing old","The Picture of Dorian Gray, Victorian literature",Dagon Studies
 Christian Grey,"running a multinational corporation, seducing women, womanizing, promoting capitalism",Fifty Shades of Grey,Dagon Studies
 Doris Day,starring in romantic comedies,"Hollywood, Acting",
@@ -181,8 +180,8 @@ Francis Bacon,painting dark pictures,"Expressionist art, Expressionist painting"
 Francis Crick,"studying genetics, modeling DNA, ","Biology, DNA, The Double Helix, Genetics",
 Frank Capra,making idealistic movies,"It's a Wonderful Life, Hollywood, ",
 Frank Columbo,"solving crimes, pursuing criminals, tricking criminals, extracting confessions",Detective fiction,Dagon Studies
-Frank Gehry,designing modern buildings,"American architecture, Modern architecture,",
-Frank Lloyd Wright,designing modern buildings,"American architecture, Modern architecture,",
+Frank Gehry,designing modern buildings,"American architecture, Modern architecture",
+Frank Lloyd Wright,designing modern buildings,"American architecture, Modern architecture",
 Frank Sinatra,"singing middle-of-the-road songs, crooning love songs, recording pop songs, starring in romantic comedies","Easy Listening, the Rat Pack",
 Frank Zappa,"singing experimental songs, writing experimental songs",Experimental music,
 Franz Liszt,playing classical piano,"Classical music,  Piano music",
@@ -217,7 +216,7 @@ H.P. Lovecraft,"writing purple prose, writing horror stories, writing for pulp m
 Han Solo,"piloting the Millenium Falcon, doing the Kessel run, smuggling contraband, fighting for the rebel alliance",Star Wars,Dagon Studies
 Jabba the Hutt,"running a crime family, running a smuggling business",Star Wars,Dagon Studies
 Hannibal Lecter,"eating census takers, eluding FBI profilers, eating people","Detective fiction, Horror fiction",Dagon Studies
-Harry Houdini,"escaping from handcuffs, escaping from water tanks,","Escapology, Stage Magic, Magic",
+Harry Houdini,"escaping from handcuffs, escaping from water tanks","Escapology, Stage Magic, Magic",
 Harry Potter,"performing magic tricks, studying magic tricks, playing quidditch","Hogwarts, Teen fiction, Magic",Dagon Studies
 Lord Voldemort,"devising evil schemes, striving for world domination, meddling in the dark arts, tormenting muggles","Hogwarts, Teen fiction, Magic",Dagon Studies
 Albus Dumbledore,"performing magic tricks, studying magic tricks, teaching magic, running a school for gifted teens, teaching the next generation ","Hogwarts, Teen fiction, Magic",Dagon Studies
@@ -302,7 +301,7 @@ Johnny Cash,singing country music,Country music,
 Jon Stewart,hosting a late night chat show,"Comedy Central, Comedy, Late-night TV, the News",
 Jonathan Swift,writing political satires,"Satire, the Irish Famine",
 Joseph Goebbels,"running a propaganda machine, promoting totalitarianism","the Nazi Party, National Socialism, the Third Reich",
-Joseph Stalin,"running a communist country, eliminating political rivals,","the Soviet Union, the Cold War",
+Joseph Stalin,"running a communist country, eliminating political rivals","the Soviet Union, the Cold War",
 Judas Iscariot,"betraying friends, stabbing in the back, selling out","the New Testament, the Bible, the 12 Apostles, Betrayal",
 Judge Judy Sheindlin,"judging legal cases, rooting out facts, delivering judgments","Reality TV, Afternoon TV",
 Julia Child,"cooking dinners, writing cook books","Cooking, the Kitchen",
@@ -315,7 +314,7 @@ Karen Carpenter,"singing pop songs, writing pop songs, playing drums, losing wei
 Karl Lagerfeld,"designing clothes, pushing haute couture","Fashion, the Rag Trade, the Fashion industry",
 Karl Marx,"promoting communism, fighting for worker's rights, arguing against capitalism","Das Capital, Communism",
 Karl Rove,"promoting conservative values, ranting about liberals","the Right, the Republicans, American politics, Fox News",
-Kate Moss,"modeling clothes, selling cosmetics,","Fashion, the Rag Trade, the Fashion industry",
+Kate Moss,"modeling clothes, selling cosmetics","Fashion, the Rag Trade, the Fashion industry",
 Keith Moon,"playing drums, raising cain, throwing TVs out of the windows",Rock music,
 Keith Richards,"playing rock music, playing rock guitar",Rock music,
 Kevin Smith,"making mediocre movies, selling comic books, podcasting about movies","Hollywood, Indie Movies",
@@ -359,15 +358,15 @@ Marco Polo,"opening new markets, exploring foreign countries","the Age of Discov
 Margaret Thatcher,"promoting conservative values, ranting about liberals","the Right, the British Right, the Conservative Party",
 Marge Simpson,raising a family,"The Simpsons, Springfield",Dagon Studies
 Mariah Carey,singing Hipbop songs,Pop music,
-Marilyn Monroe,"starring in Hollywood movies,","Hollywood, Acting",
+Marilyn Monroe,"starring in Hollywood movies","Hollywood, Acting",
 Mark Twain,writing folksy fiction,American literature,
-Marlene Dietrich,"starring in Hollywood movies,","Hollywood, Acting",
+Marlene Dietrich,"starring in Hollywood movies","Hollywood, Acting",
 Marlon Brando,"starring in Hollywood movies, campaigning for social causes","Hollywood, Acting",
 Martha Stewart,"cooking dinners, writing cook books, running a media empire","Cooking, the Kitchen, Arts and Crafts,  Housekeeping",
 Martin Luther King,"promoting racial harmony, fighting for democracy, promoting pacifism, fighting for civil rights","Black liberation, the American Civil Rights movement",
 Mata Hari,"spying for the enemy, seducing miltary officers, selling military secrets","World War I, ",
 Matt Drudge,"promoting conservative values, ranting about liberals, spreading political gossip","the Right, the Republicans, American politics",
-Megan Fox,"starring in Hollywood movies,","Hollywood, Acting",
+Megan Fox,"starring in Hollywood movies","Hollywood, Acting",
 Mel Brooks,"directing comedies, writing funny movies","Hollywood, Comedy",
 Mel Gibson,"making antisemitic remarks, driving under the influence, directing action movies","Hollywood, Acting, Action movies",
 Meryl Streep,"speaking with funny accents, performing serious acting, winning Oscars","Serious Acting, Hollywood, Acting",
@@ -380,7 +379,7 @@ Michael Moore,"making provocative documentaries, complaining about capitalism","
 Michael O'Leary,"selling cheap airline seats, running a budget airline, promoting air travel",the Aviation industry,
 Michael Phelps,"winning gold medals, winning swimming competitions",Swimming,
 Michelangelo,"painting church ceilings, carving magnificent statues","Renaissance art, Sculpture, Painting",
-Michelle Obama,"promoting feminism,","the Left, the Democrats, American politics",
+Michelle Obama,"promoting feminism","the Left, the Democrats, American politics",
 Mick Jagger,"singing rock songs, writing rock songs, gyrating hips","Pop music, Rock music",
 Mickey Mouse,"promoting movie violence, starring in animated movies",Walt Disney animation,Dagon Studies
 Mike Tyson,"winning heavyweight titles, knocking out opponents, winning boxing matches",Boxing,
@@ -435,7 +434,6 @@ Plato,"teaching philosophy, teaching the next generation","Ancient philosophy, G
 Adrian Monk,"obsessively washing hands, solving crimes, solving mysteries, tricking criminals, finding clues",Detective fiction,Dagon Studies
 Pontius Pilate,"obsessively washing hands, avoiding responsibility","the New Testament, the Bible, Ancient Rome",
 Pope Benedict XVI,"promoting Catholic values, promoting conservative values, ranting about liberals",Catholicism,
-Pope Francis,"promoting Catholic values,",Catholicism,
 Quentin Tarantino,"making violent movies, promoting movie violence, directing violent movies","Hollywood, Indie Movies",
 Ralph Nader,campaigning for consumer rights,"the American Left, the Left, Consumer Advocacy",
 Grigori Rasputin,"manipulating political pawns, climbing social ladders, wielding political power",Russian politics,
@@ -446,10 +444,10 @@ Richard Dawkins,"explaining evolution, promoting Darwinism, explaining natural s
 Richard Nixon,"promoting conservative values, ranting about liberals, bugging political rivals, pulling dirty political tricks","the Right, the Republicans, American politics",
 Richie Rich,"squandering money, enjoying money",Harvey Comics,Dagon Studies
 Ricky Martin,"enjoying salsa dancing, singing pop songs, gyrating hips",Latin music,
-Ridley Scott,"making fantasy movies, directing science fiction movies, making science fiction movies","Hollywood, Special Effects,",
+Ridley Scott,"making fantasy movies, directing science fiction movies, making science fiction movies","Hollywood, Special Effects",
 Ringo Starr,"singing pop songs, writing pop songs, playing drums","The Beatles, Pop music",
 Robbie Williams,"singing pop songs, writing pop songs","Pop music, Take That",
-Robert De Niro,"starring in Hollywood movies,","Hollywood, Acting, Serious Acting",
+Robert De Niro,"starring in Hollywood movies","Hollywood, Acting, Serious Acting",
 Robert Redford,"starring in Hollywood movies, running film festivals","Hollywood, Acting, Serious Acting",
 Robin Hood,"robbing from the rich, giving to the poor","British legend, British history, Sherwood Forest",Dagon Studies
 Robin Williams,"telling zany jokes, making madcap comedies","Comedy, Hollywood, Stand-Up Comedy",
@@ -491,7 +489,7 @@ Mr. Krabs,"running a fast-food business, selling fast food, pinching pennies","N
 Steve Ballmer,"running a software company, running a technology company","Microsoft, the Software business, Technology",
 Steve Jobs,"running a software company, running a technology company, running a hardware company, pioneering new technologies, terrorizing employees, developing new technologies ","Apple Computer, Technology, Software, the Software business",
 Steve Martin,"performing stand-up, playing the banjo, starring in comedies","Comedy, Hollywood, Stand-Up Comedy",
-Steven Spielberg,"directing Hollywood movies, producing Hollywood movies, ","Hollywood, Special Effects,",
+Steven Spielberg,"directing Hollywood movies, producing Hollywood movies, ","Hollywood, Special Effects",
 Stewie Griffin,"plotting against family members, pioneering new technologies, inventing time machines, developing new technologies ",Family Guy,Dagon Studies
 Sun Tzu,developing military strategies,"The Art of War, Ancient military history",
 Svengali,manipulating ingenues,the Music industry,Dagon Studies
@@ -510,11 +508,10 @@ Tom Sawyer,"playing pranks, solving mysteries","American literature, the America
 Tom Waits,"singing blues songs, writing blues songs","Jazz, Blues music, ",
 Tony Blair,"promoting liberal values, cozying up to conservatives","British politics, the British Left, the Labour Party",
 Huckleberry Finn,growing up poor,"American literature, the American South",Dagon Studies
-Tony Robbins,"selling self-help books, giving self-help lectures,","Neuro-Linguistic Programming, Self-Help, Self-Improvement",
+Tony Robbins,"selling self-help books, giving self-help lectures","Neuro-Linguistic Programming, Self-Help, Self-Improvement",
 Tony Soprano,"running a crime family, running an empire","the New Jersey Mob, New Jersey, the Mafia",Dagon Studies
 Tony Stark,"running a multinational corporation, running a hardware company, running a software company, pioneering new technologies, developing new technologies ","Marvel Comics, Technology",Dagon Studies
 Tomás de Torquemada,"extracting confessions, promoting conservative values, promoting Catholic values","Catholicism, the Inquisition",
-Leon Trotsky,"spreading revolution, promoting communism",the Russian revolution,
 Tony Montana,"running a crime family, running an empire",the Miami crime world,Dagon Studies
 Victor Meldrew,complaining about everything,Modern Britain,Dagon Studies
 Vincent Van Gogh,"painting colorful pictures, going slowly mad","Modern art, Post-Impressionism",
@@ -537,7 +534,7 @@ William Shatner,"starring in science fiction movies, starring in TV shows, const
 Willy Wonka,"running a business empire, making chocolate, selling confectionary, inventing new confectionary, pioneering new technologies","the Confectionary business, the Chocolate industry",Dagon Studies
 Winston Churchill,"fighting against totalitarianism, fighting for democracy, promoting democracy, coining sparkling witticisms","World War II, British history, British politics, the British Right the Conservative Party",
 Wolfgang Amadeus Mozart,"composing classical music, playing the piano",Classical music,
-Kenny G,"playing the saxophone,","Easy Listening, Light Jazz,  Saxophone music",
+Kenny G,"playing the saxophone","Easy Listening, Light Jazz,  Saxophone music",
 Woody Allen,"directing Hollywood movies, writing Hollywood movies, starring in Hollywood movies, directing comedies, starring in comedies, worrying about health, playing the clarinet","New York City, Hollywood, Acting, Comedy",
 Woody Guthrie,"campaigning for environmental causes, campaigning for social causes, singing protest songs",Folk music,
 Wyatt Earp,"arresting criminals, running a frontier town, preventing crime, punishing crime","The Old West, Westerns",
@@ -693,7 +690,7 @@ Hermione Granger,"concocting magic potions, casting magic spells","Hogwarts, Tee
 Sydney Bristow,"kicking ass, spying for the CIA","Espionage, International Crime",Dagon Studies
 Dana Scully,"explaining away the unexplained, investigating alien abductions","The X-Files, ",Dagon Studies
 Marie Curie,extracting Radium from pitchblend,"Physics, Modern science,  Chemistry",
-Tim Burton,"making bizarre movies,","Hollywood, Animation, Horror",
+Tim Burton,"making bizarre movies","Hollywood, Animation, Horror",
 Coco Chanel,"designing haute couture, selling perfumes","Fashion, the Rag Trade, the Fashion industry",
 Fox Mulder,"postulating bizarre theories, investigating alien abductions","The X-Files, ",Dagon Studies
 Bruce Willis,"making action movies, starring in action movies","Hollywood, Acting, Action movies",
@@ -814,16 +811,16 @@ Severus Snape,"performing magic tricks, studying magic tricks, teaching magic, r
 Borat,"interviewing celebrities, interviewing politicians, making documentaries","Borat!, Comedy, Documentaries",Dagon Studies
 Ali G,"interviewing celebrities, interviewing politicians, posing as a street thug","Ali G Indahouse, Comedy",Dagon Studies
 Jack Reacher,"solving mysteries, solving crimes, finding clues, interpreting evidence","Crime fiction, Detective fiction",Dagon Studies
-Arthur Dent,"drinking tea, making sandwiches,","Science Fiction, British comedy, British humour, Comedy, The Hitchhikers Guide to The Galaxy",Dagon Studies
+Arthur Dent,"drinking tea, making sandwiches","Science Fiction, British comedy, British humour, Comedy, The Hitchhikers Guide to The Galaxy",Dagon Studies
 Del Boy Trotter,"selling dodgy goods, selling tat","Only Fools and Horses ,  British comedy, British humour, Comedy",Dagon Studies
 Captain William Bligh,"barking orders at subordinates, cracking the whip","Mutiny on the Bounty, Politics, British history",
 Fletcher Christian,"expressing dissent, plotting mutinies, undermining authority","Mutiny on the Bounty, Politics, British history",
 Frank Underwood,"plotting election strategies, directing the business of state, manipulating political pawns, climbing social ladders, wielding political power",House of Cards,Dagon Studies
 Napoleon Solo,"foiling the schemes of evil villains, rescuing damsels in distress",The Man from U.N.C.L.E,Dagon Studies
-Quasimodo,"carving magnificent statues, hiding from the public","French history, French politics, pre-Revolutionary France, Literature,",Dagon Studies
+Quasimodo,"carving magnificent statues, hiding from the public","French history, French politics, pre-Revolutionary France, Literature",Dagon Studies
 Ilya Kuryakin,foiling the schemes of evil villains,The Man from U.N.C.L.E,Dagon Studies
 Wolverine,"foiling the schemes of evil villains, slashing victims, punishing criminals","Marvel Comics, The X-Men",Dagon Studies
-Deadpool,"foiling the schemes of evil villains, punishing criminals, undermining authority, making vulgar jokes,","Marvel Comics, The X-Men",Dagon Studies
+Deadpool,"foiling the schemes of evil villains, punishing criminals, undermining authority, making vulgar jokes","Marvel Comics, The X-Men",Dagon Studies
 Green Lantern,"foiling the schemes of evil villains, guarding the galaxy","DC Comics, Alien Science, Science Fiction",Dagon Studies
 Superman,"reporting the news, foiling the schemes of evil villains, fighting for justice, defending the weak","DC Comics, Metropolis, The Daily Planet, Science Fiction",Dagon Studies
 Ryan Reynolds,"starring in Hollywood movies, making dumb comedies","Hollywood, Comedy",
@@ -832,8 +829,8 @@ Don Quixote,"tilting at windmills, going on romantic quests",Spanish literature,
 Baron Munchausen,"telling tall tales, inventing lies",German literature,Dagon Studies
 Hunter S. Thompson,writing about manly pursuits,American politics,
 Lando Calrissian,"running a criminal enterprise, fighting for the rebel alliance, ",Star Wars,Dagon Studies
-Bob Woodward,"reporting the news, following the money","American politics,  the News, the Newspaper industry,",
-Carl Bernstein,"reporting the news, following the money","American politics,  the News, the Newspaper industry,",
+Bob Woodward,"reporting the news, following the money","American politics,  the News, the Newspaper industry",
+Carl Bernstein,"reporting the news, following the money","American politics,  the News, the Newspaper industry",
 G. Gordon Liddy,"promoting conservative values, ranting about liberals, bugging political rivals, pulling dirty political tricks",American politics,
 Anthony Scaramucci,"making political gaffes, promoting conservative values, ranting about liberals, managing hedge funds",American politics,
 Melania Trump,posing for photographs,American politics,
@@ -850,7 +847,7 @@ Deep Throat,"talking in riddles, offering advice","Watergate, American politics"
 Gianni Versace,"flaunting foppish fashions, designing clothes, pushing haute couture, ","Fashion, the Rag Trade, the Fashion industry",
 Reince Priebus,promoting conservative values,"the Right, the Republicans, American politics",
 Mike  Pence,promoting conservative values,"the Right, the Republicans, American politics",
-Tom Wolfe,"writing about social problems, writing serialized stories, writing modern fiction,","Politics, the News",
+Tom Wolfe,"writing about social problems, writing serialized stories, writing modern fiction","Politics, the News",
 Steve Bannon,promoting conservative values,"the Right, the Republicans, American politics",
 Jared Kushner,running a business empire,"the Right, the Republicans, American politics",
 Ivanka Trump,running a business empire,"the Right, the Republicans, American politics",
@@ -880,7 +877,7 @@ Cher,"singing pop songs, writing pop songs",Pop music,
 Amy Schumer,"making vulgar jokes, starring in comedies, doing stand-up",Comedy,
 Lucille Ball,"starring in sit-coms, starring in madcap comedies, ",Comedy,
 Jerry Maguire,promoting greed," American sports, American football, ",Dagon Studies
-Joe DiMaggio,"playing baseball,"," American sports, Baseball",
+Joe DiMaggio,"playing baseball"," American sports, Baseball",
 Katharine Hepburn,"starring in Hollywood movies, ","Hollywood, Serious Acting",
 Janet Jackson,"singing pop songs, writing pop songs",Pop music,
 Jayne Mansfield,"starring in Hollywood movies, ","Hollywood, Acting",
@@ -904,7 +901,7 @@ Johnny Depp,starring in Hollywood movies,"Hollywood, Acting",
 Cristiano Ronaldo,playing soccer,Soccer,
 Pope Francis,promoting Catholic values,Catholicism,
 Tom Brady,signing sports memorabilia,"American football, American sports",
-Tyra Banks,"modeling clothes, selling cosmetics,","Fashion, the Rag Trade, the Fashion industry",
+Tyra Banks,"modeling clothes, selling cosmetics","Fashion, the Rag Trade, the Fashion industry",
 Zac Efron,"starring in Hollywood movies, making insipid musicals","Hollywood, Acting",
 Novak Djokovic,"delivering forehand slams, winning tennis tournaments",Tennis,
 Usain Bolt,"running races, competing in the Olympics","Olympics, Racing, Running",
@@ -936,7 +933,7 @@ Martin Luther,"recruiting dissidents, raging against the machine","German histor
 Isaac Newton,"studying mathematics, proving math theorems","Physics, Astronomy, the Cosmos",
 Ronald Reagan,promoting conservative values,"the Right, the Republicans, American politics",
 Friedrich Nietzsche,"promoting humanism, teaching philosophy, spreading philosophy, ","Continental philosophy, Modern philosophy, German philosophy",
-Galileo Galilei,"promoting Heliocentrism,","Physics, Astronomy, the Cosmos",
+Galileo Galilei,"promoting Heliocentrism","Physics, Astronomy, the Cosmos",
 Oliver Cromwell," fighting with swords, spreading revolution, instigating rebellion, leading revolts","British history, British royalty",
 Edgar Allan Poe,writing mystery stories,American literature,
 Joseph Smith,"searching for the messiah, recruiting dissidents, racking up marriages",Mormonism,
@@ -949,7 +946,7 @@ King Arthur,"fighting with swords, leading armies into battle, ruling over subje
 Sir Lancelot,fighting with swords,British history,Dagon Studies
 Merlin,"performing magic tricks, studying magic tricks, teaching magic, brewing magican potions, casting magic spells",British history,Dagon Studies
 Morgana Le Fay,"performing magic tricks, studying magic tricks, teaching magic, brewing magican potions, casting magic spells",British history,Dagon Studies
-Johann von Goethe,"writing poetry, writing about social problems,","German literature, Romantic poetry",
+Johann von Goethe,"writing poetry, writing about social problems","German literature, Romantic poetry",
 Thomas Aquinas,"teaching philosophy, spreading philosophy, ",Religious Iconology,
 René Descartes,"teaching philosophy, spreading philosophy, ","Continental philosophy, Modern philosophy, French philosophy",
 Harry S. Truman,"campaigning for the presidency, wielding political power",American politics,
@@ -982,13 +979,13 @@ Ferdinand Magellan,"searching for a new world, exploring the new world",,
 Grace Hopper,pioneering new technologies,"Computer Science, Software, Technology",
 Margaret Mead,bridging cultures ,Anthropology,
 Sappho,writing poetry,Romantic poetry,
-Harriet Tubman,"fighting for civil rights,",American history,
+Harriet Tubman,"fighting for civil rights",American history,
 Catherine The Great,"ruling over subjects, running a kingdom","Russian politics, Russian history",
 Annie Oakley,"promoting circus attractions, selling tickets, piquing public interest",American history,
 Eleanor Roosevelt,campaigning for social causes,"American history, American politics",
 Jane Goodall,living amongst apes,Anthropology,
 Madeleine Albright, fighting for democracy,American politics,
-Emmeline Pankhurst ," fighting for democracy, campaigning for social causes, promoting feminism,","British history, British politics",
+Emmeline Pankhurst ," fighting for democracy, campaigning for social causes, promoting feminism","British history, British politics",
 Boudicca," spreading revolution, instigating rebellion, leading revolts",British history,
 Natasha Romanova,"spying for the enemy, seducing miltary officers, kicking ass, foiling the schemes of evil villains",Marvel Comics. Espionage,Dagon Studies
 Lady Macbeth,"manipulating political pawns, climbing social ladders, wielding political power","British politics, British royalty, Shakespeare",Dagon Studies
@@ -1013,7 +1010,7 @@ Cinderella, climbing social ladders,"Fairy Tales, ",Dagon Studies
 Violet Baudelaire,"pioneering new technologies, inventing electrical marvels",Children's tales,Dagon Studies
 Peter Rabbit,eating carrots,Children's tales,Dagon Studies
 Hedda Gabler, frowning at errant husbands,Modern literature,Dagon Studies
-Father Ted,"preaching tolerance, spreading Christianity,",Comedy,Dagon Studies
+Father Ted,"preaching tolerance, spreading Christianity",Comedy,Dagon Studies
 Saga Norén,"solving mysteries, solving crimes, finding clues, interpreting evidence",Scandinavian crime fiction,Dagon Studies
 Winnie the Pooh,"cooking for friends, ",Children's tales,Dagon Studies
 Willie Nelson,singing country music,Country music,
