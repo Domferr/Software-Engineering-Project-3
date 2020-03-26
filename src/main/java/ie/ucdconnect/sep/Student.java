@@ -14,8 +14,17 @@ public class Student implements CSVRow {
     private Focus focus;
     private List<Project> preferences;
 
+    public Student(){
 
+    }
 
+    public Student(String firstName, String lastName, String studentNumber, Focus focus, List<Project> preferences) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.studentNumber = studentNumber;
+        this.focus = focus;
+        this.preferences = preferences;
+    }
 
     @Override
     public String toCSVRow() {
