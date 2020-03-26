@@ -1,5 +1,5 @@
-resources
-names.txt
-Miskatonic Staff Members.csv
-prefixes.txt
-testcases
+RESOURCES_DIR=resources
+NAMES_FILE=names.txt
+STAFF_MEMBERS_FILE=Miskatonic Staff Members.csv
+PREFIXES_FILE=prefixes.txt
+TESTCASES_DIR=testcases

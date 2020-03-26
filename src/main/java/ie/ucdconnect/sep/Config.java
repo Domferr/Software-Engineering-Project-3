@@ -15,6 +15,7 @@ import java.util.List;
  *  N.B: Each element is written in one row.
  * */
 public class Config {
+    private static final char DIVIDER = '=';
     private static Config instance = null;  //Instance reference
 
     private static final String CONFIG_FILENAME = "config.txt"; //Name of the file with config data
@@ -24,7 +25,7 @@ public class Config {
     private static File NAMES_FILE;         //File with student names
     private static File STAFF_MEMBERS_FILE; //File csv with supervisors
     private static File PREFIXES_FILE;      //File with custom project prefixes
-    private static final int NUMBER_OF_ROWS = 5;
+    private static final int NUMBER_OF_ROWS = 5;    //How many rows the config.txt file should have
 
     private Config() {
         try {
@@ -59,14 +60,22 @@ public class Config {
         }
     }
 
+    /** Given a row, returns its value and ignores its description and the divider.
+     *  If the divider is missing nothing is ignored
+     * */
+    private String parseRow(String row) {
+        int dividerIndex = row.lastIndexOf(DIVIDER)+1;
+        return row.substring(dividerIndex);
+    }
+
     /** Parse and save data read */
     private void parseDataRead(List<String> fileRows) {
-        FILES_DIR_NAME = fileRows.get(0);
+        FILES_DIR_NAME = parseRow(fileRows.get(0));
         String filesDirPath = "./"+FILES_DIR_NAME+"/";
-        NAMES_FILE = new File(filesDirPath+fileRows.get(1));
-        STAFF_MEMBERS_FILE = new File(filesDirPath+fileRows.get(2));
-        PREFIXES_FILE = new File(filesDirPath+fileRows.get(3));
-        TESTCASE_DIR_NAME = "./"+filesDirPath+fileRows.get(4)+"/";
+        NAMES_FILE = new File(filesDirPath+parseRow(fileRows.get(1)));
+        STAFF_MEMBERS_FILE = new File(filesDirPath+parseRow(fileRows.get(2)));
+        PREFIXES_FILE = new File(filesDirPath+parseRow(fileRows.get(3)));
+        TESTCASE_DIR_NAME = "./"+filesDirPath+parseRow(fileRows.get(4))+"/";
     }
 
     /** Overwrite field strings and then write into config file */
@@ -79,11 +88,16 @@ public class Config {
         TESTCASE_DIR_NAME = "./"+testCaseDir+"/";
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILENAME));
-        writer.append(filesDirName+"\n");
-        writer.append(namesFileName+"\n");
-        writer.append(staffMembersFileName+"\n");
-        writer.append(prefixesFileName+"\n");
-        writer.append(testCaseDir+"\n");
+        writer.append("RESOURCES_DIR"+DIVIDER+filesDirName);
+        writer.newLine();
+        writer.append("NAMES_FILE"+DIVIDER+namesFileName);
+        writer.newLine();
+        writer.append("STAFF_MEMBERS_FILE"+DIVIDER+staffMembersFileName);
+        writer.newLine();
+        writer.append("PREFIXES_FILE"+DIVIDER+prefixesFileName);
+        writer.newLine();
+        writer.append("TESTCASES_DIR"+DIVIDER+testCaseDir);
+        writer.newLine();
         writer.close();
     }
 
