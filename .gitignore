@@ -3,6 +3,7 @@
 
 target/
 resources/testcases/
+miskatonic-project-matcher.iml
 
 # User-specific stuff
 .idea/**/workspace.xml
