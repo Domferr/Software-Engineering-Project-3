@@ -1,6 +1,7 @@
 package ie.ucdconnect.sep;
 
 public class StaffMember {
+
     private String name;
     private String[] researchActivities;
     private String[] researchAreas;
