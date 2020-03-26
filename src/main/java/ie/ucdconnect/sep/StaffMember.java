@@ -1,18 +1,12 @@
 package ie.ucdconnect.sep;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
 public class StaffMember {
     private String name;
     private String[] researchActivities;
     private String[] researchAreas;
     private boolean specialFocus;   // True if is only DS, otherwise false
 
-    public StaffMember(){
-
-    }
+    public StaffMember() {}
 
     public StaffMember(String name, String[] researchActivities, String[] researchAreas, boolean specialFocus) {
         this.name = name;

@@ -70,7 +70,8 @@ public class Config {
         NAMES_FILE = new File(filesDirPath+parseRow(fileRows.get(1)));
         STAFF_MEMBERS_FILE = new File(filesDirPath+parseRow(fileRows.get(2)));
         PREFIXES_FILE = new File(filesDirPath+parseRow(fileRows.get(3)));
-        TESTCASE_DIR_NAME = "./"+filesDirPath+parseRow(fileRows.get(4))+"/";
+        TESTCASE_DIR_NAME = filesDirPath+parseRow(fileRows.get(4))+"/";
+        System.out.println(TESTCASE_DIR_NAME);
     }
 
     /** Overwrite field strings and then write into config file */
@@ -80,7 +81,7 @@ public class Config {
         NAMES_FILE = new File(filesDirPath + namesFileName);
         STAFF_MEMBERS_FILE = new File(filesDirPath + staffMembersFileName);
         PREFIXES_FILE = new File(filesDirPath + prefixesFileName);
-        TESTCASE_DIR_NAME = "./"+testCaseDir+"/";
+        TESTCASE_DIR_NAME = filesDirPath+testCaseDir+"/";
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILENAME));
         writer.append("RESOURCES_DIR"+DIVIDER+filesDirName);

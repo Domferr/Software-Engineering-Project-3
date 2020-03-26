@@ -37,7 +37,7 @@ public class TestCaseGenerator {
 			System.out.print("Unable to save config file: ");
 			System.out.println(e.getMessage());
 		}
-		
+
 		ArrayList<String> prefixes = null;
 		ArrayList<StaffMember> staffMembers = null;
 		try {
@@ -98,6 +98,7 @@ public class TestCaseGenerator {
 	/** Write the given list into specified file.  */
 	private static void saveGeneratedTestcase(String filename, List<? extends CSVRow> list) {
 		String dirName = config.getTestcaseDirName();
+		System.out.println(dirName);
 		File testCaseDir = new File(dirName);
 		if (!testCaseDir.exists())
 			testCaseDir.mkdir();
