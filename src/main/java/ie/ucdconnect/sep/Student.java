@@ -14,6 +14,9 @@ public class Student implements CSVRow {
     private Focus focus;
     private List<Project> preferences;
 
+
+
+
     @Override
     public String toCSVRow() {
         return String.join(",", studentNumber, firstName, lastName, focus.toString(), createPreferencesCSVEntry());
