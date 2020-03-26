@@ -21,11 +21,34 @@ public class TestCaseGenerator {
 	private static HashMap<Integer, Integer> studentNumbers = new HashMap<>();
 
     private static Random random = new Random(System.currentTimeMillis());
+	private static Config config;
 
-	public static void main(String[] args) throws IOException {
-		//Config.getInstance().save("resources", "testcases", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
-		ArrayList<String> prefixes = loadPrefixes();
-		ArrayList<StaffMember> staffMembers = loadStaffMembers();
+	public static void main(String[] args) {
+		try {
+			config = Config.getInstance();
+		} catch (IOException e) {
+			System.out.print("Unable to load Config file: ");
+			System.out.println(e.getMessage());
+			return;
+		}
+		try {
+			config.save("resources", "testcases", "names.txt", "Miskatonic Staff Members.csv", "prefixes.txt");
+		} catch (IOException e) {
+			System.out.print("Unable to save config file: ");
+			System.out.println(e.getMessage());
+		}
+		
+		ArrayList<String> prefixes = null;
+		ArrayList<StaffMember> staffMembers = null;
+		try {
+			prefixes = loadPrefixes();
+			staffMembers = loadStaffMembers();
+		} catch (IOException e) {
+			System.out.print("Unable to read from resources: ");
+			System.out.println(e.getMessage());
+			return;
+		}
+
 		List<List<Student>> studentsTestData = new ArrayList<>();
 		List<List<Project>> projectsTestData = new ArrayList<>();
 		/** Generating the different number of required students i.e. 60, 120, 240 and 500*/
@@ -39,7 +62,7 @@ public class TestCaseGenerator {
 				int randomIndex = random.nextInt(staffMembers.size());
 				staffCopy.add(staffMembers.get(randomIndex));
 			}
-			List<Project> projects = generateProjects(staffCopy, prefixes, TEST_SETS_STUDENTS_SIZE[i]);
+			List<Project> projects = generateProjects(staffCopy, prefixes);
 			System.out.println("Generating "+projects.size()+" projects for " + TEST_SETS_STUDENTS_SIZE[i] + " students.");
 			List<Student> students = generateStudents(TEST_SETS_STUDENTS_SIZE[i], projects);
 			studentsTestData.add(students);
@@ -74,7 +97,7 @@ public class TestCaseGenerator {
 
 	/** Write the given list into specified file.  */
 	private static void saveGeneratedTestcase(String filename, List<? extends CSVRow> list) {
-		String dirName = Config.getInstance().getTestcaseDirName();
+		String dirName = config.getTestcaseDirName();
 		File testCaseDir = new File(dirName);
 		if (!testCaseDir.exists())
 			testCaseDir.mkdir();
@@ -90,7 +113,7 @@ public class TestCaseGenerator {
 		}
 	}
 
-	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes, int howManyStudents) {
+	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
 		int numberOfProjects = staffMembers.size()*AVERAGE_PROPOSAL;
 		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
 		List<StaffMember> csAndDs = partition.get(false); // Proposes CS or CS+DS
@@ -146,7 +169,7 @@ public class TestCaseGenerator {
 
 	private static ArrayList<StaffMember> loadStaffMembers() throws IOException {
 		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
-		CSVReader csvReader = new CSVReader(new FileReader(Config.getInstance().getStaffMembersFile()));
+		CSVReader csvReader = new CSVReader(new FileReader(config.getStaffMembersFile()));
 		List<String[]> rows = csvReader.readAll();
 		for (String[] row : rows) {
 			StaffMember staffMember = new StaffMember();
@@ -176,7 +199,7 @@ public class TestCaseGenerator {
 
 		ArrayList<Student> students = new ArrayList<>(noStudents);
 		try{
-			Scanner scanner = new Scanner(Config.getInstance().getNamesFile());
+			Scanner scanner = new Scanner(config.getNamesFile());
 			while(scanner.hasNext() && students.size() < noStudents){
 				Student student = new Student();
 				String first = scanner.next();
