@@ -13,11 +13,15 @@ class ConfigTest {
 
     @Test
     void getInstance() {
-        fail("This test has not yet been implemented");
+        assertDoesNotThrow(Config::getInstance, "Config instance is null!");
     }
 
     @Test
     void save() {
-        fail("This test has not yet been implemented");
+        assertDoesNotThrow(() -> Config.getInstance().save("resources",
+                        "testcases",
+                        "names.txt",
+                        "Miskatonic Staff Members.csv",
+                        "prefixes.txt"), "Unable to save on Config file");
     }
 }

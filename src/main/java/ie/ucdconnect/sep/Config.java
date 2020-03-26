@@ -27,17 +27,12 @@ public class Config {
     private static File PREFIXES_FILE;      //File with custom project prefixes
     private static final int NUMBER_OF_ROWS = 5;    //How many rows the config.txt file should have
 
-    private Config() {
-        try {
-            load();
-        } catch (IOException ex) {
-            //TODO what to do when loading fails?
-            System.err.println("config file reading failed");
-        }
+    private Config() throws IOException {
+        load();
     }
 
     /** Singleton implementation */
-    public static Config getInstance() {
+    public static Config getInstance() throws IOException {
         if (instance == null)
             instance = new Config();
         return instance;
