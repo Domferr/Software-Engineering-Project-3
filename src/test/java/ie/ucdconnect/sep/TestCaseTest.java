@@ -1,11 +1,20 @@
 package ie.ucdconnect.sep;
 
+import com.opencsv.CSVParser;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -14,6 +23,8 @@ public class TestCaseTest {
 	private static final Pattern STUDENT_TESTCASE_FILENAME_PATTERN = Pattern.compile("students(\\d+)\\.csv");
 	private static final Pattern PROJECT_TESTCASE_FILENAME_PATTERN = Pattern.compile("projectsFor(\\d+)Students\\.csv");
 	private static final String TESTCASE_DIR = "resources/testcases";
+	private static final String STAFF_FILE = "resources/Miskatonic Staff Members.csv";
+	private static final CSVParser CSV_PARSER = new CSVParser();
 
 	@Test
 	public void testFilenameFormat() {
@@ -50,15 +61,78 @@ public class TestCaseTest {
 	}
 
 	@Test
-	public void testTestCaseValidity() {
+	public void testTestCaseValidity() throws IOException {
 		File testCaseDir = new File(TESTCASE_DIR);
+		// From the above test, we are now assuming students and projects come in same number pairs.
 		for (File testCaseFile : testCaseDir.listFiles()) {
 			String fileName = testCaseFile.getName();
-			if (STUDENT_TESTCASE_FILENAME_PATTERN.matcher(fileName).matches()) {
-				//validateStudentFile(testCaseFile);
-			} else if (PROJECT_TESTCASE_FILENAME_PATTERN.matcher(fileName).matches()) {
-				//validateProjectFile(testCaseFile);
+			Matcher matcher = PROJECT_TESTCASE_FILENAME_PATTERN.matcher(fileName);
+			if (matcher.matches()) {
+				int num = Integer.parseInt(matcher.group(1));
+				validateProjectFile(testCaseFile);
+				File studentsFile = new File(testCaseFile.getParent() + "/students" + num + ".csv");
+				validateStudentFile(studentsFile, testCaseFile);
 			}
 		}
+	}
+
+	private void validateProjectFile(File projectsFile) throws IOException {
+		Map<String, String> staffMap = mapStaff();
+		for (String line : Files.readAllLines(projectsFile.toPath())) {
+			String[] parts = CSV_PARSER.parseLine(line);
+			String staffName = parts[0];
+			String focus = parts[1];
+			String title = parts[2];
+			String staffLine = staffMap.get(staffName);
+			if (focus.equals("DS")) {
+				if (!staffLine.endsWith("Dagon Studies")) {
+					fail(title + " proposed by " + staffName + " is not valid (DS project proposed by non DS staff)");
+				}
+			} else if (staffLine.endsWith("Dagon Studies")) {
+				fail(title + " proposed by " + staffName + " is not valid (CS/CSDS project proposed by DS staff)");
+			}
+		}
+	}
+
+	private void validateStudentFile(File studentsFile, File projectsFile) throws IOException {
+		// This ensures student IDs are unique. If they are not, an error will be thrown.
+		Map<Integer, String> studentsMap = mapStudents(studentsFile);
+		Map<String, String> projectsMap = mapProjects(projectsFile);
+		for (String line : studentsMap.values()) {
+			String[] parts = CSV_PARSER.parseLine(line);
+			String studentFocus = parts[3];
+			String projects = parts[4];
+			for (String projectTitle : projects.split(",")) {
+				String projectLine = projectsMap.get(projectTitle);
+				String[] projectParts = CSV_PARSER.parseLine(projectLine);
+				String projectFocus = projectParts[1];
+				if (projectFocus.equals("CS") && !studentFocus.equals("CS") || projectFocus.equals("DS") && !studentFocus.equals("DS")) {
+					fail(parts[0] + " focus is " + studentFocus + ". Chose project (" + projectFocus + "): " + projectTitle);
+				}
+			}
+		}
+	}
+
+	private Map<String, String> mapProjects(File projectsFile) throws IOException {
+		// Maps the projects by their title
+		return Files.lines(projectsFile.toPath()).collect(Collectors.toMap(s -> s.substring(s.lastIndexOf(",") + 1), s -> s));
+	}
+
+	private Map<String, String> mapStaff() throws IOException {
+		// Maps the staff members by their name.
+		return Files.lines(Paths.get(STAFF_FILE)).collect(Collectors.toMap(s -> {
+			try {
+				// We must do this as some staff have an alias: Firstname "alias" lastname
+				return CSV_PARSER.parseLine(s)[0];
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}, s -> s));
+	}
+
+	private Map<Integer, String> mapStudents(File file) throws IOException {
+		// Maps the students by their student number.
+		return Files.lines(file.toPath()).collect(Collectors.toMap(s -> Integer.parseInt(s.substring(0, s.indexOf(","))), s -> s));
 	}
 }
