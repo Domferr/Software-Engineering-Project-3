@@ -98,7 +98,6 @@ public class TestCaseGenerator {
 	/** Write the given list into specified file.  */
 	private static void saveGeneratedTestcase(String filename, List<? extends CSVRow> list) {
 		String dirName = config.getTestcaseDirName();
-		System.out.println(dirName);
 		File testCaseDir = new File(dirName);
 		if (!testCaseDir.exists())
 			testCaseDir.mkdir();

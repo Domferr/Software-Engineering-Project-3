@@ -71,7 +71,6 @@ public class Config {
         STAFF_MEMBERS_FILE = new File(filesDirPath+parseRow(fileRows.get(2)));
         PREFIXES_FILE = new File(filesDirPath+parseRow(fileRows.get(3)));
         TESTCASE_DIR_NAME = filesDirPath+parseRow(fileRows.get(4))+"/";
-        System.out.println(TESTCASE_DIR_NAME);
     }
 
     /** Overwrite field strings and then write into config file */
