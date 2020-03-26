@@ -14,8 +14,9 @@ class ProjectTest {
 
     @BeforeEach
     void setUp() {
-        staffMember = new StaffMember("staff1", researchActivities, researchArea , true);
+        staffMember = new StaffMember("staff1", researchActivities, researchArea , null, true);
         project = new Project("project1", staffMember, Project.Type.DS);
+        staffMember.addProposedProject(project);
     }
 
     @Test

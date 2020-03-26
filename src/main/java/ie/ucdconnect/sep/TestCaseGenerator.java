@@ -39,10 +39,10 @@ public class TestCaseGenerator {
 		}
 
 		ArrayList<String> prefixes = null;
-		ArrayList<StaffMember> staffMembers = null;
+		ArrayList<StaffMember> allStaffMembers = null;
 		try {
 			prefixes = loadPrefixes();
-			staffMembers = loadStaffMembers();
+			allStaffMembers = loadStaffMembers();
 		} catch (IOException e) {
 			System.out.print("Unable to read from resources: ");
 			System.out.println(e.getMessage());
@@ -51,22 +51,35 @@ public class TestCaseGenerator {
 
 		List<List<Student>> studentsTestData = new ArrayList<>();
 		List<List<Project>> projectsTestData = new ArrayList<>();
+		List<List<StaffMember>> pickedStaffTestData = new ArrayList<>();
+
 		/** Generating the different number of required students i.e. 60, 120, 240 and 500*/
 		for (int i = 0; i < TEST_SETS_STUDENTS_SIZE.length; i++) {
 			/**
 			 * Generates test cases and outputs the generated tests.
 			 */
+			ArrayList<StaffMember> pickedMembers = new ArrayList<>();
 			int numberOfStaffMembers = (int)(TEST_SETS_STUDENTS_SIZE[i]*STUDENTS_STAFF_RATIO);
-			ArrayList<StaffMember> staffCopy = new ArrayList<>();
 			for (int j = 0; j < numberOfStaffMembers; j++) {
-				int randomIndex = random.nextInt(staffMembers.size());
-				staffCopy.add(staffMembers.get(randomIndex));
+				int randomIndex = random.nextInt(allStaffMembers.size());
+				StaffMember randomStaff = allStaffMembers.get(randomIndex);
+				//Create a copy of the randomly picked staff member
+				StaffMember finalMember = new StaffMember();
+				finalMember.setName(randomStaff.getName());
+				finalMember.setSpecialFocus(randomStaff.isSpecialFocus());
+				finalMember.setResearchAreas(randomStaff.getResearchAreas());
+				finalMember.setResearchActivities(randomStaff.getResearchActivities());
+
+				pickedMembers.add(finalMember);
 			}
-			List<Project> projects = generateProjects(staffCopy, prefixes);
+
+			List<Project> projects = generateProjects(pickedMembers, prefixes);
 			System.out.println("Generating "+projects.size()+" projects for " + TEST_SETS_STUDENTS_SIZE[i] + " students.");
 			List<Student> students = generateStudents(TEST_SETS_STUDENTS_SIZE[i], projects);
+
 			studentsTestData.add(students);
 			projectsTestData.add(projects);
+			pickedStaffTestData.add(pickedMembers);
 		}
 
 		String[] studentsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("students%d.csv", i)).toArray(String[]::new);
@@ -154,7 +167,10 @@ public class TestCaseGenerator {
 		String prefix = prefixes.get(random.nextInt(prefixes.size()));
 		String title = research[random.nextInt(research.length)];
 
-		return new Project(prefix+" "+title, staffMember, type);
+		Project generated = new Project(prefix+" "+title, staffMember, type);
+		staffMember.addProposedProject(generated);
+
+		return generated;
 	}
 
 	private static Project.Type pickRandomType() {
