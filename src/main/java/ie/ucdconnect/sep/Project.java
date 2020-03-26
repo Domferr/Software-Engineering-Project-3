@@ -17,6 +17,13 @@ public class Project implements CSVRow {
         this.title = title;
         this.supervisor = supervisor;
         this.type = type;
+        validate();
+    }
+
+    public void validate(){
+        if(supervisor.isSpecialFocus() && !type.equals(Type.DS)){
+            throw new IllegalArgumentException();
+        }
     }
 
     public boolean matchesFocus(Student.Focus studentFocus) {

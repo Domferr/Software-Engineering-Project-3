@@ -38,9 +38,13 @@ class ProjectTest {
     }
 
     @Test
+    void validate(){
+        project.setType(Project.Type.CS);
+        assertThrows(IllegalArgumentException.class, () -> project.validate());
+    }
+
+    @Test
     void toCSVRow() {
         assertEquals("staff1,DS,project1", project.toCSVRow(), "Incorrect CSV row output");
     }
-
-    //TODO TEST THAT IF SPECIAL FOCUS IS TRUE THEN PROJECT PROPOSED MUST BE DS
 }

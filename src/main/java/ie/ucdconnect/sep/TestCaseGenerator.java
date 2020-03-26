@@ -169,6 +169,7 @@ public class TestCaseGenerator {
 		return prefixes;
 	}
 
+	/** Generate list of students*/
 	private static ArrayList<Student> generateStudents(int noStudents, List<Project> projects) {
 		final int MAX_NUM = 90000000;
 		final int MIN_NUM = 10000000;
@@ -211,6 +212,7 @@ public class TestCaseGenerator {
 		}
 	}
 
+	/** Assign list of project preferences to students*/
 	private static List<Project> assignPreferences(List<Project> projects, Student.Focus studentFocus) {
 		List<Project> projectPreferences = new ArrayList<>();
 		while (projectPreferences.size() < MAX_STUDENT_PREFERENCES) {
