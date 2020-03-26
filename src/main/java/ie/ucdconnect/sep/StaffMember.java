@@ -10,6 +10,17 @@ public class StaffMember {
     private String[] researchAreas;
     private boolean specialFocus;   // True if is only DS, otherwise false
 
+    public StaffMember(){
+
+    }
+
+    public StaffMember(String name, String[] researchActivities, String[] researchAreas, boolean specialFocus) {
+        this.name = name;
+        this.researchActivities = researchActivities;
+        this.researchAreas = researchAreas;
+        this.specialFocus = specialFocus;
+    }
+
     public String getName() {
         return name;
     }

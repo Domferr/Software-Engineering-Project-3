@@ -13,9 +13,11 @@ class ConfigTest {
 
     @Test
     void getInstance() {
+        fail("This test has not yet been implemented");
     }
 
     @Test
     void save() {
+        fail("This test has not yet been implemented");
     }
 }
