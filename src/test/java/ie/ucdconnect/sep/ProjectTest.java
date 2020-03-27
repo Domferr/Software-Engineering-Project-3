@@ -3,6 +3,9 @@ package ie.ucdconnect.sep;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectTest {
@@ -46,5 +49,15 @@ class ProjectTest {
     @Test
     void toCSVRow() {
         assertEquals("staff1,DS,project1", project.toCSVRow(), "Incorrect CSV row output");
+    }
+
+    @Test
+    void fromCSVRow() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(staffMember);
+        Project parsedProject = Project.fromCSVRow("staff1,DS,project1", list);
+        assertEquals("project1", parsedProject.getTitle());
+        assertEquals("staff1", parsedProject.getSupervisor().getName());
+        assertEquals(Project.Type.DS, parsedProject.getType());
     }
 }
