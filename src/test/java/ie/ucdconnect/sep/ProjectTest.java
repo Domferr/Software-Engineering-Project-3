@@ -65,6 +65,54 @@ class ProjectTest {
     }
 
     @Test
+    void fromCSVRow_invalidStaffMember() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
+        assertThrows(IllegalArgumentException.class, () -> Project.fromCSVRow("invalidStaff,DS,project1", list));
+    }
+
+    @Test
+    void fromCSVRow_invalidType() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
+        assertThrows(IllegalArgumentException.class, () -> Project.fromCSVRow("staff1,CS,project1", list));
+    }
+
+    @Test
+    void fromCSVRow_tooFewColumns() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
+        assertThrows(IllegalArgumentException.class, () -> Project.fromCSVRow("staff1,DS", list));
+    }
+
+    @Test
+    void fromCSVRow_tooManyColumns() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
+        assertThrows(IllegalArgumentException.class, () -> Project.fromCSVRow("staff1,DS,title,extra", list));
+    }
+
+    @Test
+    void fromCSVRow_tooManyColumns_emptyFinalColumn() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
+        assertThrows(IllegalArgumentException.class, () -> Project.fromCSVRow("staff1,DS,title,", list));
+    }
+
+    @Test
+    void fromCSVRow_emptyTitle() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
+        assertThrows(IllegalArgumentException.class, () -> Project.fromCSVRow("staff1,DS,", list));
+    }
+
+    @Test
     void fromCSV() {
         LinkedList<StaffMember> list = new LinkedList<>();
         list.add(CSstaffMember);

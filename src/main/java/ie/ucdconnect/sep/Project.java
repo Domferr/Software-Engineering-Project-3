@@ -25,9 +25,12 @@ public class Project implements CSVRow {
         validate();
     }
 
-    void validate(){
+    void validate() {
+        if (title == null || title.equals("")) {
+            throw new IllegalArgumentException("Invalid title");
+        }
         if(supervisor == null || supervisor.isSpecialFocus() && !type.equals(Type.DS)){
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Invalid supervisor");
         }
     }
 
