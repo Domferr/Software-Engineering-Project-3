@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
  */
 public class TestCaseGenerator {
 
-	private static final int[] TEST_SETS_STUDENTS_SIZE = {60, 120, 240, 500};
 	private static final int CS_FREQUENCY = 60;
 	private static final int AVERAGE_PROPOSAL = 3;	//each staff member proposes, on average, 3 projects
     private static final int MAX_STUDENT_PREFERENCES = 10;
@@ -54,12 +53,13 @@ public class TestCaseGenerator {
 		List<List<StaffMember>> pickedStaffTestData = new ArrayList<>();
 
 		/** Generating the different number of required students i.e. 60, 120, 240 and 500*/
-		for (int i = 0; i < TEST_SETS_STUDENTS_SIZE.length; i++) {
+		for (int i = 0; i < config.TEST_SETS_STUDENTS_SIZE.length; i++) {
+			int size = config.TEST_SETS_STUDENTS_SIZE[i];
 			/**
 			 * Generates test cases and outputs the generated tests.
 			 */
 			ArrayList<StaffMember> pickedMembers = new ArrayList<>();
-			int numberOfStaffMembers = (int)(TEST_SETS_STUDENTS_SIZE[i]*STUDENTS_STAFF_RATIO);
+			int numberOfStaffMembers = (int)(size*STUDENTS_STAFF_RATIO);
 			for (int j = 0; j < numberOfStaffMembers; j++) {
 				int randomIndex = random.nextInt(allStaffMembers.size());
 				StaffMember randomStaff = allStaffMembers.get(randomIndex);
@@ -74,20 +74,20 @@ public class TestCaseGenerator {
 			}
 
 			List<Project> projects = generateProjects(pickedMembers, prefixes);
-			System.out.println("Generating "+projects.size()+" projects for " + TEST_SETS_STUDENTS_SIZE[i] + " students.");
-			List<Student> students = generateStudents(TEST_SETS_STUDENTS_SIZE[i], projects);
+			System.out.println("Generating "+projects.size()+" projects for " + size + " students.");
+			List<Student> students = generateStudents(size, projects);
 
 			studentsTestData.add(students);
 			projectsTestData.add(projects);
 			pickedStaffTestData.add(pickedMembers);
 		}
 
-		String[] studentsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("students%d.csv", i)).toArray(String[]::new);
+		String[] studentsTestSets = Arrays.stream(config.TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("students%d.csv", i)).toArray(String[]::new);
 		for (int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(studentsTestSets[i], studentsTestData.get(i));
 		}
 
-		String[] projectsTestSets = Arrays.stream(TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("projectsFor%dStudents.csv", i)).toArray(String[]::new);
+		String[] projectsTestSets = Arrays.stream(config.TEST_SETS_STUDENTS_SIZE).mapToObj(i -> String.format("projectsFor%dStudents.csv", i)).toArray(String[]::new);
 		for (int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i));
 			//printProjectFrequency(projectsTestData.get(i));
