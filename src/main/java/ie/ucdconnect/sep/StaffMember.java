@@ -1,6 +1,10 @@
 package ie.ucdconnect.sep;
 
+import com.opencsv.CSVParser;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class StaffMember {
@@ -15,15 +19,41 @@ public class StaffMember {
         proposedProjects = new ArrayList<>();
     }
 
-    public StaffMember(String name, String[] researchActivities, String[] researchAreas, List<Project> proposedProjects, boolean specialFocus) {
+    public StaffMember(String name, String[] researchActivities, String[] researchAreas, boolean specialFocus) {
         this.name = name;
         this.researchActivities = researchActivities;
         this.researchAreas = researchAreas;
         this.specialFocus = specialFocus;
-        if (proposedProjects != null)
-            this.proposedProjects = proposedProjects;
-        else
-            this.proposedProjects = new ArrayList<>();
+        this.proposedProjects = new ArrayList<>();
+    }
+
+    /**
+     * Creates a list of {@link StaffMember} from {@code csvFile}.
+     */
+    public static List<StaffMember> fromCSV(String csvFile) {
+        List<StaffMember> staffMembers = new LinkedList<>();
+        String[] rows = csvFile.split("\n");
+        for (String row : rows) {
+            staffMembers.add(fromCSVRow(row));
+        }
+        return staffMembers;
+    }
+
+    /**
+     * Creates a {@link StaffMember} from {@code row}.
+     * {@code row} must not end with a newline.
+     * @return the created {@link StaffMember}
+     */
+    public static StaffMember fromCSVRow(String row) {
+        try {
+            String[] parts = new CSVParser().parseLine(row);
+            String[] researchActivities = parts[1].split(", ");
+            String[] researchAreas = parts[2].split(", ");
+            return new StaffMember(parts[0], researchActivities, researchAreas, parts[3].equals("Dagon Studies"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("Could not parse: " + row);
     }
 
     public String getName() {

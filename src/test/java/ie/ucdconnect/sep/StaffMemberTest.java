@@ -17,8 +17,17 @@ class StaffMemberTest {
         String[] researchAreas = {"Acting","Hollywood","Serious Acting"};
         String[] researchActivities = {"performing serious acting","winning Oscars"};
 
-        dsOnlyStaffMember = new StaffMember("Name1", researchActivities, researchAreas, null, true);
-        csStaffMember = new StaffMember("Name2", researchActivities, researchAreas, null, false);
+        dsOnlyStaffMember = new StaffMember("Name1", researchActivities, researchAreas, true);
+        csStaffMember = new StaffMember("Name2", researchActivities, researchAreas, false);
+    }
+
+    @Test
+    public void testFromCSVRow() {
+        StaffMember staffMember = StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\",Dagon Studies");
+        assertEquals("The Joker", staffMember.getName());
+        assertArrayEquals(new String[]{"causing mayhem", "spreading fear", "laughing maniacally"}, staffMember.getResearchActivities());
+        assertArrayEquals(new String[]{"DC Comics", "Gotham City"}, staffMember.getResearchAreas());
+        assertTrue(staffMember.isSpecialFocus());
     }
 
     @Test
