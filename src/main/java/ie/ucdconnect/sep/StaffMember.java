@@ -27,6 +27,14 @@ public class StaffMember {
         this.proposedProjects = new ArrayList<>();
     }
 
+    public StaffMember(String name, String[] researchActivities, String[] researchAreas, List<Project> proposedProjects, boolean specialFocus) {
+        this.name = name;
+        this.researchActivities = researchActivities;
+        this.researchAreas = researchAreas;
+        this.specialFocus = specialFocus;
+        this.proposedProjects = proposedProjects;
+    }
+
     /**
      * Creates a list of {@link StaffMember} from {@code csvFile}.
      */
@@ -47,6 +55,9 @@ public class StaffMember {
     public static StaffMember fromCSVRow(String row) {
         try {
             String[] parts = new CSVParser().parseLine(row);
+            if (parts.length != 4) {
+                throw new IllegalArgumentException("Invalid number of columns");
+            }
             String[] researchActivities = parts[1].split(", ");
             String[] researchAreas = parts[2].split(", ");
             return new StaffMember(parts[0], researchActivities, researchAreas, parts[3].equals("Dagon Studies"));
