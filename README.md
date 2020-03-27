@@ -4,6 +4,17 @@ Martynas Jagutis 17424866
 Domenico Ferraro 19203549
 Alex Ng 17409754
 
+TASK 2
+We have created 3 classes to store the data called Project, StaffMember and Student. Project contains the title,
+the staff member that proposed it and the stream it targets. Student contains general student info, their stream (focus),
+and their project preferences. StaffMember consists of their name, research activities, research areas, their proposed projects
+and whether or not they are special focus. We created the respective unit tests for each of these class aiming for high 
+coverage. Each of the classes consists of fromCSV and fromCSVRow methods which reads data from disk and creates their objects.
+These methods are tested in the unit test classes provided. Project offers a validate method which makes sures that the supervisors
+that propose these projects are consistent with their focus.
+
+
+TASK 1
 How Test Sets are generated:
 Students are generated from a list of names. They are assigned a random unique student number and a focus which has 
 a 60% chance of being CS and 40% chance of being DS. They are then assigned 10 difference preferences of projects
