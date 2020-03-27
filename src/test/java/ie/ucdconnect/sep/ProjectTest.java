@@ -19,7 +19,7 @@ class ProjectTest {
     void setUp() {
         DSstaffMember = new StaffMember("staff1", researchActivities, researchArea , true);
         CSstaffMember = new StaffMember("staff2", researchActivities, researchArea , false);
-        project = new Project("project1", DSstaffMember, Project.Type.DS);
+        DSstaffMember.addProposedProject(project);
     }
 
     @Test
