@@ -3,6 +3,7 @@ package ie.ucdconnect.sep;
 import com.opencsv.CSVParser;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Project implements CSVRow {
@@ -31,6 +32,18 @@ public class Project implements CSVRow {
     }
 
     /**
+     * Creates a list of {@link Project} from {@code csvFile}.
+     */
+    public static List<Project> fromCSV(String csvFile, List<StaffMember> staffMembers) {
+        List<Project> projects = new LinkedList<>();
+        String[] rows = csvFile.split("\n");
+        for (String row : rows) {
+            projects.add(fromCSVRow(row, staffMembers));
+        }
+        return projects;
+    }
+
+    /**
      * Creates a {@link Project} from {@code row}.
      * {@code row} must not end with a newline.
      * @return the created {@link Project}, or null if an error occurred.
@@ -45,7 +58,7 @@ public class Project implements CSVRow {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        throw new IllegalArgumentException("Could not parse: " + row);
     }
 
     private static StaffMember findStaffMember(String name, List<StaffMember> staffMembers) {

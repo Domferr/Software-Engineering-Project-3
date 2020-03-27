@@ -10,15 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectTest {
 
-    private StaffMember staffMember;
+    private StaffMember DSstaffMember, CSstaffMember;
     private Project project;
     private String[] researchActivities = {"researchActivity1", "researchActivity2"};
     private String[] researchArea = {"researchArea1", "researchArea2"};
 
     @BeforeEach
     void setUp() {
-        staffMember = new StaffMember("staff1", researchActivities, researchArea , true);
-        project = new Project("project1", staffMember, Project.Type.DS);
+        DSstaffMember = new StaffMember("staff1", researchActivities, researchArea , true);
+        CSstaffMember = new StaffMember("staff2", researchActivities, researchArea , false);
+        project = new Project("project1", DSstaffMember, Project.Type.DS);
     }
 
     @Test
@@ -54,10 +55,28 @@ class ProjectTest {
     @Test
     void fromCSVRow() {
         LinkedList<StaffMember> list = new LinkedList<>();
-        list.add(staffMember);
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
         Project parsedProject = Project.fromCSVRow("staff1,DS,project1", list);
         assertEquals("project1", parsedProject.getTitle());
         assertEquals("staff1", parsedProject.getSupervisor().getName());
         assertEquals(Project.Type.DS, parsedProject.getType());
+    }
+
+    @Test
+    void fromCSV() {
+        LinkedList<StaffMember> list = new LinkedList<>();
+        list.add(CSstaffMember);
+        list.add(DSstaffMember);
+        List<Project> parsedProjects = Project.fromCSV("staff1,DS,project1\nstaff2,CS,project2", list);
+        assertEquals(2, parsedProjects.size());
+        Project project1 = parsedProjects.get(0);
+        Project project2 = parsedProjects.get(1);
+        assertEquals("project1", project1.getTitle());
+        assertEquals("staff1", project1.getSupervisor().getName());
+        assertEquals(Project.Type.DS, project1.getType());
+        assertEquals("project2", project2.getTitle());
+        assertEquals("staff2", project2.getSupervisor().getName());
+        assertEquals(Project.Type.CS, project2.getType());
     }
 }
