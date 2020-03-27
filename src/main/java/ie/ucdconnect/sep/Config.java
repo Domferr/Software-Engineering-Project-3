@@ -15,7 +15,7 @@ import java.util.List;
  *  N.B: Each element is written in one row.
  * */
 public class Config {
-    public static final int[] TEST_SETS_STUDENTS_SIZE = {60, 120, 240, 500};
+    private static final int[] TEST_SETS_STUDENTS_SIZE = {60, 120, 240, 500};
     private static final char DIVIDER = '=';
     private static Config instance = null;  //Instance reference
 
@@ -127,5 +127,9 @@ public class Config {
     public static void setConfigFilename(String filename) {
         if (filename != null)
             CONFIG_FILENAME = filename;
+    }
+
+    public int[] getTestSetsStudentsSize() {
+        return TEST_SETS_STUDENTS_SIZE;
     }
 }
