@@ -19,6 +19,7 @@ class ProjectTest {
     void setUp() {
         DSstaffMember = new StaffMember("staff1", researchActivities, researchArea, null, true);
         CSstaffMember = new StaffMember("staff2", researchActivities, researchArea, null, false);
+        project = new Project("project1", DSstaffMember, Project.Type.DS);
         DSstaffMember.addProposedProject(project);
     }
 
