@@ -49,7 +49,7 @@ public class Project implements CSVRow {
     /**
      * Creates a {@link Project} from {@code row}.
      * {@code row} must not end with a newline.
-     * @return the created {@link Project}, or null if an error occurred.
+     * @return the created {@link Project}
      */
     public static Project fromCSVRow(String row, List<StaffMember> staffMembers) {
         try {
