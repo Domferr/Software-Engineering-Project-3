@@ -5,10 +5,10 @@ import java.util.List;
 
 public class StaffMember {
 
-    private String name;
+    private String name;    //Full name
     private String[] researchActivities;
     private String[] researchAreas;
-    private List<Project> proposedProjects;
+    private List<Project> proposedProjects; //What project this staff member has proposed
     private boolean specialFocus;   // True if is only DS, otherwise false
 
     public StaffMember() {

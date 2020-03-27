@@ -18,7 +18,7 @@ public class Config {
     private static final char DIVIDER = '=';
     private static Config instance = null;  //Instance reference
 
-    private static final String CONFIG_FILENAME = "config.txt"; //Name of the file with config data
+    private static String CONFIG_FILENAME = "config.txt"; //Name of the file with config data
 
     private static String FILES_DIR_NAME;   //Name of the directory that contains the files
     private static String TESTCASE_DIR_NAME;//Name of the directory with generated testcases
@@ -28,7 +28,15 @@ public class Config {
     private static final int NUMBER_OF_ROWS = 5;    //How many rows the config.txt file should have
 
     private Config() throws IOException {
-        load();
+        File configFile = new File(CONFIG_FILENAME);
+        if (!configFile.exists()) {
+            if (configFile.createNewFile())
+                load(configFile);
+            else
+                throw new IOException("Unable to create config file");
+        } else {
+            load(configFile);
+        }
     }
 
     /** Singleton implementation */
@@ -39,8 +47,7 @@ public class Config {
     }
 
     /** Load from the configuration file */
-    private void load() throws IOException {
-        File configFile = new File(CONFIG_FILENAME);
+    private void load(File configFile) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(configFile));
         ArrayList<String> fileRows = new ArrayList<>(NUMBER_OF_ROWS);
         String line = "";
@@ -110,5 +117,14 @@ public class Config {
 
     public String getTestcaseDirName() {
         return TESTCASE_DIR_NAME;
+    }
+
+    public static File getConfigFile() {
+        return new File(CONFIG_FILENAME);
+    }
+
+    public static void setConfigFilename(String filename) {
+        if (filename != null)
+            CONFIG_FILENAME = filename;
     }
 }
