@@ -55,12 +55,27 @@ public class StaffMember {
     public static StaffMember fromCSVRow(String row) {
         try {
             String[] parts = new CSVParser().parseLine(row);
-            if (parts.length != 4) {
+            if (parts.length < 3 || parts.length > 4) {
                 throw new IllegalArgumentException("Invalid number of columns");
             }
+            String name = parts[0];
+            if (name.trim().length() == 0)
+                throw new IllegalArgumentException("Staff member must have a name");
             String[] researchActivities = parts[1].split(", ");
+            if (researchActivities.length == 0 || (researchActivities.length == 1 && researchActivities[0].trim().length() == 0))
+                throw new IllegalArgumentException("Staff member must have at least one research activity");
             String[] researchAreas = parts[2].split(", ");
-            return new StaffMember(parts[0], researchActivities, researchAreas, parts[3].equals("Dagon Studies"));
+            if (researchAreas.length == 0 || (researchAreas.length == 1 && researchAreas[0].trim().length() == 0))
+                throw new IllegalArgumentException("Staff member must have at least one research area");
+
+            boolean specialFocus = false;
+            if (parts.length == 4) {
+                specialFocus = parts[3].equals("Dagon Studies");
+            }
+            if (parts.length == 4 && !specialFocus)
+                throw new IllegalArgumentException("Dagon Studies is the only special focus allowed");
+
+            return new StaffMember(name, researchActivities, researchAreas, specialFocus);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,19 +100,11 @@ public class StaffMember {
      * @return the created {@link StaffMember}, or null if an error occurred.
      */
     public static StaffMember fromCSVRow(String row, List<Project> proposedProjects) {
-        try {
-            String[] parts = new CSVParser().parseLine(row);
-            String[] researchActivities = parts[1].split(" ");
-            String[] researchAreas = parts[2].split(" ");
-            boolean specialFocus = parts[3].equals("Dagon Studies");
-            if (parts.length != 4) {
-                throw new IllegalArgumentException("Expected 4 values, found " + parts.length);
-            }
-            return new StaffMember(parts[0], researchActivities, researchAreas, proposedProjects, specialFocus);
-        } catch (IOException e) {
-            e.printStackTrace();
+        StaffMember member = fromCSVRow(row);
+        for (Project project: proposedProjects) {
+            member.addProposedProject(project);
         }
-        throw new IllegalArgumentException("Could not parse: " + row);
+        return member;
     }
 
     public String getName() {
@@ -139,7 +146,7 @@ public class StaffMember {
     public void addProposedProject(Project proposedProject) {
         if (specialFocus && proposedProject.getType() != Project.Type.DS
             || !specialFocus && proposedProject.getType() == Project.Type.DS)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("This staffmember cannot propose this project. Staff special focus: "+specialFocus+", Project type: "+proposedProject.getType());
         this.proposedProjects.add(proposedProject);
     }
 

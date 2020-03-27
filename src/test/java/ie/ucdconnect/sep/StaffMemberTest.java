@@ -22,7 +22,7 @@ class StaffMemberTest {
     }
 
     @Test
-    public void testFromCSVRow() {
+    public void testFromCSVRow_withSpecialFocus() {
         StaffMember staffMember = StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\",Dagon Studies");
         assertEquals("The Joker", staffMember.getName());
         assertArrayEquals(new String[]{"causing mayhem", "spreading fear", "laughing maniacally"}, staffMember.getResearchActivities());
@@ -31,8 +31,43 @@ class StaffMemberTest {
     }
 
     @Test
+    public void testFromCSVRow_withoutSpecialFocus() {
+        StaffMember staffMember = StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\"");
+        assertEquals("The Joker", staffMember.getName());
+        assertArrayEquals(new String[]{"causing mayhem", "spreading fear", "laughing maniacally"}, staffMember.getResearchActivities());
+        assertArrayEquals(new String[]{"DC Comics", "Gotham City"}, staffMember.getResearchAreas());
+        assertFalse(staffMember.isSpecialFocus());
+    }
+
+    @Test
     public void testFromCSVRow_invalidNumberOfColumns() {
-        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\""));
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\",\"Dagon Studies\",\"Something\""));
+    }
+
+    @Test
+    public void testFromCSVRow_zeroResearchActivities() {
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"\",\"DC Comics, Gotham City\""));
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,,\"DC Comics, Gotham City\""));
+    }
+
+    @Test
+    public void testFromCSVRow_zeroResearchAreas() {
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"\""));
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\","));
+    }
+
+    @Test
+    public void testFromCSVRow_noName() {
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow(",\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\""));
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("\"\",\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\""));
+    }
+
+    @Test
+    public void testFromCSVRow_wrongStudies() {
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\",Wrong Studies"));
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\",\" \""));
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\","));
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\",\"\""));
     }
 
     @Test
