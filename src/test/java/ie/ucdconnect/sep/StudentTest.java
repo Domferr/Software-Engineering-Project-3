@@ -36,7 +36,7 @@ class StudentTest {
 
     @Test
     void toCSVRow() {
-        assertEquals("12345678,Nigel,Mooney,CS,\"Creating a web interface for promoting evolutionary theory,Creating a web interface for promoting healthy eating\"", student.toCSVRow(), "Incorrect CSV row output");
+        assertEquals("12345678,Nigel,Mooney,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", student.toCSVRow(), "Incorrect CSV row output");
     }
 
     @Test

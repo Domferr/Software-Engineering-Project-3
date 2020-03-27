@@ -82,31 +82,6 @@ public class StaffMember {
         throw new IllegalArgumentException("Could not parse: " + row);
     }
 
-    /**
-     * Creates a list of {@link StaffMember} from {@code csvFile}.
-     */
-    public static List<StaffMember> fromCSV(String csvFile, List<Project> proposedProjects) {
-        List<StaffMember> staffMembers = new LinkedList<>();
-        String[] rows = csvFile.split("\n");
-        for (String row : rows) {
-            staffMembers.add(fromCSVRow(row, proposedProjects));
-        }
-        return staffMembers;
-    }
-
-    /**
-     * Creates a {@link StaffMember} from {@code row}.
-     * {@code row} must not end with a newline.
-     * @return the created {@link StaffMember}, or null if an error occurred.
-     */
-    public static StaffMember fromCSVRow(String row, List<Project> proposedProjects) {
-        StaffMember member = fromCSVRow(row);
-        for (Project project: proposedProjects) {
-            member.addProposedProject(project);
-        }
-        return member;
-    }
-
     public String getName() {
         return name;
     }
