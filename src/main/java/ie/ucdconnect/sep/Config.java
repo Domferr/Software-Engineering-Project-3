@@ -15,6 +15,7 @@ import java.util.List;
  *  N.B: Each element is written in one row.
  * */
 public class Config {
+    public static final int[] TEST_SETS_STUDENTS_SIZE = {60, 120, 240, 500};
     private static final char DIVIDER = '=';
     private static Config instance = null;  //Instance reference
 
