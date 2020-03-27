@@ -31,6 +31,11 @@ class StaffMemberTest {
     }
 
     @Test
+    public void testFromCSVRow_invalidNumberOfColumns() {
+        assertThrows(IllegalArgumentException.class, () -> StaffMember.fromCSVRow("The Joker,\"causing mayhem, spreading fear, laughing maniacally\",\"DC Comics, Gotham City\""));
+    }
+
+    @Test
     void getResearchActivities() {
         assertNotNull(dsOnlyStaffMember.getResearchActivities());
         assertTrue(dsOnlyStaffMember.getResearchActivities().length > 0);
