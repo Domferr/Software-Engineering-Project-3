@@ -1,6 +1,10 @@
 package ie.ucdconnect.sep;
 
+import com.opencsv.CSVParser;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class StaffMember {
@@ -24,6 +28,39 @@ public class StaffMember {
             this.proposedProjects = proposedProjects;
         else
             this.proposedProjects = new ArrayList<>();
+    }
+
+    /**
+     * Creates a list of {@link StaffMember} from {@code csvFile}.
+     */
+    public static List<StaffMember> fromCSV(String csvFile, List<Project> proposedProjects) {
+        List<StaffMember> staffMembers = new LinkedList<>();
+        String[] rows = csvFile.split("\n");
+        for (String row : rows) {
+            staffMembers.add(fromCSVRow(row, proposedProjects));
+        }
+        return staffMembers;
+    }
+
+    /**
+     * Creates a {@link StaffMember} from {@code row}.
+     * {@code row} must not end with a newline.
+     * @return the created {@link StaffMember}, or null if an error occurred.
+     */
+    public static StaffMember fromCSVRow(String row, List<Project> proposedProjects) {
+        try {
+            String[] parts = new CSVParser().parseLine(row);
+            String[] researchActivities = parts[1].split(" ");
+            String[] researchAreas = parts[2].split(" ");
+            boolean specialFocus = parts[3].equals("Dagon Studies");
+            if (parts.length != 4) {
+                throw new IllegalArgumentException("Expected 4 values, found " + parts.length);
+            }
+            return new StaffMember(parts[0], researchActivities, researchAreas, proposedProjects, specialFocus);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("Could not parse: " + row);
     }
 
     public String getName() {

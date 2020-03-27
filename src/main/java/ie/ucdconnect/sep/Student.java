@@ -1,5 +1,11 @@
 package ie.ucdconnect.sep;
 
+import com.opencsv.CSVParser;
+
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Student implements CSVRow {
@@ -42,6 +48,45 @@ public class Student implements CSVRow {
         }
         sb.append("\"");
         return sb.toString();
+    }
+
+    /**
+     * Creates a list of {@link Project} from {@code csvFile}.
+     */
+    public static List<Student> fromCSV(String csvFile, List<Project> projects) {
+        List<Student> students = new LinkedList<>();
+        String[] rows = csvFile.split("\n");
+        for (String row : rows) {
+            students.add(fromCSVRow(row, projects));
+        }
+        return students;
+    }
+
+    /**
+     * Creates a {@link Student} from {@code row}.
+     * {@code row} must not end with a newline.
+     * @return the created {@link Student}, or null if an error occurred.
+     */
+    public static Student fromCSVRow(String row, List<Project> projects) {
+        try {
+            String[] parts = new CSVParser().parseLine(row);
+            if (parts.length != 5) {
+                throw new IllegalArgumentException("Expected 5 values, found " + parts.length);
+            }
+            return new Student(parts[1], parts[2], parts[0], Focus.valueOf(parts[3]), projects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new IllegalArgumentException("Could not parse: " + row);
+    }
+
+    private static StaffMember findStaffMember(String name, List<StaffMember> staffMembers) {
+        for (StaffMember staffMember : staffMembers) {
+            if (staffMember.getName().equals(name)) {
+                return staffMember;
+            }
+        }
+        return null;
     }
 
     public void setFullName(String firstName, String lastName) {

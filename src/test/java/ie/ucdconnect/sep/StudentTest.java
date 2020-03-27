@@ -18,7 +18,7 @@ class StudentTest {
     private Project csdsProject;
 
     @BeforeEach
-    void set(){
+    void setup(){
         preferences = new ArrayList<Project>();
 
         String[] researchAreas = {"Acting","Hollywood","Serious Acting"};
