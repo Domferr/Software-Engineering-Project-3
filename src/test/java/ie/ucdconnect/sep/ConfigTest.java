@@ -11,16 +11,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ConfigTest {
 
-    private Executable savingExecutable;
+    private static final Executable savingExecutable = () -> Config.getInstance().save("resources",
+            "testcases",
+            "names.txt",
+            "Miskatonic Staff Members.csv",
+            "prefixes.txt");
 
     @BeforeEach
     void setUp() {
         Config.setConfigFilename("configtest.txt");
-        savingExecutable = () -> Config.getInstance().save("resources",
-                "testcases",
-                "names.txt",
-                "Miskatonic Staff Members.csv",
-                "prefixes.txt");
     }
 
     @Test
