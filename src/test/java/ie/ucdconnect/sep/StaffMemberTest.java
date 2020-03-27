@@ -116,4 +116,6 @@ class StaffMemberTest {
         assertDoesNotThrow(() -> csStaffMember.addProposedProject(p1), "CS staff can propose cs+ds projects");
         assertTrue(csStaffMember.getProposedProjects().contains(p1));
     }
+
+
 }
