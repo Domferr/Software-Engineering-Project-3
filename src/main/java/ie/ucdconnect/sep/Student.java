@@ -2,7 +2,6 @@ package ie.ucdconnect.sep;
 
 import com.opencsv.CSVParser;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;

@@ -124,6 +124,10 @@ public class Config {
         return new File(CONFIG_FILENAME);
     }
 
+    public String getFilesDirName() {
+        return FILES_DIR_NAME;
+    }
+
     public static void setConfigFilename(String filename) {
         if (filename != null)
             CONFIG_FILENAME = filename;

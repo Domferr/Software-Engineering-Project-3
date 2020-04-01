@@ -20,11 +20,7 @@ public class StaffMember {
     }
 
     public StaffMember(String name, String[] researchActivities, String[] researchAreas, boolean specialFocus) {
-        this.name = name;
-        this.researchActivities = researchActivities;
-        this.researchAreas = researchAreas;
-        this.specialFocus = specialFocus;
-        this.proposedProjects = new ArrayList<>();
+        this(name, researchActivities, researchAreas, new ArrayList<Project>(), specialFocus);
     }
 
     public StaffMember(String name, String[] researchActivities, String[] researchAreas, List<Project> proposedProjects, boolean specialFocus) {
