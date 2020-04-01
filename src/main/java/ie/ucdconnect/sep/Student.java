@@ -4,9 +4,7 @@ import com.opencsv.CSVParser;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
 
 public class Student implements CSVRow {
@@ -54,7 +52,7 @@ public class Student implements CSVRow {
     /**
      * Creates a list of {@link Project} from {@code csvFile}.
      */
-    public static List<Student> fromCSV(String csvFile, HashMap<String, Project> projects) {
+    public static List<Student> fromCSV(String csvFile, Map<String, Project> projects) {
         List<Student> students = new LinkedList<>();
         String[] rows = csvFile.split("\n");
         for (String row : rows) {
@@ -68,7 +66,7 @@ public class Student implements CSVRow {
      * {@code row} must not end with a newline.
      * @return the created {@link Student}, or null if an error occurred.
      */
-    public static Student fromCSVRow(String row, HashMap<String, Project> projects) {
+    public static Student fromCSVRow(String row, Map<String, Project> projects) {
         try {
             String[] parts = new CSVParser().parseLine(row);
 
