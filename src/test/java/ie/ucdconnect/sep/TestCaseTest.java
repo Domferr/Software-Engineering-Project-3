@@ -22,18 +22,23 @@ public class TestCaseTest {
 
 	private static final Pattern STUDENT_TESTCASE_FILENAME_PATTERN = Pattern.compile("students(\\d+)\\.csv");
 	private static final Pattern PROJECT_TESTCASE_FILENAME_PATTERN = Pattern.compile("projectsFor(\\d+)Students\\.csv");
-	private static final String TESTCASE_DIR = "resources/testcases";
-	private static final String STAFF_FILE = "resources/Miskatonic Staff Members.csv";
 	private static final CSVParser CSV_PARSER = new CSVParser();
+	private static Config config;
+
+	@BeforeEach
+	void setUp() throws IOException {
+		config = Config.getInstance();
+
+	}
 
 	@Test
 	public void testFilenameFormat() {
-		File testCaseDir = new File(TESTCASE_DIR);
+		File testCaseDir = new File(config.getTestcaseDirName());
 		if (!testCaseDir.exists()) {
-			fail(TESTCASE_DIR + " does not exist. Please generate test cases");
+			fail(config.getTestcaseDirName() + " does not exist. Please generate test cases");
 		}
 		if (!testCaseDir.isDirectory()) {
-			fail(TESTCASE_DIR + " is not a directory");
+			fail(config.getTestcaseDirName() + " is not a directory");
 		}
 		// This is a bitmap we will use to ensure all numbers appear exactly twice.
 		// We will XOR every number onto this, if every number appears EXACTLY two times, the result will be zero. Otherwise it will be non-zero.
@@ -62,7 +67,7 @@ public class TestCaseTest {
 
 	@Test
 	public void testTestCaseValidity() throws IOException {
-		File testCaseDir = new File(TESTCASE_DIR);
+		File testCaseDir = new File(config.getTestcaseDirName());
 		// From the above test, we are now assuming students and projects come in same number pairs.
 		for (File testCaseFile : testCaseDir.listFiles()) {
 			String fileName = testCaseFile.getName();
@@ -120,7 +125,7 @@ public class TestCaseTest {
 
 	private Map<String, String> mapStaff() throws IOException {
 		// Maps the staff members by their name.
-		return Files.lines(Paths.get(STAFF_FILE)).collect(Collectors.toMap(s -> {
+		return Files.lines(Paths.get(config.getStaffMembersFile().getCanonicalPath())).collect(Collectors.toMap(s -> {
 			try {
 				// We must do this as some staff have an alias: Firstname "alias" lastname
 				return CSV_PARSER.parseLine(s)[0];
