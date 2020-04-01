@@ -90,7 +90,7 @@ public class TestCaseGenerator {
 		String[] projectsTestSets = Arrays.stream(config.getTestSetsStudentsSize()).mapToObj(i -> String.format("projectsFor%dStudents.csv", i)).toArray(String[]::new);
 		for (int i = 0; i < studentsTestSets.length; i++) {
 			saveGeneratedTestcase(projectsTestSets[i], projectsTestData.get(i));
-			//printProjectFrequency(projectsTestData.get(i));
+			printProjectFrequency(projectsTestData.get(i));
 		}
 	}
 
@@ -258,11 +258,10 @@ public class TestCaseGenerator {
 			// https://stackoverflow.com/questions/54712600/what-is-the-true-maximum-and-minimum-value-of-random-nextgaussian
 			// This stackoverflow answer calculated the min/max values of nextGaussian().
 			// There is a slight inaccuracy here, to fix use z-scores to find probability P, the calculate index as 'P * projects.size()'.
-			double sd = 1;
-			double maxOutput = 8 * sd;
-			double randDistribution = random.nextGaussian() * sd; // Generates a randomly distributed double, with mean zero and SD 1.
-			double positiveRandDistribution = maxOutput + randDistribution;
-			int projectIndex = (int)(positiveRandDistribution / (maxOutput * 2) * projects.size());
+			double maxOutput = 8;
+			double randDistribution = random.nextGaussian() * 3;
+			double positiveRandDistribution = Math.max(0, Math.min(16, maxOutput + randDistribution));
+			int projectIndex = (int)(positiveRandDistribution / (maxOutput * 2 + 0.01) * projects.size());
 			Project randomProject = projects.get(projectIndex);
 			if (randomProject.matchesFocus(studentFocus)) {
 				randomProject.totalPicks++;
