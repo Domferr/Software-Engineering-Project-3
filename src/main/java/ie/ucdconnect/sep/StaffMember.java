@@ -62,18 +62,18 @@ public class StaffMember {
             if (name.trim().length() == 0)
                 throw new IllegalArgumentException("Staff member must have a name");
             String[] researchActivities = parts[1].split(", ");
-            if (researchActivities.length == 0 || (researchActivities.length == 1 && researchActivities[0].trim().length() == 0))
-                throw new IllegalArgumentException("Staff member must have at least one research activity");
+//            if (researchActivities.length == 0 || (researchActivities.length == 1 && researchActivities[0].trim().length() == 0))
+//                throw new IllegalArgumentException("Staff member must have at least one research activity: " + row);
             String[] researchAreas = parts[2].split(", ");
-            if (researchAreas.length == 0 || (researchAreas.length == 1 && researchAreas[0].trim().length() == 0))
-                throw new IllegalArgumentException("Staff member must have at least one research area");
+//            if (researchAreas.length == 0 || (researchAreas.length == 1 && researchAreas[0].trim().length() == 0))
+//                throw new IllegalArgumentException("Staff member must have at least one research area: " + row);
 
             boolean specialFocus = false;
             if (parts.length == 4) {
                 specialFocus = parts[3].equals("Dagon Studies");
             }
-            if (parts.length == 4 && !specialFocus)
-                throw new IllegalArgumentException("Dagon Studies is the only special focus allowed");
+            if (parts.length == 4 && !specialFocus && !parts[3].equals(""))
+                throw new IllegalArgumentException("Dagon Studies is the only special focus allowed: " + row);
 
             return new StaffMember(name, researchActivities, researchAreas, specialFocus);
         } catch (IOException e) {
