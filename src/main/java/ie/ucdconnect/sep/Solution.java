@@ -59,10 +59,10 @@ public class Solution {
 
 	@Override
 	public String toString() {
-		String s = "";
+		StringBuilder s = new StringBuilder();
 		for (Project project: projectMapping.keySet()){
-			s += "Project: "+ project.getTitle() + " -> Student: " + projectMapping.get(project).toString() + "\n";
+			s.append("Project: ").append(project.getTitle()).append(" -> Student: ").append(projectMapping.get(project).toString()).append("\n");
 		}
-		return s;
+		return s.toString();
 	}
 }
