@@ -16,8 +16,9 @@ public class Solution {
 			Student student = students.remove(rand.nextInt(currentNoStudents));
 			boolean matched = false;
 			List<Project> preferences = student.getPreferences();
-			for (int i = preferences.size() - 1; i >= 0; i--) {
-				Project project = preferences.get(i);
+			int startIndex = rand.nextInt(preferences.size());
+			for (int i = startIndex; i < startIndex + preferences.size(); i++) {
+				Project project = preferences.get(i % preferences.size());
 				if (solution.isAvailable(project)) {
 					solution.safeMap(student, project);
 					matched = true;
