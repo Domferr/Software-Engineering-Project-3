@@ -1,18 +1,19 @@
 package ie.ucdconnect.sep;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Solution {
 
 	private Map<Project, Student> projectMapping = new HashMap<>();
 
 	public static Solution createRandom(List<Project> projects, List<Student> students) {
+		Random rand = new Random();
 		Solution solution = new Solution();
 		Stack<Student> unmappedStudents = new Stack<>();
-		for (Student student : students) {
+
+		int currentNoStudents = students.size();
+		while (currentNoStudents > 0){
+			Student student = students.remove(rand.nextInt(currentNoStudents));
 			boolean matched = false;
 			List<Project> preferences = student.getPreferences();
 			for (int i = preferences.size() - 1; i >= 0; i--) {
@@ -26,7 +27,9 @@ public class Solution {
 			if (!matched) {
 				unmappedStudents.push(student);
 			}
+			currentNoStudents--;
 		}
+
 		while (!unmappedStudents.empty()) {
 			Student student = unmappedStudents.pop();
 			for (Project project : projects) {
@@ -51,5 +54,14 @@ public class Solution {
 
 	public boolean isAvailable(Project project) {
 		return !projectMapping.containsKey(project);
+	}
+
+	@Override
+	public String toString() {
+		String s = "";
+		for (Project project: projectMapping.keySet()){
+			s += "Project: "+ project.getTitle() + " -> Student: " + projectMapping.get(project).toString() + "\n";
+		}
+		return s;
 	}
 }

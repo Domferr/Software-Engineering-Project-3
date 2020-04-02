@@ -21,6 +21,8 @@ public class SolutionGenerator {
 		Map<String, Project> projectsMap = projects.stream().collect(Collectors.toMap(Project::getTitle, Function.identity()));
 		List<Student> students = Student.fromCSV(readFile(getStudentsFile().toPath()), projectsMap);
 		Solution solution = Solution.createRandom(projects, students);
+
+		System.out.println(solution);
 	}
 
 	private static File getProjectFile() {
