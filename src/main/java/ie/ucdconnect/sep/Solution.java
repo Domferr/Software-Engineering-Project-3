@@ -72,7 +72,9 @@ public class Solution implements CSVRow {
 		return s.toString();
 	}
 
-	/** Returns this solution in CSV format */
+	/** Returns this solution in CSV format.
+	 *  Each file's row has two columns. The first column is the project
+	 *  while the second one is the assigned student. */
 	@Override
 	public String toCSVRow() {
 		StringBuilder s = new StringBuilder();
@@ -82,11 +84,19 @@ public class Solution implements CSVRow {
 		return s.toString();
 	}
 
-	public static Solution fromCSV(String csvFile) {
+	/** Returns the solution from a given csvfile content.
+	 * @throws IllegalStateException if another student cannot be mapped */
+	public static Solution fromCSV(String csvFile, List<StaffMember> staffMembers, Map<String, Project> projectsMap) throws IllegalStateException {
 		Solution solution = new Solution();
-
-		//TODO work in progress
-
+		String[] rows = csvFile.split("\n");
+		for (String row : rows) {
+			String[] columns = row.split(";");
+			if (columns.length != 2)
+				throw new IllegalArgumentException("This file must have two columns");
+			Project project = Project.fromCSVRow(columns[0], staffMembers);
+			Student student = Student.fromCSVRow(columns[1], projectsMap);
+			solution.safeMap(student, project);
+		}
 		return solution;
 	}
 }

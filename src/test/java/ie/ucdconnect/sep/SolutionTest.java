@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,14 +18,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class SolutionTest {
 
     private static Config config;
+    private static List<StaffMember> staffMembers;
 
     @BeforeEach
     void setUp() throws IOException {
         config = Config.getInstance();
-        int size = 60;
+        staffMembers = StaffMember.fromCSV(readFile(config.getStaffMembersFile().toPath()));
+    }
 
-        String fileContent = readSolutionFile(size);
-        System.out.println(fileContent);
+    private static String readFile(Path path) throws IOException {
+        return String.join("\n", Files.readAllLines(path));
     }
 
     private String readSolutionFile(int testSetSize) throws IOException {
@@ -32,35 +36,34 @@ class SolutionTest {
         return String.join("\n", Files.readAllLines(solutionFile.toPath()));
     }
 
-    private boolean validateSolution(Solution solution) {
-        return true;
+    private Map<String, Project> getProjectsMap(int testSetSize) throws IOException {
+        File projectFile = new File(config.getTestcaseDirName() + "projectsFor" + testSetSize + "Students.csv");
+        List<Project> projects = Project.fromCSV(readFile(projectFile.toPath()), staffMembers);
+        return projects.stream().collect(Collectors.toMap(Project::getTitle, Function.identity()));
+    }
+
+    private void validateSolution(int testSetSize) throws IOException {
+        String fileContent = readSolutionFile(testSetSize);
+        Solution.fromCSV(fileContent, staffMembers, getProjectsMap(testSetSize));
     }
 
     @Test
-    void validateSolution_60Students() throws IOException {
-        String fileContent = readSolutionFile(60);
-        Solution solution = Solution.fromCSV(fileContent);
-        assertTrue(validateSolution(solution));
+    void validateSolution_60Students() {
+        assertDoesNotThrow(() -> validateSolution(60));
     }
 
     @Test
-    void validateSolution_120Students() throws IOException {
-        String fileContent = readSolutionFile(120);
-        Solution solution = Solution.fromCSV(fileContent);
-        assertTrue(validateSolution(solution));
+    void validateSolution_120Students() {
+        assertDoesNotThrow(() -> validateSolution(120));
     }
 
     @Test
-    void validateSolution_240Students() throws IOException {
-        String fileContent = readSolutionFile(240);
-        Solution solution = Solution.fromCSV(fileContent);
-        assertTrue(validateSolution(solution));
+    void validateSolution_240Students() {
+        assertDoesNotThrow(() -> validateSolution(240));
     }
 
     @Test
-    void validateSolution_500Students() throws IOException {
-        String fileContent = readSolutionFile(500);
-        Solution solution = Solution.fromCSV(fileContent);
-        assertTrue(validateSolution(solution));
+    void validateSolution_500Students() {
+        assertDoesNotThrow(() -> validateSolution(500));
     }
 }
