@@ -21,7 +21,7 @@ public class Config {
 
     private static String CONFIG_FILENAME = "config.txt"; //Name of the file with config data
 
-    private static String FILES_DIR_NAME;   //Name of the directory that contains the files
+    private static String RESOURCES_DIR_NAME;   //Name of the directory that contains the files
     private static String TESTCASE_DIR_NAME;//Name of the directory with generated testcases
     private static File NAMES_FILE;         //File with student names
     private static File STAFF_MEMBERS_FILE; //File csv with supervisors
@@ -73,8 +73,8 @@ public class Config {
 
     /** Parse and save data read */
     private void parseDataRead(List<String> fileRows) {
-        FILES_DIR_NAME = parseRow(fileRows.get(0));
-        String filesDirPath = "./"+FILES_DIR_NAME+"/";
+        RESOURCES_DIR_NAME = parseRow(fileRows.get(0));
+        String filesDirPath = "./"+ RESOURCES_DIR_NAME +"/";
         NAMES_FILE = new File(filesDirPath+parseRow(fileRows.get(1)));
         STAFF_MEMBERS_FILE = new File(filesDirPath+parseRow(fileRows.get(2)));
         PREFIXES_FILE = new File(filesDirPath+parseRow(fileRows.get(3)));
@@ -84,7 +84,7 @@ public class Config {
     /** Overwrite field strings and then write into config file */
     public void save(String filesDirName, String testCaseDir, String namesFileName, String staffMembersFileName, String prefixesFileName) throws IOException {
         String filesDirPath = "./"+filesDirName+"/";
-        FILES_DIR_NAME = filesDirName;
+        RESOURCES_DIR_NAME = filesDirName;
         NAMES_FILE = new File(filesDirPath + namesFileName);
         STAFF_MEMBERS_FILE = new File(filesDirPath + staffMembersFileName);
         PREFIXES_FILE = new File(filesDirPath + prefixesFileName);
@@ -125,7 +125,7 @@ public class Config {
     }
 
     public String getFilesDirName() {
-        return FILES_DIR_NAME;
+        return RESOURCES_DIR_NAME;
     }
 
     public static void setConfigFilename(String filename) {

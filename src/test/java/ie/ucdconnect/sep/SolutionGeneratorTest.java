@@ -15,11 +15,10 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.*;
 
 /** This class unit tests the solution files */
-class SolutionTest {
+class SolutionGeneratorTest {
 
     private static Config config;
     private static List<StaffMember> staffMembers;
-
 
     @BeforeEach
     void setUp() throws IOException {

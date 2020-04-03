@@ -59,13 +59,11 @@ class StaffMemberTest {
     @Test
     void getResearchActivities() {
         assertNotNull(dsOnlyStaffMember.getResearchActivities());
-        assertTrue(dsOnlyStaffMember.getResearchActivities().length > 0);
     }
 
     @Test
     void getResearchAreas() {
         assertNotNull(dsOnlyStaffMember.getResearchAreas());
-        assertTrue(dsOnlyStaffMember.getResearchAreas().length > 0);
     }
 
     @Test
@@ -102,6 +100,4 @@ class StaffMemberTest {
         assertDoesNotThrow(() -> csStaffMember.addProposedProject(p1), "CS staff can propose cs+ds projects");
         assertTrue(csStaffMember.getProposedProjects().contains(p1));
     }
-
-
 }
