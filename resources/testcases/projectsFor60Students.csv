@@ -1,90 +1,90 @@
-Dalton Trumbo,CSDS,Creating a web interface for writing scripts
-Lance Armstrong,CS,Building a service to help pedalling furiously
-Eliza Doolittle,DS,Creating a web interface for handing out flowers
-Mother Teresa,CSDS,Creating an app for promoting Catholic values
-Martin Luther King,CSDS,Building a service to help fighting for democracy
-Alexander Fleming,CS,Creating a web interface for studying science
-Jayne Mansfield,CS,Building a REST API for starring in Hollywood movies
-Lance Armstrong,CS,Building a REST API for riding a bicycle
-Mr. Bean,DS,Creating a web interface for causing mayhem
-Confucius,CS,Creating an app for spreading philosophy
-George Costanza,DS,Creating a web interface for complaining about life
-Mother Teresa,CSDS,Creating a web interface for giving to the poor
-Gordon Ramsay,CSDS,Creating a web interface for winning Michelin stars
-William the Conqueror,CS,Building a REST API for ruling over subjects
-Ernst Stavro Blofeld,DS,Building a service to help running a clandestine spy organization
-William the Conqueror,CS,Building a REST API for running a kingdom
-Genghis Khan,CS,Building a service to help running an empire
-Gordon Ramsay,CS,Building a service to help winning Michelin stars
-Jayne Mansfield,CS,Creating an app for starring in Hollywood movies
-Gordon Ramsay,CS,Building a service to help cooking fancy food
-Lance Armstrong,CS,Creating an app for pedalling furiously
-William the Conqueror,CS,Building a service to help running a kingdom
-Edith Piaf,CS,Building a REST API for singing melancholy songs
-Dalton Trumbo,CSDS,Building a REST API for writing compelling dialogue
-Genghis Khan,CS,Building a REST API for running an empire
-Gustavo Fring,DS,Creating a web interface for running a criminal empire
-George Costanza,DS,Building a REST API for complaining about life
-Sherlock Holmes,DS,Creating an app for solving crimes
-Gustavo Fring,DS,Building a REST API for selling chrystal meth
-Mother Teresa,CS,Creating an app for giving to the poor
-Stanley Kowalski,DS,Creating a web interface for moaning about women
-Lance Armstrong,CS,Building a REST API for taking anabolic steroids
-Jean-Luc Picard,DS,Creating an app for making strategic decisions
-William the Conqueror,CSDS,Creating a web interface for ruling over subjects
-Martin Luther King,CSDS,Creating a web interface for fighting for democracy
-Alexander Fleming,CS,Building a service to help studying science
-Edith Piaf,CS,Building a service to help singing melancholy songs
-Stanley Kowalski,DS,Creating an app for moaning about women
-Jean-Luc Picard,DS,Building a REST API for making strategic decisions
-Martin Luther King,CS,Building a REST API for promoting pacifism
-Forrest Gump,DS,Building a REST API for eating a box of chocolates
-Mother Teresa,CS,Building a REST API for giving to the poor
-Indiana Jones,DS,Building a REST API for unearthing ancient tombs
-Lance Armstrong,CS,Building a service to help taking anabolic steroids
-Richard Dawkins,CS,Creating an app for promoting science
-Mister Magoo,DS,Building a REST API for causing mayhem
-Indiana Jones,DS,Creating a web interface for unearthing ancient tombs
-Edith Piaf,CS,Creating a web interface for singing melancholy songs
-Confucius,CS,Creating a web interface for teaching philosophy
-Sherlock Holmes,DS,Building a REST API for solving crimes
-Gordon Ramsay,CS,Creating a web interface for cursing at kitchen staff
-Sherlock Holmes,DS,Building a service to help interpreting evidence
-Dalton Trumbo,CS,Creating an app for writing compelling dialogue
-Cardinal Richelieu,CSDS,Creating a web interface for directing the business of state
-Confucius,CSDS,Creating an app for teaching philosophy
-Gordon Ramsay,CSDS,Creating a web interface for cooking fancy food
-Mother Teresa,CS,Building a REST API for promoting Catholic values
-Ernst Stavro Blofeld,DS,Creating an app for devising evil schemes
-Forrest Gump,DS,Creating an app for eating a box of chocolates
-Ernst Stavro Blofeld,DS,Building a REST API for running a clandestine spy organization
-Martin Luther King,CS,Creating an app for fighting for civil rights
-Jayne Mansfield,CS,Building a service to help starring in Hollywood movies
-Sherlock Holmes,DS,Building a REST API for finding clues
-Richard Dawkins,CS,Creating a web interface for promoting science
-Harriet Tubman,CS,Creating a web interface for fighting for civil rights
-Confucius,CSDS,Creating an app for teaching the next generation
-Cardinal Richelieu,CS,Building a REST API for directing the business of state
-Mr. Bean,DS,Creating an app for causing mayhem
-Gordon Ramsay,CS,Creating an app for winning Michelin stars
-Richard Dawkins,CSDS,Creating a web interface for promoting atheism
-Richard Dawkins,CS,Creating a web interface for explaining evolution
-Lance Armstrong,CS,Creating an app for taking anabolic steroids
-Wesley Crusher,DS,Building a REST API for studying science
-Lance Armstrong,CS,Building a REST API for pedalling furiously
-Frank Sinatra,CS,Building a service to help starring in romantic comedies
-Lance Armstrong,CS,Creating a web interface for riding a bicycle
-Frank Sinatra,CS,Building a service to help crooning love songs
-Frank Sinatra,CS,Creating a web interface for singing middle-of-the-road songs
-Indiana Jones,DS,Building a service to help unearthing ancient tombs
-Mr. Bean,DS,Building a service to help causing mayhem
-William the Conqueror,CS,Creating a web interface for fighting with swords
-Cardinal Richelieu,CS,Building a REST API for plotting strategies
-Richard Dawkins,CS,Creating a web interface for ranting about religion
-Cardinal Richelieu,CS,Creating an app for directing the business of state
-Cardinal Richelieu,CSDS,Building a service to help plotting strategies
-Lionel Hutz,DS,Creating an app for losing court cases
-Genghis Khan,CS,Creating an app for running an empire
-Mother Teresa,CS,Creating an app for feeding the poor
-Gordon Ramsay,CSDS,Creating an app for cooking fancy food
-Eliza Doolittle,DS,Building a service to help handing out flowers
+Barney Stinson,DS,Creating an app for womanizing
+Linus Torvalds,CS,Building a service to help promoting open-source software
+Johnny Cash,CS,Creating a web interface for singing country music
+Barney Stinson,DS,Creating an app for seducing women
+Beetlejuice,DS,Creating a web interface for laughing maniacally
+Adolf Hitler,CS,Building a REST API for launching a war
+Hugh Hefner,CSDS,Creating an app for dating centrefolds
+Queen Victoria,CS,Building a service to help running a kingdom
+Amelia Earhart,CS,Building a REST API for flying airplanes
+Don Quixote,DS,Creating an app for tilting at windmills
+Pippi Longstocking,DS,Building a REST API for playing pranks
+Jay Gatsby,DS,Building a service to help throwing lavish parties
+Hedda Hopper,CS,Building a REST API for ranting about liberals
+Archimedes,CS,Building a service to help studying mathematics
+Adolf Hitler,CS,Creating an app for running a reich
+Jim Jones,CS,Building a REST API for organizing mass suicides 
+Adolf Hitler,CS,Creating a web interface for launching a war
+Jay Gatsby,DS,Creating an app for throwing lavish parties
+Gloria Steinem,CS,Creating an app for promoting feminism
+David Hasselhoff,CS,Building a service to help constructing an ironic public image
+Adolf Hitler,CS,Creating a web interface for running a reich
+Gloria Steinem,CS,Building a service to help promoting feminism
+Queen Victoria,CS,Building a REST API for ruling over subjects
+Don Quixote,DS,Creating an app for going on romantic quests
+Larry Flynt,CSDS,Building a service to help publishing soft pornography
+Voltaire,CS,Creating an app for writing novels
+Angela Merkel,CSDS,Creating a web interface for plotting election strategies
+Jim Jones,CS,Building a service to help running a religious cult
+Amelia Earhart,CS,Creating an app for flying airplanes
+Archimedes,CSDS,Building a REST API for studying mathematics
+Larry Flynt,CS,Building a REST API for running gentleman's clubs
+Beetlejuice,DS,Building a service to help practicing the Occult
+Angela Merkel,CS,Creating an app for plotting election strategies
+Bob Cratchit,DS,Building a service to help keeping accounts
+Angela Merkel,CS,Building a REST API for plotting election strategies
+Pippi Longstocking,DS,Creating a web interface for playing pranks
+Queen Victoria,CSDS,Creating an app for running a kingdom
+Jason Voorhees,DS,Creating an app for killing teenagers
+Adolf Hitler,CSDS,Creating a web interface for opening a new front
+Mr. Miyagi,DS,Creating a web interface for teaching martial arts
+Gloria Steinem,CS,Building a REST API for promoting feminism
+Harry Potter,DS,Building a service to help playing quidditch
+Larry Flynt,CS,Creating an app for running gentleman's clubs
+Adolf Hitler,CSDS,Creating an app for organizing a putsch
+Voltaire,CS,Building a REST API for writing novels
+Beetlejuice,DS,Creating a web interface for practicing the Occult
+Gloria Steinem,CS,Creating a web interface for promoting feminism
+Adolf Hitler,CS,Building a REST API for running a reich
+Harry Potter,DS,Building a REST API for studying magic tricks
+Gloria Steinem,CSDS,Creating a web interface for moaning about men
+Jason Voorhees,DS,Building a REST API for creating nightmares
+Hedda Hopper,CS,Building a service to help ranting about liberals
+Larry Flynt,CS,Building a service to help running gentleman's clubs
+Voltaire,CSDS,Building a REST API for promoting enlightenment
+Adolf Hitler,CS,Building a REST API for opening a new front
+Jason Voorhees,DS,Creating a web interface for killing teenagers
+Bruce Willis,CS,Creating a web interface for starring in action movies
+Jim Jones,CS,Creating an app for running a religious cult
+Beetlejuice,DS,Creating a web interface for causing mayhem
+Archimedes,CS,Creating an app for proving math theorems
+Adolf Hitler,CS,Creating an app for creating an axis of evil
+Bob Cratchit,DS,Building a REST API for keeping accounts
+Lady Macbeth,DS,Creating an app for wielding political power
+Popeye,DS,Building a REST API for defending the weak
+Don Quixote,DS,Building a REST API for tilting at windmills
+Jay Gatsby,DS,Creating a web interface for throwing lavish parties
+Mr. Miyagi,DS,Creating an app for teaching martial arts
+Hedda Hopper,CSDS,Creating a web interface for promoting conservative values
+Archimedes,CSDS,Building a REST API for proving math theorems
+David Hasselhoff,CS,Creating a web interface for constructing an ironic public image
+Joan Crawford,CSDS,Building a service to help starring in Hollywood movies
+Linus Torvalds,CS,Creating a web interface for developing operating systems
+Amelia Earhart,CS,Creating a web interface for breaking records
+Queen Victoria,CS,Creating a web interface for running a kingdom
+Hedda Hopper,CS,Creating an app for ranting about liberals
+Barney Stinson,DS,Creating a web interface for womanizing
+Archimedes,CS,Creating a web interface for proving math theorems
+Beetlejuice,DS,Building a REST API for laughing maniacally
+Lady Macbeth,DS,Building a REST API for climbing social ladders
+Amelia Earhart,CS,Building a REST API for breaking records
+Gloria Steinem,CS,Building a REST API for moaning about men
+Tony Soprano,DS,Creating a web interface for running an empire
+Bruce Willis,CS,Creating an app for starring in action movies
+Hugh Hefner,CSDS,Building a REST API for dating centrefolds
+Lady Macbeth,DS,Creating a web interface for manipulating political pawns
+Gloria Steinem,CSDS,Creating an app for moaning about men
+Harry Potter,DS,Building a service to help studying magic tricks
+Jim Jones,CS,Creating a web interface for organizing mass suicides 
+Jason Voorhees,DS,Creating a web interface for slashing victims
+Archimedes,CSDS,Creating a web interface for studying mathematics
