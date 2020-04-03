@@ -25,10 +25,6 @@ public class TestCaseTest {
 	@BeforeEach
 	void setUp() throws IOException {
 		config = Config.getInstance();
-	}
-
-	@Test
-	public void testFilenameFormat() {
 		File testCaseDir = new File(config.getTestcaseDirName());
 		if (!testCaseDir.exists()) {
 			fail(config.getTestcaseDirName() + " does not exist. Please generate test cases");
@@ -36,6 +32,11 @@ public class TestCaseTest {
 		if (!testCaseDir.isDirectory()) {
 			fail(config.getTestcaseDirName() + " is not a directory");
 		}
+	}
+
+	@Test
+	public void testFilenameFormat() {
+		File testCaseDir = new File(config.getTestcaseDirName());
 		// This is a bitmap we will use to ensure all numbers appear exactly twice.
 		// We will XOR every number onto this, if every number appears EXACTLY two times, the result will be zero. Otherwise it will be non-zero.
 		int bitMap = 0;
