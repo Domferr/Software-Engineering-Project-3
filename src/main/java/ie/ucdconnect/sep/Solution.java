@@ -20,9 +20,10 @@ public class Solution implements CSVRow {
 		Solution solution = new Solution();
 		Stack<Student> unmappedStudents = new Stack<>();
 
-		int currentNoStudents = students.size();
-		while (currentNoStudents > 0){
-			Student student = students.remove(rand.nextInt(currentNoStudents));
+		List<Student> studentsCopy = new ArrayList<>(students);
+		Collections.shuffle(studentsCopy);
+
+		for (Student student : studentsCopy) {
 			boolean matched = false;
 			List<Project> preferences = student.getPreferences();
 			int startIndex = rand.nextInt(preferences.size());
@@ -37,7 +38,6 @@ public class Solution implements CSVRow {
 			if (!matched) {
 				unmappedStudents.push(student);
 			}
-			currentNoStudents--;
 		}
 
 		while (!unmappedStudents.empty()) {
@@ -45,6 +45,7 @@ public class Solution implements CSVRow {
 			for (Project project : projects) {
 				if (solution.isAvailable(project)) {
 					solution.safeMap(student, project);
+					break;
 				}
 			}
 		}
