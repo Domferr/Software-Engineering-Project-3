@@ -2,10 +2,16 @@ package ie.ucdconnect.sep;
 
 import java.util.*;
 
+/** This class represent a solution. It maps each project to a student */
 public class Solution implements CSVRow {
 
 	private Map<Project, Student> projectMapping = new HashMap<>();
 
+	/** Static method that takes a list of projects and students and then generates a random solution.
+	 *  The algorithm is the following:
+	 *  Assign every student their LEAST preferable project, if that project isn't available, try
+	 *  to give them more preferable projects. Any student who can not be matched to a project
+	 *  (all their preferences are already taken) will be assigned a random project from the list. */
 	public static Solution createRandom(List<Project> projects, List<Student> students) {
 		Random rand = new Random();
 		Solution solution = new Solution();

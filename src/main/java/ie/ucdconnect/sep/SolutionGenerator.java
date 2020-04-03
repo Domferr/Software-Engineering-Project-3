@@ -13,10 +13,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /** This class reads the testcases and generates a random solution.
- *  For each project it prints the assigned student. */
+ *  It saves each solution into a file inside the testcase dir.
+ *  Each row of the solution file has a project and the assigned student. */
 public class SolutionGenerator {
 
-	private static final int CASE_NUM = 500;
 	private static Config config;
 
 	public static void main(String[] args) throws IOException {
@@ -31,7 +31,7 @@ public class SolutionGenerator {
 		}
 	}
 
-	/** Write the given list into specified file.  */
+	/** Write the given solution into a file.  */
 	private static void saveSolution(Solution solution, int size) {
 		String dirName = config.getTestcaseDirName();
 		File testCaseDir = new File(dirName);
