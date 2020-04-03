@@ -2,7 +2,7 @@ package ie.ucdconnect.sep;
 
 import java.util.*;
 
-public class Solution {
+public class Solution implements CSVRow {
 
 	private Map<Project, Student> projectMapping = new HashMap<>();
 
@@ -67,7 +67,8 @@ public class Solution {
 	}
 
 	/** Returns this solution in CSV format */
-	public String toCSV() {
+	@Override
+	public String toCSVRow() {
 		StringBuilder s = new StringBuilder();
 		for (Project project: projectMapping.keySet()) {
 			s.append(project.getTitle()).append(";").append(projectMapping.get(project).toCSVRow()).append("\n");
