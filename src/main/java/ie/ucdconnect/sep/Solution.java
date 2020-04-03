@@ -92,10 +92,14 @@ public class Solution implements CSVRow {
 		for (String row : rows) {
 			String[] columns = row.split(";");
 			if (columns.length != 2)
-				throw new IllegalArgumentException("This file must have two columns");
+				throw new IllegalArgumentException("The row ["+ row +"] must have two columns");
 			Project project = Project.fromCSVRow(columns[0], staffMembers);
 			Student student = Student.fromCSVRow(columns[1], projectsMap);
-			solution.safeMap(student, project);
+			if (solution.isAvailable(project)) {
+				solution.safeMap(student, project);
+			} else {
+				throw new IllegalStateException("The project "+project.getTitle()+" has been mapped with two or more students");
+			}
 		}
 		return solution;
 	}
