@@ -85,15 +85,6 @@ public class Solution implements CSVRow {
 		return new ArrayList<Student>(projectMapping.values());
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder s = new StringBuilder();
-		for (Project project: projectMapping.keySet()){
-			s.append("Project: ").append(project.getTitle()).append(" -> Student: ").append(projectMapping.get(project).toString()).append("\n");
-		}
-		return s.toString();
-	}
-
 	/** Returns this solution in CSV format.
 	 *  Each file's row has two columns. The first column is the project
 	 *  while the second one is the assigned student. */
@@ -107,7 +98,7 @@ public class Solution implements CSVRow {
 	}
 
 	/** Returns the solution from a given csvfile content.
-	 * @throws IllegalStateException if another student cannot be mapped */
+	 * @throws IllegalStateException if a student cannot be mapped */
 	public static Solution fromCSV(String csvFile, List<StaffMember> staffMembers, Map<String, Project> projectsMap) throws IllegalStateException {
 		Solution solution = new Solution();
 		String[] rows = csvFile.split("\n");
@@ -124,5 +115,14 @@ public class Solution implements CSVRow {
 			}
 		}
 		return solution;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		for (Project project: projectMapping.keySet()){
+			s.append("Project: ").append(project.getTitle()).append(" -> Student: ").append(projectMapping.get(project).toString()).append("\n");
+		}
+		return s.toString();
 	}
 }
