@@ -5,12 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -32,29 +28,26 @@ class SolutionGeneratorTest {
         if (!testCaseDir.isDirectory()) {
             fail(config.getTestcaseDirName() + " is not a directory");
         }
-        staffMembers = StaffMember.fromCSV(readFile(config.getStaffMembersFile().toPath()));
-    }
-
-    private static String readFile(Path path) throws IOException {
-        return String.join("\n", Files.readAllLines(path));
+        staffMembers = StaffMember.fromCSV(Utils.readFile(config.getStaffMembersFile().toPath()));
     }
 
     private String readSolutionFile(int testSetSize) throws IOException {
         String fileName = "solutionFor"+testSetSize+"Students.csv";
         File solutionFile = new File(config.getTestcaseDirName() + fileName);
-        return String.join("\n", Files.readAllLines(solutionFile.toPath()));
+        return Utils.readFile(solutionFile.toPath());
     }
 
     private Map<String, Project> getProjectsMap(int testSetSize) throws IOException {
-        File projectFile = new File(config.getTestcaseDirName() + "projectsFor" + testSetSize + "Students.csv");
-        List<Project> projects = Project.fromCSV(readFile(projectFile.toPath()), staffMembers);
+        File projectFile = Utils.getProjectFile(config, testSetSize);
+        List<Project> projects = Project.fromCSV(Utils.readFile(projectFile.toPath()), staffMembers);
         return projects.stream().collect(Collectors.toMap(Project::getTitle, Function.identity()));
     }
 
     private void validateSolution(int testSetSize) throws IOException {
         String fileContent = readSolutionFile(testSetSize);
         Map<String, Project> projectMap = getProjectsMap(testSetSize);
-        List<Student> students = Student.fromCSV(readFile(new File(config.getTestcaseDirName() + "students" + testSetSize + ".csv").toPath()), projectMap);
+        File studentsFile = Utils.getStudentsFile(config, testSetSize);
+        List<Student> students = Student.fromCSV(Utils.readFile(studentsFile.toPath()), projectMap);
         Solution solution = Solution.fromCSV(fileContent, students, projectMap);
         assertEquals(testSetSize, solution.getStudents().size());
         assertEquals(testSetSize, solution.getProjects().size());

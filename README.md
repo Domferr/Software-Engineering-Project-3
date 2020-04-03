@@ -5,14 +5,14 @@ Domenico Ferraro 19203549
 Alex Ng 17409754
 
 TASK 3
-To achieve the random generation of solutions we created two methods called SolutionGeneration and Solution with unit tests
+To achieve the random generation of solutions we created two classes called SolutionGeneration and Solution with unit tests
 to test both of these classes. The solution class creates a map of project to student so only one project is mapped to one 
-student. This is done through the create random method which takes the list of projects and students as its parameters.
+student. This class also contains methods to modify this map safely. This is done through the create random method which takes the list of projects and students as its parameters.
 This method choose a random student from the list and a random preference from that student and maps it if the project
 has not yet been taken by another student. This is checked by the safe map method which makes sure that the project 
 has not been taken. It then goes to the next preference if it has been taken and loops back around until it finds one
 which has not been taken. If all projects in the preference list have been take a random project is assigned to that student.
-The solution generator creates the solution class. The results a saved to .csv files named solutionFor<no_of_students>Students.csv. 
+The solution generator a solution for all the test cases we generated in previous assignments. The results are saved to .csv files named solutionFor<no_of_students>Students.csv. 
 
 TASK 2
 We have created 3 classes to store the data called Project, StaffMember and Student. Project contains the title,
