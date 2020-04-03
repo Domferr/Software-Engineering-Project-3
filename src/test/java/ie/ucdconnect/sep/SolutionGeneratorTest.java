@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -56,6 +58,22 @@ class SolutionGeneratorTest {
         Solution solution = Solution.fromCSV(fileContent, students, projectMap);
         assertEquals(testSetSize, solution.getStudents().size());
         assertEquals(testSetSize, solution.getProjects().size());
+
+        for (Project project: solution.getProjects()) {
+            Student assignedStudent = solution.getAssignedStudent(project);
+            checkDuplication(assignedStudent, project);
+        }
+    }
+
+    /** Checks if the projects are duplicated in memory to avoid memory leak */
+    private void checkDuplication(Student student, Project assignedProject) {
+        if (!student.getPreferences().contains(assignedProject)) {
+            for (Project preference: student.getPreferences()) {
+                if (assignedProject.getTitle().equals(preference.getTitle())) {
+                    throw new IllegalStateException("There is duplication of projects in memory");
+                }
+            }
+        }
     }
 
     @Test
