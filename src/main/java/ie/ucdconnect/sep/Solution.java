@@ -77,8 +77,16 @@ public class Solution implements CSVRow {
 	public String toCSVRow() {
 		StringBuilder s = new StringBuilder();
 		for (Project project: projectMapping.keySet()) {
-			s.append(project.getTitle()).append(";").append(projectMapping.get(project).toCSVRow()).append("\n");
+			s.append(project.toCSVRow()).append(";").append(projectMapping.get(project).toCSVRow()).append("\n");
 		}
 		return s.toString();
+	}
+
+	public static Solution fromCSV(String csvFile) {
+		Solution solution = new Solution();
+
+		//TODO work in progress
+
+		return solution;
 	}
 }

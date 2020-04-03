@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class SolutionTest {
 
     private static Config config;
-    private Map<Project, Student> projectMapping = new HashMap<>();
 
     @BeforeEach
     void setUp() throws IOException {
@@ -33,12 +32,35 @@ class SolutionTest {
         return String.join("\n", Files.readAllLines(solutionFile.toPath()));
     }
 
-    private boolean validateSolution(Map<Project, Student> solutionMapping) {
+    private boolean validateSolution(Solution solution) {
         return true;
     }
 
     @Test
-    void validateSolution_60Students() {
+    void validateSolution_60Students() throws IOException {
+        String fileContent = readSolutionFile(60);
+        Solution solution = Solution.fromCSV(fileContent);
+        assertTrue(validateSolution(solution));
+    }
 
+    @Test
+    void validateSolution_120Students() throws IOException {
+        String fileContent = readSolutionFile(120);
+        Solution solution = Solution.fromCSV(fileContent);
+        assertTrue(validateSolution(solution));
+    }
+
+    @Test
+    void validateSolution_240Students() throws IOException {
+        String fileContent = readSolutionFile(240);
+        Solution solution = Solution.fromCSV(fileContent);
+        assertTrue(validateSolution(solution));
+    }
+
+    @Test
+    void validateSolution_500Students() throws IOException {
+        String fileContent = readSolutionFile(500);
+        Solution solution = Solution.fromCSV(fileContent);
+        assertTrue(validateSolution(solution));
     }
 }
