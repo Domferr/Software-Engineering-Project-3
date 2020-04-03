@@ -20,7 +20,7 @@ public class SolutionGenerator {
 
 	public static void main(String[] args) throws IOException {
 		config = Config.getInstance();
-		List<StaffMember> staffMembers = StaffMember.fromCSV(readFile(config.getStaffMembersFile().toPath()));
+		List<StaffMember> staffMembers = StaffMember.fromCSV(Utils.readFile(config.getStaffMembersFile().toPath()));
 		int[] testSetsSize = config.getTestSetsStudentsSize();
 		for (int i = 0; i < testSetsSize.length; i++) {
 			Solution solution = generateSolution(testSetsSize[i], staffMembers);
@@ -48,24 +48,13 @@ public class SolutionGenerator {
 
 	/** Given a testset size, reads the right projects and students files and returns a random solution */
 	private static Solution generateSolution(int testSetSize, List<StaffMember> staffMembers) throws IOException {
-		List<Project> projects = Project.fromCSV(readFile(getProjectFile(testSetSize).toPath()), staffMembers);
+		File projectsFile = Utils.getProjectFile(config, testSetSize);
+		File studentsFile = Utils.getStudentsFile(config, testSetSize);
+
+		List<Project> projects = Project.fromCSV(Utils.readFile(projectsFile.toPath()), staffMembers);
 		Map<String, Project> projectsMap = projects.stream().collect(Collectors.toMap(Project::getTitle, Function.identity()));
-		List<Student> students = Student.fromCSV(readFile(getStudentsFile(testSetSize).toPath()), projectsMap);
+		List<Student> students = Student.fromCSV(Utils.readFile(studentsFile.toPath()), projectsMap);
 
 		return Solution.createRandom(projects, students);
-	}
-
-	private static File getProjectFile(int testSetSize) {
-		String fileName = "projectsFor" + testSetSize + "Students.csv";
-		return new File(config.getTestcaseDirName() + fileName);
-	}
-
-	private static File getStudentsFile(int testSetSize) {
-		String fileName = "students" + testSetSize + ".csv";
-		return new File(config.getTestcaseDirName() + fileName);
-	}
-
-	private static String readFile(Path path) throws IOException {
-		return String.join("\n", Files.readAllLines(path));
 	}
 }
