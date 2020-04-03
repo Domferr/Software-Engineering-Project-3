@@ -38,7 +38,7 @@ class SolutionGeneratorTest {
     }
 
     private String readSolutionFile(int testSetSize) throws IOException {
-        String fileName = "solutionFor"+testSetSize+"students.csv";
+        String fileName = "solutionFor"+testSetSize+"Students.csv";
         File solutionFile = new File(config.getTestcaseDirName() + fileName);
         return String.join("\n", Files.readAllLines(solutionFile.toPath()));
     }
