@@ -51,7 +51,11 @@ class SolutionGeneratorTest {
 
     private void validateSolution(int testSetSize) throws IOException {
         String fileContent = readSolutionFile(testSetSize);
-        Solution.fromCSV(fileContent, staffMembers, getProjectsMap(testSetSize));
+        Map<String, Project> projectMap = getProjectsMap(testSetSize);
+        List<Student> students = Student.fromCSV(readFile(new File(config.getTestcaseDirName() + "students" + testSetSize + ".csv").toPath()), projectMap);
+        Solution solution = Solution.fromCSV(fileContent, students, projectMap);
+        assertEquals(testSetSize, solution.getStudents().size());
+        assertEquals(testSetSize, solution.getProjects().size());
     }
 
     @Test

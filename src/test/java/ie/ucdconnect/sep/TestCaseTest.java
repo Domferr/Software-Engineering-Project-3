@@ -19,6 +19,7 @@ public class TestCaseTest {
 
 	private static final Pattern STUDENT_TESTCASE_FILENAME_PATTERN = Pattern.compile("students(\\d+)\\.csv");
 	private static final Pattern PROJECT_TESTCASE_FILENAME_PATTERN = Pattern.compile("projectsFor(\\d+)Students\\.csv");
+	private static final Pattern SOLUTION_TESTCASE_FILENAME_PATTERN = Pattern.compile("solutionFor(\\d+)Students\\.csv");
 	private static final CSVParser CSV_PARSER = new CSVParser();
 	private static Config config;
 
@@ -47,14 +48,16 @@ public class TestCaseTest {
 			}
 			Matcher studentMatcher = STUDENT_TESTCASE_FILENAME_PATTERN.matcher(fileName);
 			Matcher projectMatcher = PROJECT_TESTCASE_FILENAME_PATTERN.matcher(fileName);
+			Matcher solutionMatcher = SOLUTION_TESTCASE_FILENAME_PATTERN.matcher(fileName);
 			if (studentMatcher.matches()) {
 				int num = Integer.parseInt(studentMatcher.group(1));
 				bitMap = bitMap ^ num;
 			} else if (projectMatcher.matches()) {
 				int num = Integer.parseInt(projectMatcher.group(1));
 				bitMap = bitMap ^ num;
-			} else {
+			} else if (!solutionMatcher.matches()) {
 				fail(fileName + " was not expected");
+
 			}
 		}
 		if (bitMap != 0) {

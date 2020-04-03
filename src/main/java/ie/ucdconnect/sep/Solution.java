@@ -1,5 +1,8 @@
 package ie.ucdconnect.sep;
 
+import com.opencsv.CSVParser;
+
+import java.io.IOException;
 import java.util.*;
 
 /** This class represent a solution. It maps each project to a student */
@@ -92,22 +95,25 @@ public class Solution implements CSVRow {
 	public String toCSVRow() {
 		StringBuilder s = new StringBuilder();
 		for (Project project: projectMapping.keySet()) {
-			s.append(project.toCSVRow()).append(";").append(projectMapping.get(project).toCSVRow()).append("\n");
+			s.append(project.getTitle()).append(",").append(projectMapping.get(project).getStudentNumber()).append("\n");
 		}
 		return s.toString();
 	}
 
 	/** Returns the solution from a given csvfile content.
-	 * @throws IllegalStateException if a student cannot be mapped */
-	public static Solution fromCSV(String csvFile, List<StaffMember> staffMembers, Map<String, Project> projectsMap) throws IllegalStateException {
+	 * @throws IllegalStateException if a student cannot be mapped
+	 * @throws IOException if an error occurs while parsing the CSV
+	 */
+	public static Solution fromCSV(String csvFile, List<Student> students, Map<String, Project> projectsMap) throws IllegalStateException, IOException {
+		CSVParser csvParser = new CSVParser();
 		Solution solution = new Solution();
 		String[] rows = csvFile.split("\n");
 		for (String row : rows) {
-			String[] columns = row.split(";");
+			String[] columns = csvParser.parseLine(row);
 			if (columns.length != 2)
 				throw new IllegalArgumentException("The row ["+ row +"] must have two columns");
-			Project project = Project.fromCSVRow(columns[0], staffMembers);
-			Student student = Student.fromCSVRow(columns[1], projectsMap);
+			Project project = projectsMap.get(columns[0]);
+			Student student = findStudent(columns[1], students);
 			if (solution.isAvailable(project)) {
 				solution.safeMap(student, project);
 			} else {
@@ -116,6 +122,16 @@ public class Solution implements CSVRow {
 		}
 		return solution;
 	}
+
+	private static Student findStudent(String studentNumber, List<Student> students) {
+		for (Student student : students) {
+			if (student.getStudentNumber().equals(studentNumber)) {
+				return student;
+			}
+		}
+		throw new IllegalArgumentException("Student '" + studentNumber + "' not found.");
+	}
+
 
 	@Override
 	public String toString() {
