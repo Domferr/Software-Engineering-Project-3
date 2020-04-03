@@ -63,6 +63,28 @@ public class Solution implements CSVRow {
 		return !projectMapping.containsKey(project);
 	}
 
+	/** Returns the project assigned to a given student. Returns null if the student has no project assigned */
+	public Project getAssignedProject(Student student) {
+		for (Project project : projectMapping.keySet()) {
+			if (projectMapping.get(project).equals(student))
+				return project;
+		}
+		return null;
+	}
+
+	/** Returns the student assigned to a given project. Returns null if the project has no student assigned */
+	public Student getAssignedStudent(Project project) {
+		return projectMapping.get(project);
+	}
+
+	public Set<Project> getProjects() {
+		return projectMapping.keySet();
+	}
+
+	public ArrayList<Student> getStudents() {
+		return new ArrayList<Student>(projectMapping.values());
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();

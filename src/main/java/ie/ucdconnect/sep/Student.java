@@ -118,6 +118,17 @@ public class Student implements CSVRow {
         return preferences;
     }
 
+    public boolean hasPreference(Project project) {
+        return preferences.contains(project);
+    }
+
+    public boolean hasPreference(String projectTitle) {
+        for (Project preference : preferences) {
+            if (preference.getTitle().equals(projectTitle))
+                return true;
+        }
+        return false;
+    }
     public void setPreferences(List<Project> preferences) {
         this.preferences = preferences;
     }
