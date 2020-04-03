@@ -39,9 +39,8 @@ public class SolutionGenerator {
 			testCaseDir.mkdir();
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+"solutionFor"+size+"students.txt"));
-			String fileContent = solution.toString();
-			writer.write(fileContent);
+			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+"solutionFor"+size+"students.csv"));
+			writer.write(solution.toCSV());
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -65,4 +65,13 @@ public class Solution {
 		}
 		return s.toString();
 	}
+
+	/** Returns this solution in CSV format */
+	public String toCSV() {
+		StringBuilder s = new StringBuilder();
+		for (Project project: projectMapping.keySet()) {
+			s.append(project.getTitle()).append(";").append(projectMapping.get(project).toCSVRow()).append("\n");
+		}
+		return s.toString();
+	}
 }
