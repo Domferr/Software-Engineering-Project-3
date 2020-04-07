@@ -1,5 +1,6 @@
 package ie.ucdconnect.sep;
 
+import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableMultimap;
 import com.opencsv.CSVParser;
 
@@ -10,10 +11,14 @@ import java.util.stream.Collectors;
 /** This class represent a solution. It maps each project to a student */
 public class Solution {
 
+	private static final int CONSTRAINT_VIOLATION_PENALTY = 100;
 	private ImmutableMultimap<Project, Student> projectMapping;
+	private int energy;
 
 	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
+		energy = calculateEnergy();
+
 	}
 
 	/** Static method that takes a list of projects and students and then generates a random solution.
@@ -104,6 +109,33 @@ public class Solution {
 		return returnedStudents;
 	}
 
+	private int calculateEnergy(){
+		int energy = 0;
+		for(Project project : projectMapping.keySet()){
+			if(projectMapping.get(project).size() > 1) {
+				energy += CONSTRAINT_VIOLATION_PENALTY;
+			}
+			for(Student student : projectMapping.get(project).asList()){
+				int i = 0;
+				boolean found = false;
+				while (!found && i<10){
+					if(student.getPreferences().get(i).equals(project)){
+						System.out.println("Found at "+ i);
+						energy+=i;
+						found = true;
+					}
+					i++;
+				}
+				if(!found){
+					//System.out.println("Not found");
+					energy+=i;
+				}
+			}
+		}
+		System.out.println("Energy of generated solution: " + energy);
+		return energy;
+	}
+
 
 	@Override
 	public String toString() {
@@ -111,6 +143,7 @@ public class Solution {
 		for (Project project: projectMapping.keySet()){
 			s.append("Project: ").append(project.getTitle()).append(" -> Student: ").append(projectMapping.get(project).toString()).append("\n");
 		}
+
 		return s.toString();
 	}
 }

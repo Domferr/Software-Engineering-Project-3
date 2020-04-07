@@ -27,6 +27,7 @@ public class SolutionGenerator {
 
 			saveSolution(solution, testSetsSize[i]);
 			System.out.println("Generated solution for "+testSetsSize[i]+" students.");
+
 		}
 	}
 
