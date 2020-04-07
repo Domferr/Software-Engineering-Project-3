@@ -39,7 +39,7 @@ public class SolutionGenerator {
 
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+"solutionFor"+size+"Students.csv"));
-			writer.write(solution.toCSVRow());
+			writer.write(solution.toCSV());
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

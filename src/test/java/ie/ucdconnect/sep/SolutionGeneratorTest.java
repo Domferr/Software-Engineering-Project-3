@@ -49,24 +49,6 @@ class SolutionGeneratorTest {
         File studentsFile = Utils.getStudentsFile(config, testSetSize);
         List<Student> students = Student.fromCSV(Utils.readFile(studentsFile.toPath()), projectMap);
         Solution solution = Solution.fromCSV(fileContent, students, projectMap);
-        assertEquals(testSetSize, solution.getStudents().size());
-        assertEquals(testSetSize, solution.getProjects().size());
-
-        for (Project project: solution.getProjects()) {
-            Student assignedStudent = solution.getAssignedStudent(project);
-            checkDuplication(assignedStudent, project);
-        }
-    }
-
-    /** Checks if the projects are duplicated in memory to avoid memory leak */
-    private void checkDuplication(Student student, Project assignedProject) {
-        if (!student.getPreferences().contains(assignedProject)) {
-            for (Project preference: student.getPreferences()) {
-                if (assignedProject.getTitle().equals(preference.getTitle())) {
-                    throw new IllegalStateException("There is duplication of projects in memory");
-                }
-            }
-        }
     }
 
     @Test

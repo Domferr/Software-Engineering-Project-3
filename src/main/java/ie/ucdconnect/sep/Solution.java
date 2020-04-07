@@ -1,14 +1,20 @@
 package ie.ucdconnect.sep;
 
+import com.google.common.collect.ImmutableMultimap;
 import com.opencsv.CSVParser;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /** This class represent a solution. It maps each project to a student */
-public class Solution implements CSVRow {
+public class Solution {
 
-	private Map<Project, Student> projectMapping = new HashMap<>();
+	private ImmutableMultimap<Project, Student> projectMapping;
+
+	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
+		this.projectMapping = projectMapping;
+	}
 
 	/** Static method that takes a list of projects and students and then generates a random solution.
 	 *  The algorithm is the following:
@@ -16,68 +22,31 @@ public class Solution implements CSVRow {
 	 *  to give them more preferable projects. Any student who can not be matched to a project
 	 *  (all their preferences are already taken) will be assigned a random project from the list. */
 	public static Solution createRandom(List<Project> projects, List<Student> students) {
+		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 		Random rand = new Random();
-		Solution solution = new Solution();
-		Stack<Student> unmappedStudents = new Stack<>();
 
 		List<Student> studentsCopy = new ArrayList<>(students);
 		Collections.shuffle(studentsCopy);
 
 		for (Student student : studentsCopy) {
-			boolean matched = false;
-			List<Project> preferences = student.getPreferences();
-			int startIndex = rand.nextInt(preferences.size());
-			for (int i = startIndex; i < startIndex + preferences.size(); i++) {
-				Project project = preferences.get(i % preferences.size());
-				if (solution.isAvailable(project)) {
-					solution.safeMap(student, project);
-					matched = true;
-					break;
-				}
-			}
-			if (!matched) {
-				unmappedStudents.push(student);
-			}
+			int randomIndex = rand.nextInt(projects.size());
+			mapBuilder.put(projects.get(randomIndex), student);
 		}
-
-		while (!unmappedStudents.empty()) {
-			Student student = unmappedStudents.pop();
-			for (Project project : projects) {
-				if (solution.isAvailable(project)) {
-					solution.safeMap(student, project);
-					break;
-				}
-			}
-		}
-		return solution;
+		return new Solution(mapBuilder.build());
 	}
 
-	/**
-	 * Maps a student to a project, and checks that we do not unmap a different student in the process.
-	 * @throws IllegalStateException if the operation causes another student to be unmapped.
-	 */
-	public void safeMap(Student student, Project project) throws IllegalStateException {
-		Student oldStudent = projectMapping.put(project, student);
-		if (oldStudent != null && oldStudent != student) {
-			throw new IllegalStateException("Assigned a student to an already assigned project");
-		}
-	}
-
-	public boolean isAvailable(Project project) {
-		return !projectMapping.containsKey(project);
-	}
 
 	/** Returns the project assigned to a given student. Returns null if the student has no project assigned */
 	public Project getAssignedProject(Student student) {
 		for (Project project : projectMapping.keySet()) {
-			if (projectMapping.get(project).equals(student))
+			if (projectMapping.get(project).contains(student))
 				return project;
 		}
 		return null;
 	}
 
 	/** Returns the student assigned to a given project. Returns null if the project has no student assigned */
-	public Student getAssignedStudent(Project project) {
+	public Collection<Student> getAssignedStudents(Project project) {
 		return projectMapping.get(project);
 	}
 
@@ -92,11 +61,11 @@ public class Solution implements CSVRow {
 	/** Returns this solution in CSV format.
 	 *  Each file's row has two columns. The first column is the project
 	 *  while the second one is the assigned student. */
-	@Override
-	public String toCSVRow() {
+	public String toCSV() {
 		StringBuilder s = new StringBuilder();
 		for (Project project: projectMapping.keySet()) {
-			s.append(project.getTitle()).append(",").append(projectMapping.get(project).getStudentNumber()).append("\n");
+			String studentNumbers = projectMapping.get(project).stream().map(Student::getStudentNumber).collect(Collectors.joining(","));
+			s.append(project.getTitle()).append(",\"").append(studentNumbers).append("\"\n");
 		}
 		return s.toString();
 	}
@@ -107,30 +76,32 @@ public class Solution implements CSVRow {
 	 */
 	public static Solution fromCSV(String csvFile, List<Student> students, Map<String, Project> projectsMap) throws IllegalStateException, IOException {
 		CSVParser csvParser = new CSVParser();
-		Solution solution = new Solution();
+		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 		String[] rows = csvFile.split("\n");
 		for (String row : rows) {
 			String[] columns = csvParser.parseLine(row);
 			if (columns.length != 2)
 				throw new IllegalArgumentException("The row ["+ row +"] must have two columns");
 			Project project = projectsMap.get(columns[0]);
-			Student student = findStudent(columns[1], students);
-			if (solution.isAvailable(project)) {
-				solution.safeMap(student, project);
-			} else {
-				throw new IllegalStateException("The project "+project.getTitle()+" has been mapped with two or more students");
+			String[] studentIds = columns[1].split(",");
+			List<Student> projectStudents = findStudents(studentIds, students);
+			for (Student projectStudent : projectStudents) {
+				mapBuilder.put(project, projectStudent);
 			}
 		}
-		return solution;
+		return new Solution(mapBuilder.build());
 	}
 
-	private static Student findStudent(String studentNumber, List<Student> students) {
+	private static List<Student> findStudents(String[] studentIds, List<Student> students) {
+		LinkedList<Student> returnedStudents = new LinkedList<>();
 		for (Student student : students) {
-			if (student.getStudentNumber().equals(studentNumber)) {
-				return student;
+			for (String studentNumber : studentIds) {
+				if (student.getStudentNumber().equals(studentNumber)) {
+					returnedStudents.add(student);
+				}
 			}
 		}
-		throw new IllegalArgumentException("Student '" + studentNumber + "' not found.");
+		return returnedStudents;
 	}
 
 
