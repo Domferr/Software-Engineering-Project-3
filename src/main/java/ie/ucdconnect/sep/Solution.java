@@ -23,27 +23,6 @@ public class Solution {
 		calculate();
 	}
 
-	/**
-	 * Static method that takes a list of projects and students and then generates a random solution.
-	 * The algorithm is the following:
-	 * Assign every student their LEAST preferable project, if that project isn't available, try
-	 * to give them more preferable projects. Any student who can not be matched to a project
-	 * (all their preferences are already taken) will be assigned a random project from the list.
-	 */
-	public static Solution createRandom(List<Project> projects, List<Student> students) {
-		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
-		Random rand = new Random();
-
-		List<Student> studentsCopy = new ArrayList<>(students);
-		Collections.shuffle(studentsCopy);
-
-		for (Student student : studentsCopy) {
-			int randomIndex = rand.nextInt(projects.size());
-			mapBuilder.put(projects.get(randomIndex), student);
-		}
-		return new Solution(mapBuilder.build());
-	}
-
 	private void calculate() {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
