@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -31,18 +32,29 @@ class SolutionGeneratorTest {
         staffMembers = StaffMember.fromCSV(Utils.readFile(config.getStaffMembersFile().toPath()));
     }
 
-    private String readSolutionFile(int testSetSize) throws IOException {
+    private Solution readSolution(Map<String, Project> projectsMap, List<Student> students, int testSetSize) throws IOException {
         String fileName = "solutionFor"+testSetSize+"Students.csv";
         File solutionFile = new File(config.getTestcaseDirName() + fileName);
-        return Utils.readFile(solutionFile.toPath());
+        String fileContent = Utils.readFile(solutionFile.toPath());
+
+
+        return Solution.fromCSV(fileContent, students, projectsMap);
     }
 
     private void validateSolution(int testSetSize) throws IOException {
-        String fileContent = readSolutionFile(testSetSize);
-        Map<String, Project> projectMap = Utils.generateProjectsMap(Utils.readProjects(staffMembers, testSetSize));
-        File studentsFile = Utils.getStudentsFile(testSetSize);
-        List<Student> students = Student.fromCSV(Utils.readFile(studentsFile.toPath()), projectMap);
-        Solution solution = Solution.fromCSV(fileContent, students, projectMap);
+        //Read the test set from resources
+        List<Project> projects = Utils.readProjects(staffMembers, testSetSize);
+        Map<String, Project> projectsMap = Utils.generateProjectsMap(projects);
+        List<Student> students = Utils.readStudents(projectsMap, testSetSize);
+
+        //Read the solution
+        Solution solution = readSolution(projectsMap, students, testSetSize);
+
+        //Each project should be assigned to one student only
+        for (Project project: solution.getProjects()) {
+            Collection<Student> assignedStudents = solution.getAssignedStudents(project);
+            assertEquals(1, assignedStudents.size());
+        }
     }
 
     @Test

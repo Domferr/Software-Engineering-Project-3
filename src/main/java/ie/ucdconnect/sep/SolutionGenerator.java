@@ -14,8 +14,6 @@ import java.util.*;
  *  Each row of the solution file has a project and the assigned student. */
 public class SolutionGenerator {
 
-	// The test set to use.
-	private static final int TEST_SIZE = 120;
 	// The number of generations to be run before a solution is returned.
 	private static final int NUM_GENERATIONS = 10000;
 	// The number of solutions in each generation.
@@ -28,17 +26,22 @@ public class SolutionGenerator {
 	public static void main(String[] args) throws IOException {
 		random = new Random(System.currentTimeMillis());
 
+		int[] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
+
+		int test_size = testSetsStudentsSize[1];
+
 		//Read test set
 		List<StaffMember> staffMembers = Utils.readStaffMembers();
-		List<Project> projects = Utils.readProjects(staffMembers, SolutionGenerator.TEST_SIZE);
-		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), SolutionGenerator.TEST_SIZE);
+		List<Project> projects = Utils.readProjects(staffMembers, test_size);
+		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
 
 		//Run genetic algorithm
 		Solution solution = runGeneticAlgorithm(projects, students);
 		System.out.println("Final energy: " + solution.getEnergy() + ". Final fitness: " + solution.getFitness() + ".");
 
 		//Save generated solution into resources dir
-		saveSolution(solution, SolutionGenerator.TEST_SIZE);
+		saveSolution(solution, test_size);
+
 	}
 
 	/**
