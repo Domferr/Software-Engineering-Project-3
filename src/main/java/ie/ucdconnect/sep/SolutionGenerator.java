@@ -21,9 +21,9 @@ public class SolutionGenerator {
 	// The number of generations to be run before a solution is returned.
 	private static final int NUM_GENERATIONS = 10000;
 	// The number of solutions in each generation.
-	private static final int GENERATION_SIZE = 100;
+	private static final int GENERATION_SIZE = 250;
 	// The number of "bad" solutions that will be removed at the end of each generation.
-	private static final int GENERATION_CULL = 70;
+	private static final int GENERATION_CULL = 150;
 
 	private static Config config;
 	private static Random random;
