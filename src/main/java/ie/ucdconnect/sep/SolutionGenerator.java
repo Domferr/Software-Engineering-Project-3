@@ -27,43 +27,53 @@ public class SolutionGenerator {
 
 	public static void main(String[] args) throws IOException {
 		random = new Random(System.currentTimeMillis());
-		Solution solution = createGeneticSolution();
+
+		//Read test set
+		List<StaffMember> staffMembers = Utils.readStaffMembers();
+		List<Project> projects = Utils.readProjects(staffMembers, SolutionGenerator.TEST_SIZE);
+		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), SolutionGenerator.TEST_SIZE);
+
+		//Run genetic algorithm
+		Solution solution = runGeneticAlgorithm(projects, students);
 		System.out.println("Final energy: " + solution.getEnergy() + ". Final fitness: " + solution.getFitness() + ".");
+
+		//Save generated solution into resources dir
+		saveSolution(solution, SolutionGenerator.TEST_SIZE);
 	}
 
 	/**
-	 * Static method that takes a list of projects and students and then generates a random solution.
+	 * Static method that takes a list of projects and students and then generates one random solution.
 	 */
-	public static Solution createRandomSolution(List<Project> projects, List<Student> students) {
+	public static Solution createOneRandomSolution(List<Project> projects, List<Student> students) {
 		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
-		Random rand = new Random();
 
 		List<Student> studentsCopy = new ArrayList<>(students);
 		Collections.shuffle(studentsCopy);
 
 		for (Student student : studentsCopy) {
-			int randomIndex = rand.nextInt(projects.size());
+			int randomIndex = random.nextInt(projects.size());
 			mapBuilder.put(projects.get(randomIndex), student);
 		}
+
 		return new Solution(mapBuilder.build());
 	}
 
 	/**
 	 * Runs a genetic algorithm and returns the best result.
 	 */
-	private static Solution createGeneticSolution() throws IOException {
-		List<StaffMember> staffMembers = Utils.readStaffMembers();
-		List<Project> projects = Utils.readProjects(staffMembers, SolutionGenerator.TEST_SIZE);
-		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), SolutionGenerator.TEST_SIZE);
+	private static Solution runGeneticAlgorithm(List<Project> projects, List<Student> students) {
 		List<Solution> solutions = new ArrayList<>();
+
 		for (int i = 0; i < GENERATION_SIZE; i++) {
-			solutions.add(createRandomSolution(projects, students));
+			solutions.add(createOneRandomSolution(projects, students));
 		}
+
 		for (int i = 0; i < NUM_GENERATIONS; i++) {
 			System.out.println("Running generation: " + i);
 			solutions = SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
 			solutions = mutate(solutions, projects);
 		}
+
 		return solutions.get(0);
 	}
 
@@ -73,6 +83,7 @@ public class SolutionGenerator {
 			Solution randomSolution = solutions.get(random.nextInt(solutions.size()));
 			newSolutions.add(mutate(randomSolution, projects));
 		}
+
 		return newSolutions;
 	}
 
@@ -90,6 +101,7 @@ public class SolutionGenerator {
 			}
 			index++;
 		}
+
 		return new Solution(mapBuilder.build());
 	}
 

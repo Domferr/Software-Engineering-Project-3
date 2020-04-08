@@ -15,8 +15,10 @@ public class Solution {
 
 	private static final int CONSTRAINT_VIOLATION_PENALTY = 100;
 	private static final int NONPREFERENCE_PROJECT_VIOLATION_PENALTY = 15;
+
 	private ImmutableMultimap<Project, Student> projectMapping;
-	private int energy, fitness;
+	private int energy;
+	private int fitness;
 
 	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
@@ -27,10 +29,11 @@ public class Solution {
 	private void evaluate() {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
-			if (projectMapping.get(project).size() > 1) {
+			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
+			if (assignedStudents.size() > 1)
 				energy += CONSTRAINT_VIOLATION_PENALTY;
-			}
-			for (Student student : projectMapping.get(project).asList()) {
+
+			for (Student student : assignedStudents.asList()) {
 				int i = 0;
 				boolean found = false;
 				while (!found && i < 10) {
