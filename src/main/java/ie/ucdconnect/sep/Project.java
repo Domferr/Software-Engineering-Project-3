@@ -3,6 +3,7 @@ package ie.ucdconnect.sep;
 import com.opencsv.CSVParser;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Project implements CSVRow {
      * Creates a list of {@link Project} from {@code csvFile}.
      */
     public static List<Project> fromCSV(String csvFile, List<StaffMember> staffMembers) {
-        List<Project> projects = new LinkedList<>();
+        List<Project> projects = new ArrayList<>();
         String[] rows = csvFile.split("\n");
         for (String row : rows) {
             projects.add(fromCSVRow(row, staffMembers));
