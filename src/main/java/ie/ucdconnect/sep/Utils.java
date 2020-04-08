@@ -6,9 +6,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /** Utility class with some important methods */
 public class Utils {
+
+    /** Takes a list of projects and returns a map title -> project */
+    public static Map<String, Project> generateProjectsMap(List<Project> projects) {
+        return projects.stream().collect(Collectors.toMap(Project::getTitle, Function.identity()));
+    }
 
     /** Reads the staff members file */
     public static List<StaffMember> readStaffMembers() throws IOException {

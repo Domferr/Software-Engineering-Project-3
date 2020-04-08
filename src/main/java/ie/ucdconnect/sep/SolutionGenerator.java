@@ -8,8 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /** This class reads the testcases and generates a random solution.
  *  It saves each solution into a file inside the testcase dir.
@@ -26,25 +24,11 @@ public class SolutionGenerator {
 	private static final int GENERATION_CULL = 150;
 
 	private static Random random;
-	private static List<Project> projects;
 
 	public static void main(String[] args) throws IOException {
 		random = new Random(System.currentTimeMillis());
 		Solution solution = createGeneticSolution();
 		System.out.println("Final energy: " + solution.getEnergy() + ". Final fitness: " + solution.getFitness() + ".");
-	}
-
-	/**
-	 * Runs a genetic algorithm and returns the best result.
-	 */
-	private static Solution createGeneticSolution() throws IOException {
-		List<Solution> solutions = generateSolutions();
-		for (int i = 0; i < NUM_GENERATIONS; i++) {
-			System.out.println("Running generation: " + i);
-			solutions = SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
-			solutions = mutate(solutions);
-		}
-		return solutions.get(0);
 	}
 
 	/**
@@ -64,16 +48,35 @@ public class SolutionGenerator {
 		return new Solution(mapBuilder.build());
 	}
 
-	private static List<Solution> mutate(List<Solution> solutions) {
+	/**
+	 * Runs a genetic algorithm and returns the best result.
+	 */
+	private static Solution createGeneticSolution() throws IOException {
+		List<StaffMember> staffMembers = Utils.readStaffMembers();
+		List<Project> projects = Utils.readProjects(staffMembers, SolutionGenerator.TEST_SIZE);
+		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), SolutionGenerator.TEST_SIZE);
+		List<Solution> solutions = new ArrayList<>();
+		for (int i = 0; i < GENERATION_SIZE; i++) {
+			solutions.add(createRandomSolution(projects, students));
+		}
+		for (int i = 0; i < NUM_GENERATIONS; i++) {
+			System.out.println("Running generation: " + i);
+			solutions = SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
+			solutions = mutate(solutions, projects);
+		}
+		return solutions.get(0);
+	}
+
+	private static List<Solution> mutate(List<Solution> solutions, List<Project> projects) {
 		List<Solution> newSolutions = new ArrayList<>(solutions);
 		while (newSolutions.size() < GENERATION_SIZE) {
 			Solution randomSolution = solutions.get(random.nextInt(solutions.size()));
-			newSolutions.add(mutate(randomSolution));
+			newSolutions.add(mutate(randomSolution, projects));
 		}
 		return newSolutions;
 	}
 
-	private static Solution mutate(Solution solution) {
+	private static Solution mutate(Solution solution, List<Project> projects) {
 		ImmutableCollection<Map.Entry<Project, Student>> entries = solution.getEntries();
 		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 		int randomIndex = random.nextInt(entries.size());
@@ -88,23 +91,6 @@ public class SolutionGenerator {
 			index++;
 		}
 		return new Solution(mapBuilder.build());
-	}
-
-	/** Given a testset size, reads the right projects and students files and returns a random solution */
-	private static List<Solution> generateSolutions() throws IOException {
-		List<StaffMember> staffMembers = Utils.readStaffMembers();
-		File projectsFile = Utils.getProjectFile(SolutionGenerator.TEST_SIZE);
-		File studentsFile = Utils.getStudentsFile(SolutionGenerator.TEST_SIZE);
-
-		projects = Project.fromCSV(Utils.readFile(projectsFile.toPath()), staffMembers);
-		Map<String, Project> projectsMap = projects.stream().collect(Collectors.toMap(Project::getTitle, Function.identity()));
-		List<Student> students = Student.fromCSV(Utils.readFile(studentsFile.toPath()), projectsMap);
-
-		List<Solution> solutions = new ArrayList<>();
-		for (int i = 0; i < GENERATION_SIZE; i++) {
-			solutions.add(createRandomSolution(projects, students));
-		}
-		return solutions;
 	}
 
 	/** Write the given solution into a file.  */
