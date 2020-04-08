@@ -37,15 +37,9 @@ class SolutionGeneratorTest {
         return Utils.readFile(solutionFile.toPath());
     }
 
-    private Map<String, Project> getProjectsMap(int testSetSize) throws IOException {
-        File projectFile = Utils.getProjectFile(testSetSize);
-        List<Project> projects = Project.fromCSV(Utils.readFile(projectFile.toPath()), staffMembers);
-        return projects.stream().collect(Collectors.toMap(Project::getTitle, Function.identity()));
-    }
-
     private void validateSolution(int testSetSize) throws IOException {
         String fileContent = readSolutionFile(testSetSize);
-        Map<String, Project> projectMap = getProjectsMap(testSetSize);
+        Map<String, Project> projectMap = Utils.generateProjectsMap(Utils.readProjects(staffMembers, testSetSize));
         File studentsFile = Utils.getStudentsFile(testSetSize);
         List<Student> students = Student.fromCSV(Utils.readFile(studentsFile.toPath()), projectMap);
         Solution solution = Solution.fromCSV(fileContent, students, projectMap);

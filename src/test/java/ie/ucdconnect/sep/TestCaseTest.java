@@ -75,8 +75,7 @@ public class TestCaseTest {
 			if (matcher.matches()) {
 				int num = Integer.parseInt(matcher.group(1));
 				validateProjectFile(testCaseFile);
-				File studentsFile = new File(testCaseFile.getParent() + "/students" + num + ".csv");
-				validateStudentFile(studentsFile, testCaseFile);
+				validateStudentFile(Utils.getStudentsFile(num), testCaseFile);
 			}
 		}
 	}
