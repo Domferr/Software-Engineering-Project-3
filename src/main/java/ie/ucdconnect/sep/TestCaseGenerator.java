@@ -15,7 +15,6 @@ public class TestCaseGenerator {
 	private static final int CS_FREQUENCY = 60;
 	private static final int AVERAGE_PROPOSAL = 3;	//each staff member proposes, on average, 3 projects
     private static final int MAX_STUDENT_PREFERENCES = 10;
-	private static final String DAGON_STUDIES = "Dagon Studies";
 	private static final double STUDENTS_STAFF_RATIO = 0.5;
 	private static HashMap<Integer, Integer> studentNumbers = new HashMap<>();
 
@@ -38,10 +37,10 @@ public class TestCaseGenerator {
 		}
 
 		ArrayList<String> prefixes = null;
-		ArrayList<StaffMember> allStaffMembers = null;
+		List<StaffMember> allStaffMembers = null;
 		try {
 			prefixes = loadPrefixes();
-			allStaffMembers = loadStaffMembers();
+			allStaffMembers = Utils.readStaffMembers();
 		} catch (IOException e) {
 			System.out.print("Unable to read from resources: ");
 			System.out.println(e.getMessage());
@@ -181,21 +180,6 @@ public class TestCaseGenerator {
 			return Project.Type.CSDS;
 		}
 		return Project.Type.DS;
-	}
-
-	private static ArrayList<StaffMember> loadStaffMembers() throws IOException {
-		ArrayList<StaffMember> staffMembers = new ArrayList<StaffMember>();
-		CSVReader csvReader = new CSVReader(new FileReader(config.getStaffMembersFile()));
-		List<String[]> rows = csvReader.readAll();
-		for (String[] row : rows) {
-			StaffMember staffMember = new StaffMember();
-			staffMember.setName(row[0]);
-			staffMember.setResearchActivities(row[1].split(", "));
-			staffMember.setResearchAreas(row[2].split(", "));
-			staffMember.setSpecialFocus(row.length >= 4 && row[3].equals(DAGON_STUDIES));
-			staffMembers.add(staffMember);
-		}
-		return staffMembers;
 	}
 
 	private static ArrayList<String> loadPrefixes() throws IOException {

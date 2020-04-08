@@ -20,10 +20,11 @@ public class Solution {
 
 	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
-		calculate();
+		evaluate();
 	}
 
-	private void calculate() {
+	/** This method calculate the energy and the fitness of this solution */
+	private void evaluate() {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
 			if (projectMapping.get(project).size() > 1) {
