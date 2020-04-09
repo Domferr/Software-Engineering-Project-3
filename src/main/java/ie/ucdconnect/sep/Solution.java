@@ -9,10 +9,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * This class represent a solution. It maps each project to a student
+ * This class represent a solution.
  */
 public class Solution {
 
+	//Penalties for hard constraint violation
 	private static final int CONSTRAINT_VIOLATION_PENALTY = 100;
 	private static final int NONPREFERENCE_PROJECT_VIOLATION_PENALTY = 15;
 
@@ -25,7 +26,7 @@ public class Solution {
 		evaluate();
 	}
 
-	/** This method calculate the energy and the fitness of this solution */
+	/** This method calculates the energy and the fitness of this solution */
 	private void evaluate() {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
@@ -57,7 +58,7 @@ public class Solution {
 	 */
 	public Project getAssignedProject(Student student) {
 		for (Project project : projectMapping.keySet()) {
-			if (projectMapping.get(project).contains(student))
+			if (projectMapping.containsEntry(project, student))
 				return project;
 		}
 		return null;
@@ -79,9 +80,9 @@ public class Solution {
 	}
 
 	/**
-	 * Returns this solution in CSV format.
-	 * Each file's row has two columns. The first column is the project
-	 * while the second one is the assigned student.
+	 * Returns this solution as a String in CSV format.
+	 * Each file's row has the project title and then
+	 * the list of student numbers assigned to that project
 	 */
 	public String toCSV() {
 		StringBuilder s = new StringBuilder();
@@ -116,6 +117,8 @@ public class Solution {
 		return new Solution(mapBuilder.build());
 	}
 
+	/** Given an array of studentIDs and a list of all the students, returns a list of all the student objects
+	 *  that have an ID from the given array */
 	private static List<Student> findStudents(String[] studentIds, List<Student> students) {
 		LinkedList<Student> returnedStudents = new LinkedList<>();
 		for (Student student : students) {

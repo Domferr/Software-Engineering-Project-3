@@ -5,8 +5,7 @@ import java.util.List;
 public class SolutionAcceptor {
 
 	/**
-	 *
-	 * @return
+	 *	Sorts the solutions by energy, then removes a given number of "bad" ones. Returns the solutions sorted by fitness
 	 */
 	public static List<Solution> screenSolutions(List<Solution> solutions, int numToBeRemoved) {
 		solutions.sort(SolutionAcceptor::compareByEnergy);

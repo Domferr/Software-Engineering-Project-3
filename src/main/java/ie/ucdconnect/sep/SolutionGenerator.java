@@ -67,12 +67,14 @@ public class SolutionGenerator {
 	private static Solution runGeneticAlgorithm(List<Project> projects, List<Student> students) {
 		List<Solution> solutions = new ArrayList<>();
 
+		//Create the initial search space
 		for (int i = 0; i < GENERATION_SIZE; i++) {
 			solutions.add(createOneRandomSolution(projects, students));
 		}
 
 		for (int i = 0; i < NUM_GENERATIONS; i++) {
 			System.out.println("Running generation: " + i);
+			//Screen solutions and remove the "bad" ones. GENERATION_CULL is the number of removed solutions
 			solutions = SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
 			solutions = mutate(solutions, projects);
 		}
