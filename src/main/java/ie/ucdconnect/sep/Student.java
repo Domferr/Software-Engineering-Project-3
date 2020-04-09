@@ -94,6 +94,7 @@ public class Student implements CSVRow {
         return null;
     }
 
+    /**random gpa generation between 0 to 4.2 */
     public void generateGpa(){
         Random rand = new Random();
         double randGpa = (rand.nextInt((int)((4.2)*10+1))) / 10.0;
