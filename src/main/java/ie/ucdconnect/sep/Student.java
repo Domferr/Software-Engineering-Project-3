@@ -17,6 +17,7 @@ public class Student implements CSVRow {
     private String studentNumber;
     private Focus focus;
     private List<Project> preferences;
+    private double gpa;
 
     public Student(){
 
@@ -93,6 +94,12 @@ public class Student implements CSVRow {
         return null;
     }
 
+    public void generateGpa(){
+        Random rand = new Random();
+        double randGpa = (rand.nextInt((int)((4.2)*10+1))) / 10.0;
+        setGpa(randGpa);
+    }
+
     public void setFullName(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -131,6 +138,14 @@ public class Student implements CSVRow {
     }
     public void setPreferences(List<Project> preferences) {
         this.preferences = preferences;
+    }
+
+    public double getGpa() {
+        return gpa;
+    }
+
+    public void setGpa(double gpa) {
+        this.gpa = gpa;
     }
 
     @Override

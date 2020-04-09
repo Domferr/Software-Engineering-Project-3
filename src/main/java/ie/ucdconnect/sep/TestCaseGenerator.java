@@ -215,6 +215,7 @@ public class TestCaseGenerator {
 				student.setStudentNumber(Integer.toString(sNumber));
 				student.setFocus(studentFocus());
 				student.setPreferences(assignPreferences(projects, student.getFocus()));
+				student.generateGpa();
 				students.add(student);
 			}
 		}
