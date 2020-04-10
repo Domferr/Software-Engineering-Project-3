@@ -7,42 +7,42 @@ import org.junit.jupiter.api.function.Executable;
 
 import java.io.File;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class ConfigTest {
 
-    private static final Executable savingExecutable = () -> Config.getInstance().save("resources",
-            "testcases",
-            "names.txt",
-            "Miskatonic Staff Members.csv",
-            "prefixes.txt");
+	private static final Executable savingExecutable = () -> Config.getInstance().save("resources",
+			"testcases",
+			"names.txt",
+			"Miskatonic Staff Members.csv",
+			"prefixes.txt");
 
-    @BeforeEach
-    void setUp() {
-        Config.setConfigFilename("configtest.txt");
-    }
+	@BeforeEach
+	void setUp() {
+		Config.setConfigFilename("configtest.txt");
+	}
 
-    @Test
-    void getInstance() {
-        assertDoesNotThrow(Config::getInstance, "Config instance is null!");
-    }
+	@Test
+	void getInstance() {
+		assertDoesNotThrow(Config::getInstance, "Config instance is null!");
+	}
 
-    @Test
-    void save() {
-        assertDoesNotThrow(savingExecutable, "Unable to save on Config file");
-    }
+	@Test
+	void save() {
+		assertDoesNotThrow(savingExecutable, "Unable to save on Config file");
+	}
 
-    @Test
-    void saveWithoutFileOnDisk() {
-        File configFile = Config.getConfigFile();
-        if (configFile.exists())
-            configFile.delete();
-        assertDoesNotThrow(savingExecutable, "Unable to save on Config file");
-    }
+	@Test
+	void saveWithoutFileOnDisk() {
+		File configFile = Config.getConfigFile();
+		if (configFile.exists())
+			configFile.delete();
+		assertDoesNotThrow(savingExecutable, "Unable to save on Config file");
+	}
 
-    @AfterEach
-    void tearDown() {
-        File configFile = Config.getConfigFile();
-        configFile.delete();
-    }
+	@AfterEach
+	void tearDown() {
+		File configFile = Config.getConfigFile();
+		configFile.delete();
+	}
 }
