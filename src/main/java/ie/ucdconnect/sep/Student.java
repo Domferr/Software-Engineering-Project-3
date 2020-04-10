@@ -4,156 +4,157 @@ import com.opencsv.CSVParser;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
 
 public class Student implements CSVRow {
-    public enum Focus {
-        CS,
-        DS
-    }
+	public enum Focus {
+		CS,
+		DS
+	}
 
-    private String firstName;
-    private String lastName;
-    private String studentNumber;
-    private Focus focus;
-    private List<Project> preferences;
-    private double gpa;
+	private String firstName;
+	private String lastName;
+	private String studentNumber;
+	private Focus focus;
+	private List<Project> preferences;
+	private double gpa;
 
-    public Student(){
+	public Student() {
 
-    }
+	}
 
-    public Student(String firstName, String lastName, String studentNumber, double gpa, Focus focus, List<Project> preferences) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.studentNumber = studentNumber;
-        this.gpa = gpa;
-        this.focus = focus;
-        this.preferences = preferences;
-    }
+	public Student(String firstName, String lastName, String studentNumber, double gpa, Focus focus, List<Project> preferences) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.studentNumber = studentNumber;
+		this.gpa = gpa;
+		this.focus = focus;
+		this.preferences = preferences;
+	}
 
-    @Override
-    public String toCSVRow() {
-        return String.join(",", studentNumber, firstName, lastName, Double.toString(gpa), focus.toString(), createPreferencesCSVEntry());
-    }
+	@Override
+	public String toCSVRow() {
+		return String.join(",", studentNumber, firstName, lastName, Double.toString(gpa), focus.toString(), createPreferencesCSVEntry());
+	}
 
-    private String createPreferencesCSVEntry() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("\"");
-        for (int i = 0; i < preferences.size(); i++) {
-            if (i != 0) {
-                sb.append(",");
-            }
-            sb.append(preferences.get(i).getTitle());
-        }
-        sb.append("\"");
-        return sb.toString();
-    }
+	private String createPreferencesCSVEntry() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("\"");
+		for (int i = 0; i < preferences.size(); i++) {
+			if (i != 0) {
+				sb.append(",");
+			}
+			sb.append(preferences.get(i).getTitle());
+		}
+		sb.append("\"");
+		return sb.toString();
+	}
 
-    /**
-     * Creates a list of {@link Project} from {@code csvFile}.
-     */
-    public static List<Student> fromCSV(String csvFile, Map<String, Project> projects) {
-        List<Student> students = new LinkedList<>();
-        String[] rows = csvFile.split("\n");
-        for (String row : rows) {
-            students.add(fromCSVRow(row, projects));
-        }
-        return students;
-    }
+	/**
+	 * Creates a list of {@link Project} from {@code csvFile}.
+	 */
+	public static List<Student> fromCSV(String csvFile, Map<String, Project> projects) {
+		List<Student> students = new LinkedList<>();
+		String[] rows = csvFile.split("\n");
+		for (String row : rows) {
+			students.add(fromCSVRow(row, projects));
+		}
+		return students;
+	}
 
-    /**
-     * Creates a {@link Student} from {@code row}.
-     * {@code row} must not end with a newline.
-     * @return the created {@link Student}, or null if an error occurred.
-     */
-    public static Student fromCSVRow(String row, Map<String, Project> projects) {
-        try {
-            String[] parts = new CSVParser().parseLine(row);
+	/**
+	 * Creates a {@link Student} from {@code row}.
+	 * {@code row} must not end with a newline.
+	 *
+	 * @return the created {@link Student}, or null if an error occurred.
+	 */
+	public static Student fromCSVRow(String row, Map<String, Project> projects) {
+		try {
+			String[] parts = new CSVParser().parseLine(row);
 
-            List<Project> projectPreferences = new ArrayList<>();
-            if (parts.length != 6) {
-                throw new IllegalArgumentException("Expected 6 values, found " + parts.length);
-            }
-            String[] preferences = parts[5].split(",");
-            for(String preference : preferences){
-                projectPreferences.add(projects.get(preference));
-            }
-            return new Student(parts[1], parts[2], parts[0], Double.parseDouble(parts[3]), Focus.valueOf(parts[4]), projectPreferences);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        throw new IllegalArgumentException("Could not parse: " + row);
-    }
+			List<Project> projectPreferences = new ArrayList<>();
+			if (parts.length != 6) {
+				throw new IllegalArgumentException("Expected 6 values, found " + parts.length);
+			}
+			String[] preferences = parts[5].split(",");
+			for (String preference : preferences) {
+				projectPreferences.add(projects.get(preference));
+			}
+			return new Student(parts[1], parts[2], parts[0], Double.parseDouble(parts[3]), Focus.valueOf(parts[4]), projectPreferences);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		throw new IllegalArgumentException("Could not parse: " + row);
+	}
 
-    private static StaffMember findStaffMember(String name, List<StaffMember> staffMembers) {
-        for (StaffMember staffMember : staffMembers) {
-            if (staffMember.getName().equals(name)) {
-                return staffMember;
-            }
-        }
-        return null;
-    }
+	private static StaffMember findStaffMember(String name, List<StaffMember> staffMembers) {
+		for (StaffMember staffMember : staffMembers) {
+			if (staffMember.getName().equals(name)) {
+				return staffMember;
+			}
+		}
+		return null;
+	}
 
-    /**
-     * Generates a random gpa between 0 to 4.2
-     */
-    public void generateGpa(){
-        Random rand = new Random();
-        double randGpa = (rand.nextInt((int)((4.2)*10+1))) / 10.0;
-        setGpa(randGpa);
-    }
+	/**
+	 * Generates a random gpa between 0 to 4.2
+	 */
+	public void generateGpa() {
+		Random rand = new Random();
+		double randGpa = (rand.nextInt((int) ((4.2) * 10 + 1))) / 10.0;
+		setGpa(randGpa);
+	}
 
-    public void setFullName(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+	public void setFullName(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
-    public String getStudentNumber() {
-        return studentNumber;
-    }
+	public String getStudentNumber() {
+		return studentNumber;
+	}
 
-    public void setStudentNumber(String studentNumber) {
-        this.studentNumber = studentNumber;
-    }
+	public void setStudentNumber(String studentNumber) {
+		this.studentNumber = studentNumber;
+	}
 
-    public Focus getFocus() {
-        return focus;
-    }
+	public Focus getFocus() {
+		return focus;
+	}
 
-    public void setFocus(Focus focus) {
-        this.focus = focus;
-    }
+	public void setFocus(Focus focus) {
+		this.focus = focus;
+	}
 
-    public List<Project> getPreferences() {
-        return preferences;
-    }
+	public List<Project> getPreferences() {
+		return preferences;
+	}
 
-    public boolean hasPreference(Project project) {
-        return preferences.contains(project);
-    }
+	public boolean hasPreference(Project project) {
+		return preferences.contains(project);
+	}
 
-    public boolean hasPreference(String projectTitle) {
-        for (Project preference : preferences) {
-            if (preference.getTitle().equals(projectTitle))
-                return true;
-        }
-        return false;
-    }
-    public void setPreferences(List<Project> preferences) {
-        this.preferences = preferences;
-    }
+	public boolean hasPreference(String projectTitle) {
+		for (Project preference : preferences) {
+			if (preference.getTitle().equals(projectTitle))
+				return true;
+		}
+		return false;
+	}
 
-    public double getGpa() {
-        return gpa;
-    }
+	public void setPreferences(List<Project> preferences) {
+		this.preferences = preferences;
+	}
 
-    public void setGpa(double gpa) {
-        this.gpa = gpa;
-    }
+	public double getGpa() {
+		return gpa;
+	}
 
-    @Override
-    public String toString() {
-        return firstName+" "+lastName+" "+studentNumber+" "+focus+" "+ preferences.toString();
-    }
+	public void setGpa(double gpa) {
+		this.gpa = gpa;
+	}
+
+	@Override
+	public String toString() {
+		return firstName + " " + lastName + " " + studentNumber + " " + focus + " " + preferences.toString();
+	}
 }

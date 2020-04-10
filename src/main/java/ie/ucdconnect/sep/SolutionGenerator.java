@@ -9,9 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
-/** This class reads the testcases and generates a random solution.
- *  It saves each solution into a file inside the testcase dir.
- *  Each row of the solution file has a project and the assigned student. */
+/**
+ * This class reads the testcases and generates a random solution.
+ * It saves each solution into a file inside the testcase dir.
+ * Each row of the solution file has a project and the assigned student.
+ */
 public class SolutionGenerator {
 
 	// The number of generations to be run before a solution is returned.
@@ -110,7 +112,9 @@ public class SolutionGenerator {
 		return new Solution(mapBuilder.build());
 	}
 
-	/** Write the given solution into a file.  */
+	/**
+	 * Write the given solution into a file.
+	 */
 	private static void saveSolution(Solution solution, int size) throws IOException {
 		String dirName = Config.getInstance().getTestcaseDirName();
 		File testCaseDir = new File(dirName);
@@ -118,7 +122,7 @@ public class SolutionGenerator {
 			testCaseDir.mkdir();
 
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+"solutionFor"+size+"Students.csv"));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName + "solutionFor" + size + "Students.csv"));
 			writer.write(solution.toCSV());
 			writer.close();
 		} catch (IOException e) {

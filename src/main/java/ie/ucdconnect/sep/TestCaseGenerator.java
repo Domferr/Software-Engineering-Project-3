@@ -1,7 +1,5 @@
 package ie.ucdconnect.sep;
 
-import com.opencsv.CSVReader;
-
 import java.io.*;
 import java.util.*;
 import java.util.function.Function;
@@ -13,12 +11,12 @@ import java.util.stream.Collectors;
 public class TestCaseGenerator {
 
 	private static final int CS_FREQUENCY = 60;
-	private static final int AVERAGE_PROPOSAL = 3;	//each staff member proposes, on average, 3 projects
-    private static final int MAX_STUDENT_PREFERENCES = 10;
+	private static final int AVERAGE_PROPOSAL = 3;    //each staff member proposes, on average, 3 projects
+	private static final int MAX_STUDENT_PREFERENCES = 10;
 	private static final double STUDENTS_STAFF_RATIO = 0.5;
 	private static HashMap<Integer, Integer> studentNumbers = new HashMap<>();
 
-    private static Random random = new Random(System.currentTimeMillis());
+	private static Random random = new Random(System.currentTimeMillis());
 	private static Config config;
 
 	public static void main(String[] args) {
@@ -58,7 +56,7 @@ public class TestCaseGenerator {
 			 * Generates test cases and outputs the generated tests.
 			 */
 			ArrayList<StaffMember> pickedMembers = new ArrayList<>();
-			int numberOfStaffMembers = (int)(size*STUDENTS_STAFF_RATIO);
+			int numberOfStaffMembers = (int) (size * STUDENTS_STAFF_RATIO);
 			for (int j = 0; j < numberOfStaffMembers; j++) {
 				int randomIndex = random.nextInt(allStaffMembers.size());
 				StaffMember randomStaff = allStaffMembers.get(randomIndex);
@@ -73,7 +71,7 @@ public class TestCaseGenerator {
 			}
 
 			List<Project> projects = generateProjects(pickedMembers, prefixes);
-			System.out.println("Generating "+projects.size()+" projects for " + size + " students.");
+			System.out.println("Generating " + projects.size() + " projects for " + size + " students.");
 			List<Student> students = generateStudents(size, projects);
 
 			studentsTestData.add(students);
@@ -107,14 +105,16 @@ public class TestCaseGenerator {
 		}
 	}
 
-	/** Write the given list into specified file.  */
+	/**
+	 * Write the given list into specified file.
+	 */
 	private static void saveGeneratedTestcase(String filename, List<? extends CSVRow> list) {
 		String dirName = config.getTestcaseDirName();
 		File testCaseDir = new File(dirName);
 		if (!testCaseDir.exists())
 			testCaseDir.mkdir();
 		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+filename));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName + filename));
 			for (CSVRow row : list) {
 				writer.write(row.toCSVRow());
 				writer.newLine();
@@ -126,7 +126,7 @@ public class TestCaseGenerator {
 	}
 
 	public static List<Project> generateProjects(ArrayList<StaffMember> staffMembers, ArrayList<String> prefixes) {
-		int numberOfProjects = staffMembers.size()*AVERAGE_PROPOSAL;
+		int numberOfProjects = staffMembers.size() * AVERAGE_PROPOSAL;
 		Map<Boolean, List<StaffMember>> partition = staffMembers.stream().collect(Collectors.partitioningBy(s -> s.isSpecialFocus()));
 		List<StaffMember> csAndDs = partition.get(false); // Proposes CS or CS+DS
 		List<StaffMember> dsOnly = partition.get(true); // Proposes DS
@@ -137,7 +137,7 @@ public class TestCaseGenerator {
 		 * 50-69: CS+DS
 		 * 70-100: DS
 		 */
-        int i = 0;
+		int i = 0;
 		ArrayList<Project> projects = new ArrayList<>(numberOfProjects);
 		HashMap<String, Boolean> titlesMap = new HashMap<>();
 		while (i < numberOfProjects) {
@@ -148,17 +148,19 @@ public class TestCaseGenerator {
 			} else {
 				newProject = generateOneProject(csAndDs, prefixes, randomType);
 			}
-            if (!titlesMap.containsKey(newProject.getTitle())) {
+			if (!titlesMap.containsKey(newProject.getTitle())) {
 				titlesMap.put(newProject.getTitle(), true);
-                projects.add(newProject);
-                i++;
-            }
+				projects.add(newProject);
+				i++;
+			}
 		}
-		
+
 		return projects;
 	}
 
-	/** Returns a project */
+	/**
+	 * Returns a project
+	 */
 	private static Project generateOneProject(List<StaffMember> staffList, List<String> prefixes, Project.Type type) {
 		int staffIndex = random.nextInt(staffList.size());
 		StaffMember staffMember = staffList.get(staffIndex);
@@ -166,7 +168,7 @@ public class TestCaseGenerator {
 		String prefix = prefixes.get(random.nextInt(prefixes.size()));
 		String title = research[random.nextInt(research.length)];
 
-		Project generated = new Project(prefix+" "+title, staffMember, type);
+		Project generated = new Project(prefix + " " + title, staffMember, type);
 		staffMember.addProposedProject(generated);
 
 		return generated;
@@ -192,23 +194,25 @@ public class TestCaseGenerator {
 		return prefixes;
 	}
 
-	/** Generate list of students*/
+	/**
+	 * Generate list of students
+	 */
 	private static ArrayList<Student> generateStudents(int noStudents, List<Project> projects) {
 		final int MAX_NUM = 90000000;
 		final int MIN_NUM = 10000000;
 
 		ArrayList<Student> students = new ArrayList<>(noStudents);
-		try{
+		try {
 			Scanner scanner = new Scanner(config.getNamesFile());
-			while(scanner.hasNext() && students.size() < noStudents){
+			while (scanner.hasNext() && students.size() < noStudents) {
 				Student student = new Student();
 				String first = scanner.next();
 				String last = scanner.next();
 				student.setFullName(first, last);
 
-				int sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
-				while(studentNumbers.containsKey(sNumber)){
-					sNumber = (random.nextInt((MAX_NUM-MIN_NUM)+1)+MIN_NUM);
+				int sNumber = (random.nextInt((MAX_NUM - MIN_NUM) + 1) + MIN_NUM);
+				while (studentNumbers.containsKey(sNumber)) {
+					sNumber = (random.nextInt((MAX_NUM - MIN_NUM) + 1) + MIN_NUM);
 				}
 				studentNumbers.put(sNumber, 1);
 
@@ -218,8 +222,7 @@ public class TestCaseGenerator {
 				student.generateGpa();
 				students.add(student);
 			}
-		}
-		catch (FileNotFoundException e){
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.err.println("Could not find names file");
 		}
@@ -227,7 +230,7 @@ public class TestCaseGenerator {
 	}
 
 	/* 60% to be CS and 40% for DS */
-	private static Student.Focus studentFocus(){
+	private static Student.Focus studentFocus() {
 		int r = random.nextInt(100);
 		if (r <= CS_FREQUENCY) {
 			return Student.Focus.CS;
@@ -236,7 +239,9 @@ public class TestCaseGenerator {
 		}
 	}
 
-	/** Assign list of project preferences to students*/
+	/**
+	 * Assign list of project preferences to students
+	 */
 	private static List<Project> assignPreferences(List<Project> projects, Student.Focus studentFocus) {
 		List<Project> projectPreferences = new ArrayList<>();
 		while (projectPreferences.size() < MAX_STUDENT_PREFERENCES) {
@@ -246,7 +251,7 @@ public class TestCaseGenerator {
 			double maxOutput = 8;
 			double randDistribution = random.nextGaussian() * 3;
 			double positiveRandDistribution = Math.max(0, Math.min(16, maxOutput + randDistribution));
-			int projectIndex = (int)(positiveRandDistribution / (maxOutput * 2 + 0.01) * projects.size());
+			int projectIndex = (int) (positiveRandDistribution / (maxOutput * 2 + 0.01) * projects.size());
 			Project randomProject = projects.get(projectIndex);
 			if (randomProject.matchesFocus(studentFocus)) {
 				randomProject.totalPicks++;

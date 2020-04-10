@@ -26,7 +26,9 @@ public class Solution {
 		evaluate();
 	}
 
-	/** This method calculates the energy and the fitness of this solution */
+	/**
+	 * This method calculates the energy and the fitness of this solution
+	 */
 	private void evaluate() {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
@@ -119,8 +121,10 @@ public class Solution {
 		return new Solution(mapBuilder.build());
 	}
 
-	/** Given an array of studentIDs and a list of all the students, returns a list of all the student objects
-	 *  that have an ID from the given array */
+	/**
+	 * Given an array of studentIDs and a list of all the students, returns a list of all the student objects
+	 * that have an ID from the given array
+	 */
 	private static List<Student> findStudents(String[] studentIds, List<Student> students) {
 		LinkedList<Student> returnedStudents = new LinkedList<>();
 		for (Student student : students) {
