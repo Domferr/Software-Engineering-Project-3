@@ -23,17 +23,18 @@ public class Student implements CSVRow {
 
     }
 
-    public Student(String firstName, String lastName, String studentNumber, Focus focus, List<Project> preferences) {
+    public Student(String firstName, String lastName, String studentNumber, double gpa, Focus focus, List<Project> preferences) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.studentNumber = studentNumber;
+        this.gpa = gpa;
         this.focus = focus;
         this.preferences = preferences;
     }
 
     @Override
     public String toCSVRow() {
-        return String.join(",", studentNumber, firstName, lastName, focus.toString(), createPreferencesCSVEntry());
+        return String.join(",", studentNumber, firstName, lastName, Double.toString(gpa), focus.toString(), createPreferencesCSVEntry());
     }
 
     private String createPreferencesCSVEntry() {
@@ -71,14 +72,14 @@ public class Student implements CSVRow {
             String[] parts = new CSVParser().parseLine(row);
 
             List<Project> projectPreferences = new ArrayList<>();
-            if (parts.length != 5) {
-                throw new IllegalArgumentException("Expected 5 values, found " + parts.length);
+            if (parts.length != 6) {
+                throw new IllegalArgumentException("Expected 6 values, found " + parts.length);
             }
-            String[] preferences = parts[4].split(",");
+            String[] preferences = parts[5].split(",");
             for(String preference : preferences){
                 projectPreferences.add(projects.get(preference));
             }
-            return new Student(parts[1], parts[2], parts[0], Focus.valueOf(parts[3]), projectPreferences);
+            return new Student(parts[1], parts[2], parts[0], Double.parseDouble(parts[3]), Focus.valueOf(parts[4]), projectPreferences);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,7 +95,9 @@ public class Student implements CSVRow {
         return null;
     }
 
-    /**random gpa generation between 0 to 4.2 */
+    /**
+     * Generates a random gpa between 0 to 4.2
+     */
     public void generateGpa(){
         Random rand = new Random();
         double randGpa = (rand.nextInt((int)((4.2)*10+1))) / 10.0;

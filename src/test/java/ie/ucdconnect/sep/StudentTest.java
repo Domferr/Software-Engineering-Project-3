@@ -30,12 +30,12 @@ class StudentTest {
         preferences.add(csProject);
         preferences.add(csdsProject);
 
-        student = new Student("Nigel", "Mooney", "12345678", Student.Focus.CS, preferences);
+        student = new Student("Nigel", "Mooney", "12345678", 3.8, Student.Focus.CS, preferences);
     }
 
     @Test
     void toCSVRow() {
-        assertEquals("12345678,Nigel,Mooney,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", student.toCSVRow(), "Incorrect CSV row output");
+        assertEquals("12345678,Nigel,Mooney,3.8,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", student.toCSVRow(), "Incorrect CSV row output");
     }
 
     @Test
@@ -54,7 +54,7 @@ class StudentTest {
         HashMap<String, Project> map = new HashMap<>();
         map.put("Creating a web interface for running a movie studio", csProject);
         map.put("Building a service to help writing modern fiction", csdsProject);
-        Student parsedStudent = Student.fromCSVRow("89457781,Michel,Owen,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", map);
+        Student parsedStudent = Student.fromCSVRow("89457781,Michel,Owen,4.2,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", map);
         assertEquals("89457781", parsedStudent.getStudentNumber());
         assertEquals(Student.Focus.CS, parsedStudent.getFocus());
         assertEquals("[Creating a web interface for running a movie studio, Building a service to help writing modern fiction]", parsedStudent.getPreferences().toString());
@@ -65,7 +65,7 @@ class StudentTest {
         HashMap<String, Project> map = new HashMap<>();
         map.put("Creating a web interface for running a movie studio", csProject);
         map.put("Building a service to help writing modern fiction", csdsProject);
-        assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,\"Michel,Owen\",CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", map));
+        assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,\"Michel,Owen\",1,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", map));
     }
 
     @Test
@@ -73,14 +73,14 @@ class StudentTest {
         HashMap<String, Project> map = new HashMap<>();
         map.put("Creating a web interface for running a movie studio", csProject);
         map.put("Building a service to help writing modern fiction", csdsProject);
-        assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,Michel,Owen,CS,Creating a web interface for running a movie studio,Building a service to help writing modern fiction", map));
+        assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,Michel,Owen,0.2,CS,Creating a web interface for running a movie studio,Building a service to help writing modern fiction", map));
     }
     @Test
     void fromCSV() {
         HashMap<String, Project> map = new HashMap<>();
         map.put("Creating a web interface for running a movie studio", csProject);
         map.put("Building a service to help writing modern fiction", csdsProject);
-        List<Student> parsedStudents = Student.fromCSV("89457781,Michel,Owen,CS,\"Creating a web interface for running a movie studio\"\n28859293,Nigel,Mooney,CS,\"Building a service to help writing modern fiction\"", map);
+        List<Student> parsedStudents = Student.fromCSV("89457781,Michel,Owen,1,CS,\"Creating a web interface for running a movie studio\"\n28859293,Nigel,Mooney,2,CS,\"Building a service to help writing modern fiction\"", map);
         assertEquals(2, parsedStudents.size());
         Student student1 = parsedStudents.get(0);
         Student student2 = parsedStudents.get(1);

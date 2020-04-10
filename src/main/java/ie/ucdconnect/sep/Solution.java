@@ -29,21 +29,21 @@ public class Solution {
 
 	/** This method calculates the energy and the fitness of this solution */
 	private void evaluate() {
-
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
 			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
-			if (assignedStudents.size() > 1)
+			if (assignedStudents.size() > 1) {
 				energy += CONSTRAINT_VIOLATION_PENALTY;
-
+			}
 			for (Student student : assignedStudents.asList()) {
 				int i = 0;
 				boolean found = false;
 				while (!found && i < 10) {
 					if (student.getPreferences().get(i).equals(project)) {
-						int fitnessDelta = 10-i;
-						fitness += fitnessDelta + ( fitnessDelta * student.getGpa() * GPA_IMPORTANCE);
-						energy += i + (i * student.getGpa() * GPA_IMPORTANCE);
+						int fitnessDelta = 10 - i;
+						double gpaWeight = student.getGpa() * GPA_IMPORTANCE;
+						fitness += fitnessDelta + fitnessDelta * gpaWeight;
+						energy += i + i * gpaWeight;
 						found = true;
 					}
 					i++;

@@ -23,7 +23,7 @@ class SolutionTest {
         csdsProject = new Project("Building a service to help writing modern fiction", csStaffMember, Project.Type.CSDS);
         preferences.add(csProject);
         preferences.add(csdsProject);
-        student = new Student("Nigel", "Mooney", "12345678", Student.Focus.CS, preferences);
+        student = new Student("Nigel", "Mooney", "12345678", 3.8, Student.Focus.CS, preferences);
 
         solution = new Solution(new ImmutableMultimap.Builder<Project, Student>().put(csdsProject, student).build());
     }

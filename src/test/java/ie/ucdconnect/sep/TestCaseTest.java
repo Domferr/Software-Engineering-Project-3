@@ -104,8 +104,8 @@ public class TestCaseTest {
 		Map<String, String> projectsMap = mapProjects(projectsFile);
 		for (String line : studentsMap.values()) {
 			String[] parts = CSV_PARSER.parseLine(line);
-			String studentFocus = parts[3];
-			String projects = parts[4];
+			String studentFocus = parts[4];
+			String projects = parts[5];
 			for (String projectTitle : projects.split(",")) {
 				String projectLine = projectsMap.get(projectTitle);
 				String[] projectParts = CSV_PARSER.parseLine(projectLine);
