@@ -32,6 +32,12 @@ class SolutionTest {
 	}
 
 	@Test
+	void evaluate(){
+		assertEquals(4.8, solution.getEnergy(), 0.01);
+		assertEquals(43.2, solution.getFitness(), 0.01);
+	}
+
+	@Test
 	void getAssignedProject() {
 		assertEquals(csdsProject, solution.getAssignedProject(student));
 		assertNotEquals(csProject, solution.getAssignedProject(student));

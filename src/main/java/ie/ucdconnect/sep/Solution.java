@@ -16,20 +16,21 @@ public class Solution {
 	//Penalties for hard constraint violation
 	private static final int CONSTRAINT_VIOLATION_PENALTY = 100;
 	private static final int NONPREFERENCE_PROJECT_VIOLATION_PENALTY = 15;
-	private static final int GPA_IMPORTANCE = 1;
+	private static final double GPA_IMPORTANCE = 1.0;
+
 
 	private ImmutableMultimap<Project, Student> projectMapping;
 	private double energy, fitness;
 
 	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
-		evaluate();
+		evaluate(GPA_IMPORTANCE);
 	}
 
 	/**
 	 * This method calculates the energy and the fitness of this solution
 	 */
-	private void evaluate() {
+	private void evaluate(double gpaImportance) {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
 			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
@@ -42,7 +43,7 @@ public class Solution {
 				while (!found && i < 10) {
 					if (student.getPreferences().get(i).equals(project)) {
 						int fitnessDelta = 10 - i;
-						double gpaWeight = student.getGpa() * GPA_IMPORTANCE;
+						double gpaWeight = student.getGpa() * gpaImportance;
 						fitness += fitnessDelta + fitnessDelta * gpaWeight;
 						energy += i + i * gpaWeight;
 						found = true;
