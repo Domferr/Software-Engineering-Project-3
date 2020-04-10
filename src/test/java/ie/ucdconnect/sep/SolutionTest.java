@@ -27,8 +27,8 @@ class SolutionTest {
 		preferences.add(csProject);
 		preferences.add(csdsProject);
 		student = new Student("Nigel", "Mooney", "12345678", 3.8, Student.Focus.CS, preferences);
-
-		solution = new Solution(new ImmutableMultimap.Builder<Project, Student>().put(csdsProject, student).build());
+		ImmutableMultimap<Project, Student> projectMapping = new ImmutableMultimap.Builder<Project, Student>().put(csdsProject, student).build();
+		solution = Solution.SolutionFactory.createAndEvaluate(projectMapping, 1.0);
 	}
 
 	@Test

@@ -36,7 +36,7 @@ public class Solution implements Default {
 	private ImmutableMultimap<Project, Student> projectMapping;
 	private double energy, fitness;
 
-	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
+	private Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
 	}
 
