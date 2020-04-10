@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * This class reads the testcases and generates a random solution.
  * It saves each solution into a file inside the testcase dir.
- * Each row of the solution file has a project and the assigned student.
+ * Each row of the solution file has a project and the assigned student's ID.
  */
 public class SolutionGenerator implements Default{
 
@@ -43,7 +43,6 @@ public class SolutionGenerator implements Default{
 
 		//Save generated solution into resources dir
 		saveSolution(solution, test_size);
-
 	}
 
 	/**

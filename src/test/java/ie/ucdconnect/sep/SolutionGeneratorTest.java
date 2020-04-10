@@ -32,15 +32,6 @@ class SolutionGeneratorTest {
 		staffMembers = StaffMember.fromCSV(Utils.readFile(config.getStaffMembersFile().toPath()));
 	}
 
-	private Solution readSolution(Map<String, Project> projectsMap, List<Student> students, int testSetSize) throws IOException {
-		String fileName = "solutionFor" + testSetSize + "Students.csv";
-		File solutionFile = new File(config.getTestcaseDirName() + fileName);
-		String fileContent = Utils.readFile(solutionFile.toPath());
-
-
-		return Solution.fromCSV(fileContent, students, projectsMap);
-	}
-
 	private void validateSolution(int testSetSize) throws IOException {
 		//Read the test set from resources
 		List<Project> projects = Utils.readProjects(staffMembers, testSetSize);
@@ -48,7 +39,7 @@ class SolutionGeneratorTest {
 		List<Student> students = Utils.readStudents(projectsMap, testSetSize);
 
 		//Read the solution
-		Solution solution = readSolution(projectsMap, students, testSetSize);
+		Solution solution = Utils.readSolution(projectsMap, students, testSetSize);
 
 		//Each project should be assigned to one student only
 		for (Project project : solution.getProjects()) {

@@ -9,14 +9,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * This class represent a solution.
+ * This class represent a solution. A solution can map projects to students. It has energy and fitness values.
  */
-public class Solution implements Default{
+public class Solution implements Default {
 
+	/** Factory class for the Solution class */
 	static class SolutionFactory {
-		static Solution create(ImmutableMultimap<Project, Student> projectMapping){
+		/** Creates a solution object without evaluating energy and fitness.
+		 *  This is the most efficient and should be used when the energy and fitness values are not needed. */
+		static Solution create(ImmutableMultimap<Project, Student> projectMapping) {
 			return new Solution(projectMapping);
 		}
+
+		/** Creates a solution object and calculates its energy and fitness. */
 		static Solution createAndEvaluate(ImmutableMultimap<Project, Student> projectMapping, double gpaImportance) {
 			Solution solution = new Solution(projectMapping);
 			solution.evaluate(gpaImportance);
@@ -36,7 +41,9 @@ public class Solution implements Default{
 	}
 
 	/**
-	 * This method calculates the energy and the fitness of this solution
+	 * This method calculates the energy and the fitness of this solution.
+	 * If gpaImportance tends to 1 than the gpa is very important while if gpaImportance tends to 0
+	 * then the gpa is less important.
 	 */
 	public void evaluate(double gpaImportance) {
 		energy = fitness = 0;

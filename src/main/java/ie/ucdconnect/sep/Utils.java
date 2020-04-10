@@ -22,6 +22,16 @@ public class Utils {
 	}
 
 	/**
+	 * Reads the solution test set file with the given test set size
+	 */
+	public static Solution readSolution(Map<String, Project> projectsMap, List<Student> students, int testSetSize) throws IOException {
+		File solutionFile = getSolutionFile(testSetSize);
+		String fileContent = readFile(solutionFile.toPath());
+
+		return Solution.fromCSV(fileContent, students, projectsMap);
+	}
+
+	/**
 	 * Reads the staff members file
 	 */
 	public static List<StaffMember> readStaffMembers() throws IOException {
@@ -31,7 +41,7 @@ public class Utils {
 	}
 
 	/**
-	 * Reads the projects test set file with the given size
+	 * Reads the projects test set file with the given test set size
 	 */
 	public static List<Project> readProjects(List<StaffMember> staffMembers, int test_size) throws IOException {
 		File projectsFile = getProjectFile(test_size);
@@ -41,13 +51,21 @@ public class Utils {
 	}
 
 	/**
-	 * Reads the students test set file with the given size
+	 * Reads the students test set file with the given test set size
 	 */
 	public static List<Student> readStudents(Map<String, Project> projectsMap, int test_size) throws IOException {
 		File studentsFile = getStudentsFile(test_size);
 		String fileContent = readFile(studentsFile.toPath());
 
 		return Student.fromCSV(fileContent, projectsMap);
+	}
+
+	/**
+	 * Returns the solution file based on test set size
+	 */
+	public static File getSolutionFile(int testSetSize) throws IOException {
+		String fileName = "solutionFor" + testSetSize + "Students.csv";
+		return new File(Config.getInstance().getTestcaseDirName() + fileName);
 	}
 
 	/**
