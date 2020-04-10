@@ -14,7 +14,7 @@ import java.util.*;
  * It saves each solution into a file inside the testcase dir.
  * Each row of the solution file has a project and the assigned student.
  */
-public class SolutionGenerator {
+public class SolutionGenerator implements Default{
 
 	// The number of generations to be run before a solution is returned.
 	private static final int NUM_GENERATIONS = 10000;
@@ -60,7 +60,7 @@ public class SolutionGenerator {
 			mapBuilder.put(projects.get(randomIndex), student);
 		}
 
-		return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), 1.0);
+		return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class SolutionGenerator {
 			index++;
 		}
 
-		return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), 1.0);
+		return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
 	}
 
 	/**

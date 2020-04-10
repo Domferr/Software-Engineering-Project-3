@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * This class represent a solution.
  */
-public class Solution {
+public class Solution implements Default{
 
 	static class SolutionFactory {
 		static Solution create(ImmutableMultimap<Project, Student> projectMapping){
@@ -126,7 +126,7 @@ public class Solution {
 				mapBuilder.put(project, projectStudent);
 			}
 		}
-		return SolutionFactory.createAndEvaluate(mapBuilder.build(), 1.0);
+		return SolutionFactory.createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
 	}
 
 	/**
