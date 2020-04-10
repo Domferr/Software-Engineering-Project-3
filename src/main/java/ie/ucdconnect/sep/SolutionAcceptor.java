@@ -18,13 +18,13 @@ public class SolutionAcceptor {
 	 * Sorts low to high
 	 */
 	private static int compareByEnergy(Solution a, Solution b) {
-		return Integer.compare(a.getEnergy(), b.getEnergy());
+		return Double.compare(a.getEnergy(), b.getEnergy());
 	}
 
 	/**
 	 * Sorts high to low
 	 */
 	private static int compareByFitness(Solution a, Solution b) {
-		return Integer.compare(b.getFitness(), a.getFitness());
+		return Double.compare(b.getFitness(), a.getFitness());
 	}
 }

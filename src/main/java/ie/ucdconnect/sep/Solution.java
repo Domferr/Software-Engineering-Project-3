@@ -19,8 +19,7 @@ public class Solution {
 	private static final int GPA_IMPORTANCE = 1;
 
 	private ImmutableMultimap<Project, Student> projectMapping;
-	private int energy;
-	private int fitness;
+	private double energy, fitness;
 
 	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
@@ -134,11 +133,11 @@ public class Solution {
 		return returnedStudents;
 	}
 
-	public int getEnergy() {
+	public double getEnergy() {
 		return energy;
 	}
 
-	public int getFitness() {
+	public double getFitness() {
 		return fitness;
 	}
 
