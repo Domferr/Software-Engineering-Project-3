@@ -13,24 +13,32 @@ import java.util.stream.Collectors;
  */
 public class Solution {
 
+	static class SolutionFactory {
+		static Solution create(ImmutableMultimap<Project, Student> projectMapping){
+			return new Solution(projectMapping);
+		}
+		static Solution createAndEvaluate(ImmutableMultimap<Project, Student> projectMapping, double gpaImportance) {
+			Solution solution = new Solution(projectMapping);
+			solution.evaluate(gpaImportance);
+			return solution;
+		}
+	 }
+
 	//Penalties for hard constraint violation
 	private static final int CONSTRAINT_VIOLATION_PENALTY = 100;
 	private static final int NONPREFERENCE_PROJECT_VIOLATION_PENALTY = 15;
-	private static final double GPA_IMPORTANCE = 1.0;
-
 
 	private ImmutableMultimap<Project, Student> projectMapping;
 	private double energy, fitness;
 
 	public Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
-		evaluate(GPA_IMPORTANCE);
 	}
 
 	/**
 	 * This method calculates the energy and the fitness of this solution
 	 */
-	private void evaluate(double gpaImportance) {
+	public void evaluate(double gpaImportance) {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
 			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
@@ -56,7 +64,6 @@ public class Solution {
 			}
 		}
 	}
-
 
 	/**
 	 * Returns the project assigned to a given student. Returns null if the student has no project assigned
@@ -119,7 +126,7 @@ public class Solution {
 				mapBuilder.put(project, projectStudent);
 			}
 		}
-		return new Solution(mapBuilder.build());
+		return SolutionFactory.createAndEvaluate(mapBuilder.build(), 1.0);
 	}
 
 	/**
@@ -138,9 +145,7 @@ public class Solution {
 		return returnedStudents;
 	}
 
-	public double getEnergy() {
-		return energy;
-	}
+	public double getEnergy() { return energy; }
 
 	public double getFitness() {
 		return fitness;

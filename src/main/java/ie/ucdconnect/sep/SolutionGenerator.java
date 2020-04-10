@@ -60,7 +60,7 @@ public class SolutionGenerator {
 			mapBuilder.put(projects.get(randomIndex), student);
 		}
 
-		return new Solution(mapBuilder.build());
+		return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), 1.0);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class SolutionGenerator {
 			index++;
 		}
 
-		return new Solution(mapBuilder.build());
+		return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), 1.0);
 	}
 
 	/**
