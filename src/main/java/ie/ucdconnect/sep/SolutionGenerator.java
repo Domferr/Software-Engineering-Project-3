@@ -14,14 +14,8 @@ import java.util.*;
  * It saves each solution into a file inside the testcase dir.
  * Each row of the solution file has a project and the assigned student's ID.
  */
-public class SolutionGenerator implements Default{
+public class SolutionGenerator implements Default {
 
-	// The number of generations to be run before a solution is returned.
-	private static final int NUM_GENERATIONS = 10000;
-	// The number of solutions in each generation.
-	private static final int GENERATION_SIZE = 250;
-	// The number of "bad" solutions that will be removed at the end of each generation.
-	private static final int GENERATION_CULL = 150;
 	// The number of iterations that SA algorithm will do before lowering the temperature
 	private static final double MINIMA_NUM_ITERATIONS = 100;
 	// How much the starting temperature should be higher than the maxEnergyDelta
@@ -65,22 +59,6 @@ public class SolutionGenerator implements Default{
 		}
 
 		return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
-	}
-
-	/**
-	 * Runs the genetic algorithm and returns the best result.
-	 */
-	private static Solution runGeneticAlgorithm(List<Project> projects, List<Student> students) {
-		List<Solution> solutions = getRandomSolutionList(projects, students, GENERATION_SIZE);
-
-		for (int i = 0; i < NUM_GENERATIONS; i++) {
-			System.out.println("Running generation: " + i);
-			//Screen solutions and remove the "bad" ones. GENERATION_CULL is the number of removed solutions
-			solutions = SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
-			solutions = mutate(solutions, projects);
-		}
-
-		return solutions.get(0);
 	}
 
 	/**
@@ -131,17 +109,6 @@ public class SolutionGenerator implements Default{
 		}
 
 		return maxDelta;
-	}
-
-	/** Mutates the given list of solutions */
-	private static List<Solution> mutate(List<Solution> solutions, List<Project> projects) {
-		List<Solution> newSolutions = new ArrayList<>(solutions);
-		while (newSolutions.size() < GENERATION_SIZE) {
-			Solution randomSolution = solutions.get(random.nextInt(solutions.size()));
-			newSolutions.add(mutate(randomSolution, projects));
-		}
-
-		return newSolutions;
 	}
 
 	/** Mutates one solution */
