@@ -4,6 +4,18 @@ Martynas Jagutis 17424866
 Domenico Ferraro 19203549
 Alex Ng 17409754
 
+TASK 4
+We added a gpa field to the student which acts as a soft constraint for the evaluation of the energy and fitness functions. It is
+generated as a random value between 0 and 4.2. In the solution class we added an evaluate method this function calculates the
+fitness and energy for a given solution. We assign constraint violated penalties if the solution happens to break these constraints.
+The fitness is calculated by (10 - i) + (10 - i) * gpaWeight where i is the preference a student got where 0 is the first preference 
+and gpaWeight is the gpa of a given student times the gpaImportance the user decides to give to the gpa constraint. The energy
+is calculated by i + i + gpaWeight. The higher the fitness the better the solution and contrarily the higher the energy the worse the solution.
+We decided to create a solution factory as we figures that we will not need to always call the evaluate method when instantiating solution. 
+As an extra feature of this assignment we implements the simulated annealing algorithm to constantly make changes to the solution
+until it finds the best solution. The resulting fitness and energy values are printed to the console.
+We implemented an interface called default which contains the gpa importance value so we do not have to redefine it at the top of multiple classes.
+
 TASK 3
 To achieve the random generation of solutions we created two classes called SolutionGeneration and Solution with unit tests
 to test both of these classes. The solution class creates a map of project to student so only one project is mapped to one 
