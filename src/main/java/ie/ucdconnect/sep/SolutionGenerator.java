@@ -133,6 +133,7 @@ public class SolutionGenerator implements Default{
 		return maxDelta;
 	}
 
+	/** Mutates the given list of solutions */
 	private static List<Solution> mutate(List<Solution> solutions, List<Project> projects) {
 		List<Solution> newSolutions = new ArrayList<>(solutions);
 		while (newSolutions.size() < GENERATION_SIZE) {
@@ -143,6 +144,7 @@ public class SolutionGenerator implements Default{
 		return newSolutions;
 	}
 
+	/** Mutates one solution */
 	private static Solution mutate(Solution solution, List<Project> projects) {
 		ImmutableCollection<Map.Entry<Project, Student>> entries = solution.getEntries();
 		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();

@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
  * Utility class with some important methods
  */
 public class Utils {
-
 	/**
 	 * Takes a list of projects and returns a map title -> project
 	 */
