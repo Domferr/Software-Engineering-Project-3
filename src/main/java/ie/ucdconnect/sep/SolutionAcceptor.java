@@ -27,4 +27,22 @@ public class SolutionAcceptor {
 	private static int compareByFitness(Solution a, Solution b) {
 		return Double.compare(b.getFitness(), a.getFitness());
 	}
+
+	/**
+	 * Compares the two solutions and returns the better one in terms of energy
+	 */
+	private static Solution getBetterByEnergy(Solution a, Solution b) {
+		if (a.getEnergy() < b.getEnergy())
+			return a;
+		return b;
+	}
+
+	/**
+	 * Compares the two solutions and returns the better one in terms of fitness
+	 */
+	private static Solution getBetterByFitness(Solution a, Solution b) {
+		if (a.getFitness() > b.getFitness())
+			return a;
+		return b;
+	}
 }
