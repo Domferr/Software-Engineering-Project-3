@@ -27,6 +27,26 @@ public class Solution implements Default {
 			solution.evaluate(gpaImportance);
 			return solution;
 		}
+
+		/** Creates a new Solution by mutating a given solution. It also evaluates the resulting solution. */
+		static Solution createByMutating(Solution solution, List<Project> projects) {
+			Random random = new Random();
+			ImmutableCollection<Map.Entry<Project, Student>> entries = solution.getEntries();
+			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
+			int randomIndex = random.nextInt(entries.size());
+			int index = 0;
+			for (Map.Entry<Project, Student> entry : entries) {
+				if (index == randomIndex) {
+					Project newProject = projects.get(random.nextInt(projects.size()));
+					mapBuilder.put(newProject, entry.getValue());
+				} else {
+					mapBuilder.put(entry);
+				}
+				index++;
+			}
+
+			return createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
+		}
 	 }
 
 	//Penalties for hard constraint violation

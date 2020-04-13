@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -13,6 +14,17 @@ import java.util.stream.Collectors;
  * Utility class with some important methods
  */
 public class Utils {
+
+	/** Returns a list of the given size of random generated solutions */
+	public static List<Solution> getRandomSolutionList(List<Project> projects, List<Student> students, int size, double GPA_IMPORTANCE) {
+		List<Solution> solutions = new ArrayList<>();
+		//Create a list of solutions and find the max energy delta
+		for (int i = 0; i < size; i++) {
+			solutions.add(new RandomGeneration().generate(projects, students, GPA_IMPORTANCE));
+		}
+		return solutions;
+	}
+
 	/**
 	 * Takes a list of projects and returns a map title -> project
 	 */
