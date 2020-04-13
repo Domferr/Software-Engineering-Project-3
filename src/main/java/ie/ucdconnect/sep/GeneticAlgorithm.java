@@ -35,7 +35,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
     private static List<Solution> mutate(List<Solution> solutions, List<Project> projects) {
         List<Solution> newSolutions = new ArrayList<>(solutions);
         while (newSolutions.size() < GENERATION_SIZE) {
-            Solution randomSolution = solutions.get(new Random().nextInt(solutions.size()));
+            Solution randomSolution = solutions.get(Math.round((float)Math.random() * solutions.size()));
             Solution mutatedSolution = Solution.SolutionFactory.createByMutating(randomSolution, projects);
 
             newSolutions.add(mutatedSolution);

@@ -19,12 +19,11 @@ public class SimulatedAnnealing implements SolutionGenerationStrategy {
     /** Runs the Simulated Annealing Algorithm and returns the generated solution */
     @Override
     public Solution generate(List<Project> projects, List<Student> students, double GPA_IMPORTANCE) {
-        Random random = new Random();
         //Calculate max energy delta in 100 random solutions
         List<Solution> randomSolutions = Utils.getRandomSolutionList(projects, students, 100, GPA_IMPORTANCE);
         double maxEnergyDelta = calculateMaxEnergyDelta(randomSolutions);
         //Set the initial temperature as higher than MaxEnergyDelta
-        double temperature = maxEnergyDelta + (MAX_TEMPERATURE_INCREASE * random.nextDouble());
+        double temperature = maxEnergyDelta + (MAX_TEMPERATURE_INCREASE * Math.random());
         //Generate one random currentSolution
         Solution currentSolution = new RandomGeneration().generate(projects, students, GPA_IMPORTANCE);
         Solution bestSolution = currentSolution;
@@ -36,15 +35,15 @@ public class SimulatedAnnealing implements SolutionGenerationStrategy {
                 //Accepting if the changes have better energy
                 if (mutatedSolution.getEnergy() < currentSolution.getEnergy())
                     currentSolution = mutatedSolution;
-                    //Otherwise accept with Boltzmann probability
-                else if (random.nextDouble() <= Math.exp(-deltaEnergy/temperature))
+                //Otherwise accept with Boltzmann probability
+                else if (Math.random() <= Math.exp(-deltaEnergy/temperature))
                     currentSolution = mutatedSolution;
             }
             //Remember the global minima
             if (currentSolution.getEnergy() < bestSolution.getEnergy())
                 bestSolution = currentSolution;
             //Lower the temperature based on how much high it is
-            temperature -= temperature*random.nextDouble(); //The higher it is the more it is lowered
+            temperature -= temperature*Math.random(); //The higher it is the more it is lowered
         }
 
         return bestSolution;

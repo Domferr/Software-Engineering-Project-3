@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * This class reads the testcases and generates a random solution.
+ * This class reads the testcases and generates a solution.
  * It saves each solution into a file inside the testcase dir.
  * Each row of the solution file has a project and the assigned student's ID.
  */
