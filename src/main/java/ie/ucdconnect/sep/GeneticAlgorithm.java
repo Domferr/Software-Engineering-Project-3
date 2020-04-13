@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/** This class implements the Genetic algorithm. It implements SolutionGenerationStrategy interface,
+ *  so call the generate() method to run the algorithm.
+ *  */
+
 public class GeneticAlgorithm implements SolutionGenerationStrategy {
 
     // The number of generations to be run before a solution is returned.

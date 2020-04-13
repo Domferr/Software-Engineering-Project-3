@@ -7,7 +7,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/** This class is able to generate a random solution */
+/** This class implements an algorithm that generates a random solution.
+ *  It implements SolutionGenerationStrategy interface, so call the generate()
+ *  method to run the algorithm.
+ *  */
 public class RandomGeneration implements SolutionGenerationStrategy {
     @Override
     public Solution generate(List<Project> projects, List<Student> students, double GPA_IMPORTANCE) {

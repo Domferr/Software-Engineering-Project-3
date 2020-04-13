@@ -5,6 +5,10 @@ import ie.ucdconnect.sep.Solution.SolutionFactory;
 import java.util.List;
 import java.util.Random;
 
+/** This class implements the Simulated Annealing algorithm.
+ *  It implements SolutionGenerationStrategy interface
+ *  so call the generate() method to run the algorithm.
+ *  */
 public class SimulatedAnnealing implements SolutionGenerationStrategy {
 
     // The number of iterations that SA algorithm will do before lowering the temperature
@@ -17,7 +21,7 @@ public class SimulatedAnnealing implements SolutionGenerationStrategy {
     public Solution generate(List<Project> projects, List<Student> students, double GPA_IMPORTANCE) {
         Random random = new Random();
         //Calculate max energy delta in 100 random solutions
-        List randomSolutions = Utils.getRandomSolutionList(projects, students, 100, GPA_IMPORTANCE);
+        List<Solution> randomSolutions = Utils.getRandomSolutionList(projects, students, 100, GPA_IMPORTANCE);
         double maxEnergyDelta = calculateMaxEnergyDelta(randomSolutions);
         //Set the initial temperature as higher than MaxEnergyDelta
         double temperature = maxEnergyDelta + (MAX_TEMPERATURE_INCREASE * random.nextDouble());
