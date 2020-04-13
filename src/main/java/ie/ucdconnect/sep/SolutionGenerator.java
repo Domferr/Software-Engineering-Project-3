@@ -16,13 +16,10 @@ import java.util.*;
  */
 public class SolutionGenerator implements Default {
 
-	private static Random random;
+    private SolutionGenerationStrategy generationStrategy;
 
 	public static void main(String[] args) throws IOException {
-		random = new Random(System.currentTimeMillis());
-
 		int[] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
-
 		int test_size = testSetsStudentsSize[1];
 
 		//Read test set
@@ -30,8 +27,7 @@ public class SolutionGenerator implements Default {
 		List<Project> projects = Utils.readProjects(staffMembers, test_size);
 		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
 
-		//Run genetic algorithm
-		//Solution solution = runGeneticAlgorithm(projects, students);
+		//Run simulated annealing
 		Solution solution = new SimulatedAnnealing().generate(projects, students, GPA_IMPORTANCE);
 		System.out.println("Final energy: " + solution.getEnergy() + ". Final fitness: " + solution.getFitness() + ".");
 
