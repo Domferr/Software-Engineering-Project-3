@@ -7,11 +7,12 @@ public class SolutionAcceptor {
 	/**
 	 * Sorts the solutions by energy, then removes a given number of "bad" ones. Returns the solutions sorted by fitness
 	 */
-	public static List<Solution> screenSolutions(List<Solution> solutions, int numToBeRemoved) {
+	public static void screenSolutions(List<Solution> solutions, int numToBeRemoved) {
 		solutions.sort(SolutionAcceptor::compareByEnergy);
-		List<Solution> newSolutions = solutions.subList(0, solutions.size() - numToBeRemoved);
-		newSolutions.sort(SolutionAcceptor::compareByFitness);
-		return newSolutions;
+		for (int i = 0; i < numToBeRemoved; i++) {
+			solutions.remove(solutions.size() - 1); // O(1) as we're always remove the last element
+		}
+		solutions.sort(SolutionAcceptor::compareByFitness);
 	}
 
 	/**

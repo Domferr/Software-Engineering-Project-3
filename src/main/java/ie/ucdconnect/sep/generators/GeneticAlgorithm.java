@@ -22,28 +22,23 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
     @Override
     public Solution generate(List<Project> projects, List<Student> students, double GPA_IMPORTANCE) {
         List<Solution> solutions = Utils.getRandomSolutionList(projects, students, GENERATION_SIZE, GPA_IMPORTANCE);
-
         for (int i = 0; i < NUM_GENERATIONS; i++) {
             System.out.println("Running generation: " + i);
-            //Screen solutions and remove the "bad" ones. GENERATION_CULL is the number of removed solutions
-            solutions = SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
-            solutions = mutate(solutions, projects);
+            SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
+            mutate(solutions, projects);
         }
-
+        SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
         return solutions.get(0);
     }
 
     /** Mutates the given list of solutions */
-    private static List<Solution> mutate(List<Solution> solutions, List<Project> projects) {
-        List<Solution> newSolutions = new ArrayList<>(solutions);
-        while (newSolutions.size() < GENERATION_SIZE) {
+    private static void mutate(List<Solution> solutions, List<Project> projects) {
+        while (solutions.size() < GENERATION_SIZE) {
             int randomIndex = (int) (Math.random() * solutions.size());
             Solution randomSolution = solutions.get(randomIndex);
             Solution mutatedSolution = Solution.SolutionFactory.createByMutating(randomSolution, projects);
 
-            newSolutions.add(mutatedSolution);
+            solutions.add(mutatedSolution);
         }
-
-        return newSolutions;
     }
 }
