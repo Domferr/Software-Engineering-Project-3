@@ -1,6 +1,10 @@
-package ie.ucdconnect.sep;
+package ie.ucdconnect.sep.generators;
 
 import com.google.common.collect.ImmutableMultimap;
+import ie.ucdconnect.sep.Project;
+import ie.ucdconnect.sep.Solution;
+import ie.ucdconnect.sep.SolutionGenerationStrategy;
+import ie.ucdconnect.sep.Student;
 
 import java.util.ArrayList;
 import java.util.Collections;

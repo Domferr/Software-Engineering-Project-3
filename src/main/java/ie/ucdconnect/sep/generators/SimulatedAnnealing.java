@@ -1,5 +1,6 @@
-package ie.ucdconnect.sep;
+package ie.ucdconnect.sep.generators;
 
+import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.Solution.SolutionFactory;
 
 import java.util.List;

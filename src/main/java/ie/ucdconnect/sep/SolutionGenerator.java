@@ -1,7 +1,6 @@
 package ie.ucdconnect.sep;
 
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableMultimap;
+import ie.ucdconnect.sep.generators.SimulatedAnnealing;
 
 import java.io.BufferedWriter;
 import java.io.File;

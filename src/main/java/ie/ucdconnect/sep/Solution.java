@@ -14,22 +14,22 @@ import java.util.stream.Collectors;
 public class Solution implements Default {
 
 	/** Factory class for the Solution class */
-	static class SolutionFactory {
+	public static class SolutionFactory {
 		/** Creates a solution object without evaluating energy and fitness.
 		 *  This is the most efficient and should be used when the energy and fitness values are not needed. */
-		static Solution create(ImmutableMultimap<Project, Student> projectMapping) {
+		public static Solution create(ImmutableMultimap<Project, Student> projectMapping) {
 			return new Solution(projectMapping);
 		}
 
 		/** Creates a solution object and calculates its energy and fitness. */
-		static Solution createAndEvaluate(ImmutableMultimap<Project, Student> projectMapping, double gpaImportance) {
+		public static Solution createAndEvaluate(ImmutableMultimap<Project, Student> projectMapping, double gpaImportance) {
 			Solution solution = new Solution(projectMapping);
 			solution.evaluate(gpaImportance);
 			return solution;
 		}
 
 		/** Creates a new Solution by mutating a given solution. It also evaluates the resulting solution. */
-		static Solution createByMutating(Solution solution, List<Project> projects) {
+		public static Solution createByMutating(Solution solution, List<Project> projects) {
 			Random random = new Random();
 			ImmutableCollection<Map.Entry<Project, Student>> entries = solution.getEntries();
 			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();

@@ -1,5 +1,7 @@
 package ie.ucdconnect.sep;
 
+import ie.ucdconnect.sep.generators.RandomGeneration;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
