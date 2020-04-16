@@ -23,8 +23,9 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
     public Solution generate(List<Project> projects, List<Student> students, double GPA_IMPORTANCE) {
         List<Solution> solutions = Utils.getRandomSolutionList(projects, students, GENERATION_SIZE, GPA_IMPORTANCE);
         for (int i = 0; i < NUM_GENERATIONS; i++) {
-            System.out.println("Running generation: " + i);
             SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
+            Solution currentBest = solutions.get(0);
+            System.out.println("Running generation: " + i + ". Energy: " + Math.floor(currentBest.getEnergy()) + ". Fitness: " + Math.floor(currentBest.getFitness()) + ".");
             mutate(solutions, projects);
         }
         SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
