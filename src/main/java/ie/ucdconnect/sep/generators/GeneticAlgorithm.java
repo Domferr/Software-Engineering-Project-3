@@ -26,18 +26,18 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
             SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
             Solution currentBest = solutions.get(0);
             System.out.println("Running generation: " + i + ". Energy: " + Math.floor(currentBest.getEnergy()) + ". Fitness: " + Math.floor(currentBest.getFitness()) + ".");
-            mutate(solutions, projects);
+            mutate(solutions, projects, GPA_IMPORTANCE);
         }
         SolutionAcceptor.screenSolutions(solutions, GENERATION_CULL);
         return solutions.get(0);
     }
 
     /** Mutates the given list of solutions */
-    private static void mutate(List<Solution> solutions, List<Project> projects) {
+    private static void mutate(List<Solution> solutions, List<Project> projects, double gpaImportance) {
         while (solutions.size() < GENERATION_SIZE) {
             int randomIndex = (int) (Math.random() * solutions.size());
             Solution randomSolution = solutions.get(randomIndex);
-            Solution mutatedSolution = Solution.SolutionFactory.createByMutating(randomSolution, projects);
+            Solution mutatedSolution = Solution.SolutionFactory.createByMutating(randomSolution, projects, gpaImportance);
 
             solutions.add(mutatedSolution);
         }

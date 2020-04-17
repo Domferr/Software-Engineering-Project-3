@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * This class represent a solution. A solution can map projects to students. It has energy and fitness values.
  */
-public class Solution implements Default {
+public class Solution {
 
 	/** Factory class for the Solution class */
 	public static class SolutionFactory {
@@ -29,7 +29,7 @@ public class Solution implements Default {
 		}
 
 		/** Creates a new Solution by mutating a given solution. It also evaluates the resulting solution. */
-		public static Solution createByMutating(Solution solution, List<Project> projects) {
+		public static Solution createByMutating(Solution solution, List<Project> projects, double gpaImportance) {
 			Random random = new Random();
 			ImmutableCollection<Map.Entry<Project, Student>> entries = solution.getEntries();
 			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
@@ -45,7 +45,7 @@ public class Solution implements Default {
 				index++;
 			}
 
-			return createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
+			return createAndEvaluate(mapBuilder.build(), gpaImportance);
 		}
 	 }
 
@@ -138,7 +138,7 @@ public class Solution implements Default {
 	 * @throws IllegalStateException if a student cannot be mapped
 	 * @throws IOException           if an error occurs while parsing the CSV
 	 */
-	public static Solution fromCSV(String csvFile, List<Student> students, Map<String, Project> projectsMap) throws IllegalStateException, IOException {
+	public static Solution fromCSV(String csvFile, List<Student> students, Map<String, Project> projectsMap, double gpaImportance) throws IllegalStateException, IOException {
 		CSVParser csvParser = new CSVParser();
 		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 		String[] rows = csvFile.split("\n");
@@ -153,7 +153,7 @@ public class Solution implements Default {
 				mapBuilder.put(project, projectStudent);
 			}
 		}
-		return SolutionFactory.createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
+		return SolutionFactory.createAndEvaluate(mapBuilder.build(), gpaImportance);
 	}
 
 	/**

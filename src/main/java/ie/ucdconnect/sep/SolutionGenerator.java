@@ -13,7 +13,7 @@ import java.util.*;
  * It saves each solution into a file inside the testcase dir.
  * Each row of the solution file has a project and the assigned student's ID.
  */
-public class SolutionGenerator implements Default {
+public class SolutionGenerator {
 
     private SolutionGenerationStrategy generationStrategy;
 
@@ -21,13 +21,15 @@ public class SolutionGenerator implements Default {
 		int[] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
 		int test_size = testSetsStudentsSize[1];
 
+		double gpaImportance = 1.0;
+
 		//Read test set
 		List<StaffMember> staffMembers = Utils.readStaffMembers();
 		List<Project> projects = Utils.readProjects(staffMembers, test_size);
 		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
 
 		//Run simulated annealing
-		Solution solution = new SimulatedAnnealing().generate(projects, students, GPA_IMPORTANCE);
+		Solution solution = new SimulatedAnnealing().generate(projects, students, gpaImportance);
 		System.out.println("Final energy: " + solution.getEnergy() + ". Final fitness: " + solution.getFitness() + ".");
 
 		//Save generated solution into resources dir

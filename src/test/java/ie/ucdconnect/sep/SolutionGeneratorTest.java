@@ -18,6 +18,7 @@ class SolutionGeneratorTest {
 
 	private static Config config;
 	private static List<StaffMember> staffMembers;
+	private double gpaImportance;
 
 	@BeforeEach
 	void setUp() throws IOException {
@@ -30,6 +31,7 @@ class SolutionGeneratorTest {
 			fail(config.getTestcaseDirName() + " is not a directory");
 		}
 		staffMembers = StaffMember.fromCSV(Utils.readFile(config.getStaffMembersFile().toPath()));
+		gpaImportance = 1.0;
 	}
 
 	private void validateSolution(int testSetSize) throws IOException {
@@ -39,7 +41,7 @@ class SolutionGeneratorTest {
 		List<Student> students = Utils.readStudents(projectsMap, testSetSize);
 
 		//Read the solution
-		Solution solution = Utils.readSolution(projectsMap, students, testSetSize);
+		Solution solution = Utils.readSolution(projectsMap, students, testSetSize, gpaImportance);
 
 		//Each project should be assigned to one student only
 		for (Project project : solution.getProjects()) {

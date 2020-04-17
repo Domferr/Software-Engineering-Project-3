@@ -37,11 +37,11 @@ public class Utils {
 	/**
 	 * Reads the solution test set file with the given test set size
 	 */
-	public static Solution readSolution(Map<String, Project> projectsMap, List<Student> students, int testSetSize) throws IOException {
+	public static Solution readSolution(Map<String, Project> projectsMap, List<Student> students, int testSetSize, double gpaImportance) throws IOException {
 		File solutionFile = getSolutionFile(testSetSize);
 		String fileContent = readFile(solutionFile.toPath());
 
-		return Solution.fromCSV(fileContent, students, projectsMap);
+		return Solution.fromCSV(fileContent, students, projectsMap, gpaImportance);
 	}
 
 	/**

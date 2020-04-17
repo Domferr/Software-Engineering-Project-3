@@ -35,7 +35,7 @@ public class SimulatedAnnealing implements SolutionGenerationStrategy {
 
             //Find a local minima
             for (int i = 0; i < MINIMA_NUM_ITERATIONS; i++) {
-                Solution mutatedSolution = SolutionFactory.createByMutating(currentSolution, projects);
+                Solution mutatedSolution = SolutionFactory.createByMutating(currentSolution, projects, GPA_IMPORTANCE);
                 double deltaEnergy = Math.abs(mutatedSolution.getEnergy() - currentSolution.getEnergy());
 
                 if (mutatedSolution.getEnergy() < currentSolution.getEnergy())
