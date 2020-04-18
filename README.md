@@ -5,17 +5,22 @@ Domenico Ferraro 19203549
 Alex Ng 17409754
 
 TASK 5
-We added a class called SimulatedAnnealing which performs the Simulated Annealing algorithm on the solutions. We assign
-the starting temperature, the cooling rate and the minimum temperature as constants. Then it enters a loop which runs until
-it is cooled to the specified minimum temperature. CreateByMutating creates small changes to the current solution and 
-returns a new solution. This is a method in the SolutionFactory. If this new solution has a lower energy than the previous
-solution we accept the changes. If it is worse we accept the changes according to the Boltzman Distribution probability
-which is defined by Math.exp(-deltaEnergy/temperature). Thus we generate a random number between 0 and 1 to see whether
-or not it is bigger and less than this value and accept or decline the worse energy according to this. The temperature 
-is decreased according to the cooling rate given by startingTemperature * (Math.pow(1-COOLING_RATE, Math.log(n))). 
-The best solution is returned at the end of the method. The unit tests check whether the energy of a simulated annealing 
-solution is lower than a randomly generated solution. As an extra feature we implemented the genetic algorithm, to find
-the best fitness of the solution.
+We added the method CreateByMutating in the SolutionFactory class. This method creates a solution by mutating a given solution
+passed as argument. We decided to use the Strategy design pattern for the implementation of the SimulatedAnnealing and 
+Genetic algorithms. Each algorithm represents a strategy for the generation of a solution. The interface SolutionGeneratorStrategy
+(which has the generate method) is implemented by the SimulatedAnnealing class. Its generate method performs the SimulatedAnnealing
+algorithm. The class GeneticAlgorithm implements the same interface but its generate method performs the Genetic algorithm.
+The two classes are stateless. With this approach, the algorithm is not implemented directly but it's decided during runtime.
+For the Simulated Annealing algorithm the cooling rate and the minimum temperature as constants. We calculate the maximum
+energy delta in 100 random solution. The temperature is higher or lower than this value, based on a constant.
+For each iteration we create a new solution by mutating the solution of the previous iteration. If this new solution
+has a lower energy than the previous solution we accept the changes. If it is worse we accept the changes according to 
+the Boltzman Distribution probability which is defined by Math.exp(-deltaEnergy/temperature). Thus we generate a random number
+between 0 and 1 to see whether or not it is bigger and less than this value and accept or decline the worse energy according to this.
+The temperature is decreased exponentially: the higher the temperature is, the more it is decreased. The temperature at time n
+is equal to startingTemperature * (Math.pow(1-COOLING_RATE, Math.log(n))). The best solution is returned at the end of the method.
+The unit tests check whether the energy of a simulated annealing solution is lower than a randomly generated solution.
+As an extra feature we implemented the genetic algorithm, to find the best fitness of the solution.
 
 TASK 4
 We added a gpa field to the student which acts as a soft constraint for the evaluation of the energy and fitness functions. It is
