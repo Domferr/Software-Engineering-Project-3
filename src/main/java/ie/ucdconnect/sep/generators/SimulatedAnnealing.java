@@ -10,14 +10,12 @@ import java.util.List;
  *  so call the generate() method to run the algorithm.
  *  */
 public class SimulatedAnnealing implements SolutionGenerationStrategy {
-    // The number of iterations that SA algorithm will do before lowering the temperature
-    private static final double MINIMA_NUM_ITERATIONS = 100;
-    // How much the starting temperature should be higher than the maxEnergyDelta
-    private static final double MAX_TEMPERATURE_INCREASE = 1000;
+    // How much the starting temperature should be higher or less than the maxEnergyDelta
+    private static final double STARTING_TEMPERATURE_MODIFIER = 400;
     // How much the temperature will be lowered
-    private static final double COOLING_RATE = 0.005;
+    private static final double COOLING_RATE = 0.42;
     // The lowest value that the temperature can reach
-    private static final double MINIMUM_TEMPERATURE = 0.006;
+    private static final double MINIMUM_TEMPERATURE = 1;
 
     /** Runs the Simulated Annealing Algorithm and returns the generated solution */
     @Override
@@ -25,30 +23,31 @@ public class SimulatedAnnealing implements SolutionGenerationStrategy {
         //Calculate max energy delta in 100 random solutions
         List<Solution> randomSolutions = Utils.getRandomSolutionList(projects, students, 100, GPA_IMPORTANCE);
         double maxEnergyDelta = calculateMaxEnergyDelta(randomSolutions);
-        double temperature = maxEnergyDelta + MAX_TEMPERATURE_INCREASE;
+        double startingTemperature = maxEnergyDelta + STARTING_TEMPERATURE_MODIFIER;
 
         Solution currentSolution = new RandomGeneration().generate(projects, students, GPA_IMPORTANCE);
         Solution bestSolution = currentSolution;
-
+        int n = 1;
+        double temperature = startingTemperature;
         while(temperature > MINIMUM_TEMPERATURE) {
-            System.out.printf("Current energy: %.2f Best energy: %.2f Temperature: %.2f\n", currentSolution.getEnergy(), bestSolution.getEnergy(), temperature);
+            Solution mutatedSolution = SolutionFactory.createByMutating(currentSolution, projects, GPA_IMPORTANCE);
 
-            //Find a local minima
-            for (int i = 0; i < MINIMA_NUM_ITERATIONS; i++) {
-                Solution mutatedSolution = SolutionFactory.createByMutating(currentSolution, projects, GPA_IMPORTANCE);
-                double deltaEnergy = Math.abs(mutatedSolution.getEnergy() - currentSolution.getEnergy());
+            double deltaEnergy = Math.abs(mutatedSolution.getEnergy() - currentSolution.getEnergy());
 
-                if (mutatedSolution.getEnergy() < currentSolution.getEnergy())
+            if (mutatedSolution.getEnergy() < bestSolution.getEnergy())
+                bestSolution = mutatedSolution;
+
+            if (mutatedSolution.getEnergy() <= currentSolution.getEnergy()) {
+                currentSolution = mutatedSolution;
+            } else {
+                if (Math.random() <= Math.exp(-deltaEnergy/temperature)) {
                     currentSolution = mutatedSolution;
-                else if (Math.random() <= Math.exp(-deltaEnergy/temperature))
-                    currentSolution = mutatedSolution;
+                }
+                System.out.printf("%d - Current energy: %.2f Best energy: %.2f Temperature: %.3f\n", n, currentSolution.getEnergy(), bestSolution.getEnergy(), temperature);
+                //Lower the temperature
+                temperature = startingTemperature * (Math.pow(1-COOLING_RATE, Math.log(n)));
             }
-
-            if (currentSolution.getEnergy() < bestSolution.getEnergy())
-                bestSolution = currentSolution;
-
-            //Lower the temperature based on the cooling rate
-            temperature *= 1 - COOLING_RATE;
+            n++;
         }
 
         return bestSolution;

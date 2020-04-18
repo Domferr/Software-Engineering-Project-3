@@ -1,5 +1,6 @@
 package ie.ucdconnect.sep;
 
+import ie.ucdconnect.sep.generators.GeneticAlgorithm;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
 
 import java.io.BufferedWriter;
@@ -30,7 +31,7 @@ public class SolutionGenerator {
 
 		//Run simulated annealing
 		Solution solution = new SimulatedAnnealing().generate(projects, students, gpaImportance);
-		System.out.println("Final energy: " + solution.getEnergy() + ". Final fitness: " + solution.getFitness() + ".");
+		System.out.printf("Final energy: %.2f. Final fitness: %.2f\n", solution.getEnergy(), solution.getFitness());
 
 		//Save generated solution into resources dir
 		saveSolution(solution, test_size);
