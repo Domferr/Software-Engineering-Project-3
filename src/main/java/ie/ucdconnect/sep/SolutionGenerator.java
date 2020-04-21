@@ -30,7 +30,7 @@ public class SolutionGenerator {
 		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
 
 		//Run simulated annealing
-		Solution solution = new SimulatedAnnealing().generate(projects, students, gpaImportance);
+		Solution solution = new GeneticAlgorithm().generate(projects, students, gpaImportance);
 		System.out.printf("Final energy: %.2f. Final fitness: %.2f\n", solution.getEnergy(), solution.getFitness());
 
 		//Save generated solution into resources dir

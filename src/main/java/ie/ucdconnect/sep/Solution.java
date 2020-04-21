@@ -47,6 +47,12 @@ public class Solution {
 
 			return createAndEvaluate(mapBuilder.build(), gpaImportance);
 		}
+
+		/** Create a new solution by taking the best from the two given solutions */
+		public static Solution createByMating(Solution first, Solution second, List<Project> projects, double gpaImportance) {
+			//TODO implement the way to take the best from two given solutions to create a new solution
+			return createByMutating(first, projects, gpaImportance);
+		}
 	 }
 
 	//Penalties for hard constraint violation

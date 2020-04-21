@@ -18,7 +18,7 @@ public class SolutionAcceptor {
 	/**
 	 * Sorts low to high
 	 */
-	private static int compareByEnergy(Solution a, Solution b) {
+	public static int compareByEnergy(Solution a, Solution b) {
 		return Double.compare(a.getEnergy(), b.getEnergy());
 	}
 
