@@ -25,23 +25,19 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
     public Solution generate(List<Project> projects, List<Student> students) {
         List<Solution> solutions = Utils.getRandomSolutionList(projects, students, GENERATION_SIZE);
         int plateau = 0;
-        int genCounter = 1;
-        Solution currentBest = solutions.get(0);    //The best solution of the current generation
-        Solution lastBest = currentBest;            //The best solution of the last generation
+        int genCounter = 0;
+        Solution lastBest = solutions.get(0);            //The best solution of the last generation
         while (plateau < MAX_PLATEAU) {
             solutions.sort(SolutionAcceptor::compareByEnergy); //Sorts from best to worst - Ranking
-            currentBest = solutions.get(0); //Best solution of this generation
-            System.out.printf("Running generation: %d. Energy: %.2f. Fitness: %.2f. plateau: %d \n", genCounter, currentBest.getEnergy(), currentBest.getFitness(), plateau);
-            List<Solution> reproduced = reproduceTop(solutions, projects);  //Mate and reproduce the top - Mating
-            //Randomly mate and reproduce
-            while (reproduced.size() < GENERATION_CULL) {
-                reproduced.add(reproduceRandomly(solutions, projects));
-            }
+            List<Solution> reproduced = reproduce(solutions, projects);
             cullBottom(solutions, reproduced);  //Cull the bottom - Culling
 
+
+            Solution currentBest = solutions.get(0); //Best solution of this generation
             plateau = lastBest.getFitness() >= currentBest.getFitness() ? plateau+1 : 0;
             lastBest = currentBest;
             genCounter++;
+            System.out.printf("Running generation: %d. Energy: %.2f. Fitness: %.2f. plateau: %d \n", genCounter, currentBest.getEnergy(), currentBest.getFitness(), plateau);
         }
 
         solutions.sort(SolutionAcceptor::compareByEnergy);
@@ -56,6 +52,15 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
             allSolutions.set(badSolutionIndex, reproducedSolutions.get(i-1));
             i++;
         }
+    }
+
+    private List<Solution> reproduce(List<Solution> solutions, List<Project> projects) {
+        List<Solution> reproduced = reproduceTop(solutions, projects);
+        //Randomly mate and reproduce
+        while (reproduced.size() < GENERATION_CULL) {
+            reproduced.add(reproduceRandomly(solutions, projects));
+        }
+        return reproduced;
     }
 
     /** Reproduces the TOP_SOLUTIONS and returns the created list */
