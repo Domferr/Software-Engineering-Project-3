@@ -22,15 +22,13 @@ public class SolutionGenerator {
 		int[] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
 		int test_size = testSetsStudentsSize[1];
 
-		double gpaImportance = 1.0;
-
 		//Read test set
 		List<StaffMember> staffMembers = Utils.readStaffMembers();
 		List<Project> projects = Utils.readProjects(staffMembers, test_size);
 		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
 
 		//Run simulated annealing
-		Solution solution = new GeneticAlgorithm().generate(projects, students, gpaImportance);
+		Solution solution = new GeneticAlgorithm().generate(projects, students);
 		System.out.printf("Final energy: %.2f. Final fitness: %.2f\n", solution.getEnergy(), solution.getFitness());
 
 		//Save generated solution into resources dir

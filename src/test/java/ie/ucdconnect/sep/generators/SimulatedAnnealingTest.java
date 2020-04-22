@@ -27,12 +27,12 @@ class SimulatedAnnealingTest {
 
     @Test
     void generate() {
-        randSolution = new RandomGeneration().generate(projects, students, 1.0);
-        annealingSolution = new SimulatedAnnealing().generate(projects, students, 1.0);
+        randSolution = new RandomGeneration().generate(projects, students);
+        annealingSolution = new SimulatedAnnealing().generate(projects, students);
         assertTrue(annealingSolution.getEnergy() < randSolution.getEnergy());
         assertNotEquals(randSolution, annealingSolution);
-        randSolution = new RandomGeneration().generate(projects, students, 0);
-        annealingSolution = new SimulatedAnnealing().generate(projects, students, 0);
+        randSolution = new RandomGeneration().generate(projects, students);
+        annealingSolution = new SimulatedAnnealing().generate(projects, students);
         assertTrue(annealingSolution.getEnergy() < randSolution.getEnergy());
     }
 

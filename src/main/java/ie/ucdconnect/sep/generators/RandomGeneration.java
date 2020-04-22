@@ -17,7 +17,7 @@ import java.util.Random;
  *  */
 public class RandomGeneration implements SolutionGenerationStrategy {
     @Override
-    public Solution generate(List<Project> projects, List<Student> students, double GPA_IMPORTANCE) {
+    public Solution generate(List<Project> projects, List<Student> students) {
         ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 
         List<Student> studentsCopy = new ArrayList<>(students);
@@ -28,6 +28,6 @@ public class RandomGeneration implements SolutionGenerationStrategy {
             mapBuilder.put(projects.get(randomIndex), student);
         }
 
-        return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build(), GPA_IMPORTANCE);
+        return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
     }
 }

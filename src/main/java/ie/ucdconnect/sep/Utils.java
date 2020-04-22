@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
  */
 public class Utils {
 
-	/** Returns a list of the given size of random generated solutions */
-	public static List<Solution> getRandomSolutionList(List<Project> projects, List<Student> students, int size, double GPA_IMPORTANCE) {
+	/** Returns a list of the given size o=f random generated solutions */
+	public static List<Solution> getRandomSolutionList(List<Project> projects, List<Student> students, int size) {
 		List<Solution> solutions = new ArrayList<>();
 		//Create a list of solutions and find the max energy delta
 		for (int i = 0; i < size; i++) {
-			solutions.add(new RandomGeneration().generate(projects, students, GPA_IMPORTANCE));
+			solutions.add(new RandomGeneration().generate(projects, students));
 		}
 		return solutions;
 	}
@@ -37,11 +37,11 @@ public class Utils {
 	/**
 	 * Reads the solution test set file with the given test set size
 	 */
-	public static Solution readSolution(Map<String, Project> projectsMap, List<Student> students, int testSetSize, double gpaImportance) throws IOException {
+	public static Solution readSolution(Map<String, Project> projectsMap, List<Student> students, int testSetSize) throws IOException {
 		File solutionFile = getSolutionFile(testSetSize);
 		String fileContent = readFile(solutionFile.toPath());
 
-		return Solution.fromCSV(fileContent, students, projectsMap, gpaImportance);
+		return Solution.fromCSV(fileContent, students, projectsMap);
 	}
 
 	/**

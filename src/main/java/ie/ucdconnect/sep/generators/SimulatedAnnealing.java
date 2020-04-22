@@ -19,18 +19,18 @@ public class SimulatedAnnealing implements SolutionGenerationStrategy {
 
     /** Runs the Simulated Annealing Algorithm and returns the generated solution */
     @Override
-    public Solution generate(List<Project> projects, List<Student> students, double GPA_IMPORTANCE) {
+    public Solution generate(List<Project> projects, List<Student> students) {
         //Calculate max energy delta in 100 random solutions
-        List<Solution> randomSolutions = Utils.getRandomSolutionList(projects, students, 100, GPA_IMPORTANCE);
+        List<Solution> randomSolutions = Utils.getRandomSolutionList(projects, students, 100);
         double maxEnergyDelta = calculateMaxEnergyDelta(randomSolutions);
         double startingTemperature = maxEnergyDelta + STARTING_TEMPERATURE_MODIFIER;
 
-        Solution currentSolution = new RandomGeneration().generate(projects, students, GPA_IMPORTANCE);
+        Solution currentSolution = new RandomGeneration().generate(projects, students);
         Solution bestSolution = currentSolution;
         int n = 1;
         double temperature = startingTemperature;
         while(temperature > MINIMUM_TEMPERATURE) {
-            Solution mutatedSolution = SolutionFactory.createByMutating(currentSolution, projects, GPA_IMPORTANCE);
+            Solution mutatedSolution = SolutionFactory.createByMutating(currentSolution, projects);
 
             double deltaEnergy = Math.abs(mutatedSolution.getEnergy() - currentSolution.getEnergy());
 

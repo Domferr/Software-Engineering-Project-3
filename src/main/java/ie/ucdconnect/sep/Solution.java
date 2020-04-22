@@ -22,14 +22,14 @@ public class Solution {
 		}
 
 		/** Creates a solution object and calculates its energy and fitness. */
-		public static Solution createAndEvaluate(ImmutableMultimap<Project, Student> projectMapping, double gpaImportance) {
+		public static Solution createAndEvaluate(ImmutableMultimap<Project, Student> projectMapping) {
 			Solution solution = new Solution(projectMapping);
-			solution.evaluate(gpaImportance);
+			solution.evaluate();
 			return solution;
 		}
 
 		/** Creates a new Solution by mutating a given solution. It also evaluates the resulting solution. */
-		public static Solution createByMutating(Solution solution, List<Project> projects, double gpaImportance) {
+		public static Solution createByMutating(Solution solution, List<Project> projects) {
 			Random random = new Random();
 			ImmutableCollection<Map.Entry<Project, Student>> entries = solution.getEntries();
 			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
@@ -45,13 +45,13 @@ public class Solution {
 				index++;
 			}
 
-			return createAndEvaluate(mapBuilder.build(), gpaImportance);
+			return createAndEvaluate(mapBuilder.build());
 		}
 
 		/** Create a new solution by taking the best from the two given solutions */
-		public static Solution createByMating(Solution first, Solution second, List<Project> projects, double gpaImportance) {
+		public static Solution createByMating(Solution first, Solution second, List<Project> projects) {
 			//TODO implement the way to take the best from two given solutions to create a new solution
-			return createByMutating(first, projects, gpaImportance);
+			return createByMutating(first, projects);
 		}
 	 }
 
@@ -61,9 +61,11 @@ public class Solution {
 
 	private ImmutableMultimap<Project, Student> projectMapping;
 	private double energy, fitness;
+	private double gpaImportance;
 
 	private Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
+		setGpaImportance(1.0);
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class Solution {
 	 * If gpaImportance tends to 1 than the gpa is very important while if gpaImportance tends to 0
 	 * then the gpa is less important.
 	 */
-	public void evaluate(double gpaImportance) {
+	public void evaluate() {
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
 			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
@@ -84,7 +86,7 @@ public class Solution {
 				while (!found && i < 10) {
 					if (student.getPreferences().get(i).equals(project)) {
 						int fitnessDelta = 10 - i;
-						double gpaWeight = student.getGpa() * gpaImportance;
+						double gpaWeight = student.getGpa() * getGpaImportance();
 						fitness += fitnessDelta + fitnessDelta * gpaWeight;
 						energy += i + i * gpaWeight;
 						found = true;
@@ -144,7 +146,7 @@ public class Solution {
 	 * @throws IllegalStateException if a student cannot be mapped
 	 * @throws IOException           if an error occurs while parsing the CSV
 	 */
-	public static Solution fromCSV(String csvFile, List<Student> students, Map<String, Project> projectsMap, double gpaImportance) throws IllegalStateException, IOException {
+	public static Solution fromCSV(String csvFile, List<Student> students, Map<String, Project> projectsMap) throws IllegalStateException, IOException {
 		CSVParser csvParser = new CSVParser();
 		ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 		String[] rows = csvFile.split("\n");
@@ -159,7 +161,7 @@ public class Solution {
 				mapBuilder.put(project, projectStudent);
 			}
 		}
-		return SolutionFactory.createAndEvaluate(mapBuilder.build(), gpaImportance);
+		return SolutionFactory.createAndEvaluate(mapBuilder.build());
 	}
 
 	/**
@@ -182,6 +184,14 @@ public class Solution {
 
 	public double getFitness() {
 		return fitness;
+	}
+
+	public double getGpaImportance() {
+		return gpaImportance;
+	}
+
+	public void setGpaImportance(double gpaImportance) {
+		this.gpaImportance = gpaImportance;
 	}
 
 	public ImmutableCollection<Map.Entry<Project, Student>> getEntries() {
