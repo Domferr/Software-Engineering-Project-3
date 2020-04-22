@@ -25,7 +25,7 @@ public class SolutionAcceptor {
 	/**
 	 * Sorts high to low
 	 */
-	private static int compareByFitness(Solution a, Solution b) {
+	public static int compareByFitness(Solution a, Solution b) {
 		return Double.compare(b.getFitness(), a.getFitness());
 	}
 

@@ -15,6 +15,10 @@ public class Solution {
 
 	/** Factory class for the Solution class */
 	public static class SolutionFactory {
+
+		// The chance for an entry in a solution to mutate;
+		private static final float MUTATE_CHANCE = 0.05f;
+
 		/** Creates a solution object without evaluating energy and fitness.
 		 *  This is the most efficient and should be used when the energy and fitness values are not needed. */
 		public static Solution create(ImmutableMultimap<Project, Student> projectMapping) {
@@ -49,9 +53,19 @@ public class Solution {
 		}
 
 		/** Create a new solution by taking the best from the two given solutions */
-		public static Solution createByMating(Solution first, Solution second, List<Project> projects) {
-			//TODO implement the way to take the best from two given solutions to create a new solution
-			return createByMutating(first, projects);
+		public static Solution createByMating(Solution a, Solution b, List<Project> projects, List<Student> students) {
+			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
+			Random random = new Random(System.currentTimeMillis());
+			for (Student student : students) {
+				if (random.nextFloat() <= MUTATE_CHANCE) {
+					mapBuilder.put(projects.get(random.nextInt(projects.size())), student);
+				} else if (random.nextBoolean()) {
+					mapBuilder.put(a.getAssignedProject(student), student);
+				} else {
+					mapBuilder.put(b.getAssignedProject(student), student);
+				}
+			}
+			return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
 		}
 	 }
 

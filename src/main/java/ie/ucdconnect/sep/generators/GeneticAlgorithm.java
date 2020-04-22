@@ -28,10 +28,11 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         int genCounter = 0;
         Solution lastBest = solutions.get(0);            //The best solution of the last generation
         while (plateau < MAX_PLATEAU) {
-            solutions.sort(SolutionAcceptor::compareByEnergy); //Sorts from best to worst - Ranking
-            List<Solution> reproduced = reproduce(solutions, projects);
-            cullBottom(solutions, reproduced);  //Cull the bottom - Culling
-
+            solutions.sort(SolutionAcceptor::compareByEnergy); // Energy low to high
+            cullBottom(solutions);  //Cull the bottom - Culling
+            solutions.sort(SolutionAcceptor::compareByFitness); // Fitness high to low
+            List<Solution> reproduced = reproduce(solutions, projects, students);
+            solutions.addAll(reproduced);
 
             Solution currentBest = solutions.get(0); //Best solution of this generation
             plateau = lastBest.getFitness() >= currentBest.getFitness() ? plateau+1 : 0;
@@ -45,26 +46,23 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
     }
 
     /** Replace the worst solutions with a given list best solutioms */
-    private void cullBottom(List<Solution> allSolutions, List<Solution> reproducedSolutions) {
-        int i = 1;
-        while (i < GENERATION_CULL) {
-            int badSolutionIndex = allSolutions.size() - i;
-            allSolutions.set(badSolutionIndex, reproducedSolutions.get(i-1));
-            i++;
+    private void cullBottom(List<Solution> solutions) {
+        for (int i = GENERATION_SIZE - GENERATION_CULL; i < GENERATION_SIZE; i++) {
+            solutions.remove(solutions.size() - 1);
         }
     }
 
-    private List<Solution> reproduce(List<Solution> solutions, List<Project> projects) {
-        List<Solution> reproduced = reproduceTop(solutions, projects);
+    private List<Solution> reproduce(List<Solution> solutions, List<Project> projects, List<Student> students) {
+        List<Solution> reproduced = reproduceTop(solutions, projects, students);
         //Randomly mate and reproduce
         while (reproduced.size() < GENERATION_CULL) {
-            reproduced.add(reproduceRandomly(solutions, projects));
+            reproduced.add(reproduceRandomly(solutions, projects, students));
         }
         return reproduced;
     }
 
     /** Reproduces the TOP_SOLUTIONS and returns the created list */
-    private List<Solution> reproduceTop(List<Solution> solutions, List<Project> projects) {
+    private List<Solution> reproduceTop(List<Solution> solutions, List<Project> projects, List<Student> students) {
         List<Solution> reproduced = new ArrayList<>(GENERATION_CULL);
         int firstIndex = 0;
         int secondIndex = 1;
@@ -72,7 +70,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         while (secondIndex < TOP_SOLUTIONS-1 && reproduced.size() < GENERATION_CULL) {
             Solution firstSolution = solutions.get(firstIndex);
             Solution secondSolution = solutions.get(secondIndex);
-            reproduced.add(Solution.SolutionFactory.createByMating(firstSolution, secondSolution, projects));
+            reproduced.add(Solution.SolutionFactory.createByMating(firstSolution, secondSolution, projects, students));
 
             firstIndex++;
             secondIndex++;
@@ -81,7 +79,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         return reproduced;
     }
 
-    private Solution reproduceRandomly(List<Solution> solutions, List<Project> projects) {
+    private Solution reproduceRandomly(List<Solution> solutions, List<Project> projects, List<Student> students) {
         int secondIndex;
         int firstIndex = getRandomInteger(0, TOP_SOLUTIONS);
         if (firstIndex == TOP_SOLUTIONS - 1 || Math.random() < 0.5)
@@ -89,7 +87,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         else
             secondIndex = getRandomInteger(firstIndex+1, TOP_SOLUTIONS);
 
-        return Solution.SolutionFactory.createByMating(solutions.get(firstIndex), solutions.get(secondIndex), projects);
+        return Solution.SolutionFactory.createByMating(solutions.get(firstIndex), solutions.get(secondIndex), projects, students);
     }
 
     /** Returns a random integer between min (included) and max (excluded) */
