@@ -55,17 +55,19 @@ public class Solution {
 		/** Create a new solution by taking the best from the two given solutions */
 		public static Solution createByMating(Solution a, Solution b, List<Project> projects, List<Student> students) {
 			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
-			Random random = new Random(System.currentTimeMillis());
-			for (Student student : students) {
-				if (random.nextFloat() <= MUTATE_CHANCE) {
-					mapBuilder.put(projects.get(random.nextInt(projects.size())), student);
-				} else if (random.nextBoolean()) {
+			int crossoverPoint = (int) (Math.random() * students.size());
+
+			for (int i = 0; i < students.size(); i++) {
+				Student student = students.get(i);
+				if (i < crossoverPoint) {
 					mapBuilder.put(a.getAssignedProject(student), student);
 				} else {
 					mapBuilder.put(b.getAssignedProject(student), student);
 				}
 			}
-			return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
+			Solution child = Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
+
+			return Solution.SolutionFactory.createByMutating(child, projects);
 		}
 	 }
 
