@@ -56,24 +56,6 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         }
     }
 
-    /** Reproduces the TOP_SOLUTIONS and returns the created list */
-    private List<Solution> reproduceTop(List<Solution> solutions, List<Project> projects, List<Student> students) {
-        List<Solution> reproduced = new ArrayList<>(GENERATION_CULL);
-        int firstIndex = 0;
-        int secondIndex = 1;
-        //Mate and reproduce consecutive couples from the top solutions
-        while (secondIndex < TOP_SOLUTIONS-1 && reproduced.size() < GENERATION_CULL) {
-            Solution firstSolution = solutions.get(firstIndex);
-            Solution secondSolution = solutions.get(secondIndex);
-            reproduced.add(Solution.SolutionFactory.createByMating(firstSolution, secondSolution, projects, students, MUTATION_PROBABILITY));
-
-            firstIndex++;
-            secondIndex++;
-        }
-
-        return reproduced;
-    }
-
     private Solution reproduceRandomly(List<Solution> solutions, List<Project> projects, List<Student> students) {
         int secondIndex;
         int firstIndex = Utils.getRandomInteger(0, TOP_SOLUTIONS);
