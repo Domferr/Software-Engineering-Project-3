@@ -53,21 +53,23 @@ public class Solution {
 		}
 
 		/** Create a new solution by taking the best from the two given solutions */
-		public static Solution createByMating(Solution a, Solution b, List<Project> projects, List<Student> students) {
+		public static Solution createByMating(Solution a, Solution b, List<Project> projects, List<Student> students, double MUTATION_PROBABILITY) {
 			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 			int crossoverPoint = (int) (Math.random() * students.size());
 
 			for (int i = 0; i < students.size(); i++) {
 				Student student = students.get(i);
-				if (i < crossoverPoint) {
+				if (Math.random() <= MUTATION_PROBABILITY) {
+					Project newProject = projects.get((int) (Math.random()*(projects.size())));
+					mapBuilder.put(newProject, student);
+				} else if (i < crossoverPoint) {
 					mapBuilder.put(a.getAssignedProject(student), student);
 				} else {
 					mapBuilder.put(b.getAssignedProject(student), student);
 				}
 			}
-			Solution child = Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
 
-			return Solution.SolutionFactory.createByMutating(child, projects);
+			return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
 		}
 	 }
 

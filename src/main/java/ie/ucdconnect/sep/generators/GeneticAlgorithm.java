@@ -3,7 +3,6 @@ package ie.ucdconnect.sep.generators;
 import ie.ucdconnect.sep.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /** This class implements the Genetic algorithm. It implements SolutionGenerationStrategy interface,
@@ -13,13 +12,15 @@ import java.util.List;
 public class GeneticAlgorithm implements SolutionGenerationStrategy {
 
     // The number of solutions in each generation.
-    private static final int GENERATION_SIZE = 600;    //P
+    private static final int GENERATION_SIZE = 1000;    //P
     // The number of "good" solutions that are allowed to mate and reproduce
     private static final int TOP_SOLUTIONS = 180;       //N
     // The number of "bad" solutions that will be removed at the end of each generation.
-    private static final int GENERATION_CULL = 360;     //M
+    private static final int GENERATION_CULL = 480;     //M
     // Number of no consecutive improvements to terminate the algorithm
     private static final int MAX_PLATEAU = 100;          //R
+    // The probability of a gene to be mutated
+    private static final double MUTATION_PROBABILITY = 0.004;
 
     @Override
     public Solution generate(List<Project> projects, List<Student> students) {
@@ -70,7 +71,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         while (secondIndex < TOP_SOLUTIONS-1 && reproduced.size() < GENERATION_CULL) {
             Solution firstSolution = solutions.get(firstIndex);
             Solution secondSolution = solutions.get(secondIndex);
-            reproduced.add(Solution.SolutionFactory.createByMating(firstSolution, secondSolution, projects, students));
+            reproduced.add(Solution.SolutionFactory.createByMating(firstSolution, secondSolution, projects, students, MUTATION_PROBABILITY));
 
             firstIndex++;
             secondIndex++;
@@ -87,7 +88,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         else
             secondIndex = getRandomInteger(firstIndex+1, TOP_SOLUTIONS);
 
-        return Solution.SolutionFactory.createByMating(solutions.get(firstIndex), solutions.get(secondIndex), projects, students);
+        return Solution.SolutionFactory.createByMating(solutions.get(firstIndex), solutions.get(secondIndex), projects, students, MUTATION_PROBABILITY);
     }
 
     /** Returns a random integer between min (included) and max (excluded) */
