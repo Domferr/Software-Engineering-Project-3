@@ -4,6 +4,17 @@ Martynas Jagutis 17424866
 Domenico Ferraro 19203549
 Alex Ng 17409754
 
+TASK 6
+We added the GeneticAlgorithm class which performs the genetic algorithm on a solution. Initially we create P (GENERATION_SIZE) 
+random solutions. The fitness of each solution is evaluated by the evaluate function in the solution class. We order the population
+of solutions according to energy (which is just the opposite of fitness). The reproduce method selects the fittest M members
+(GENERATION_CULL) for mating and culls all but the fittest P solutions. Then the reproduceRandomly method is called which 
+performs a mating on two solutions and returns a new solution. This is done in the solution factory class by calling createByMating. 
+Here a mutation probability is introduced where the mutation only has a certain chance of taking place.
+The new offspring is added to the population. We stop the algorithm once it reaches a plateau, i.e. no more significant improvements 
+are made by the mating process. In the unit tests we test to make sure that the constraint are not violated by the new solution produced.
+As an extra feature an AsexualGeneticAlgorithm is implemented where new offspring are produced by only one parent.
+
 TASK 5
 We added the method CreateByMutating in the SolutionFactory class. This method creates a solution by mutating a given solution
 passed as an argument. We decided to use the Strategy design pattern for the implementation of the SimulatedAnnealing and 
