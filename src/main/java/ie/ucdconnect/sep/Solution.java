@@ -96,6 +96,7 @@ public class Solution {
 			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
 			if (assignedStudents.size() > 1) {
 				energy += CONSTRAINT_VIOLATION_PENALTY;
+				fitness -= CONSTRAINT_VIOLATION_PENALTY;
 			}
 			for (Student student : assignedStudents.asList()) {
 				int i = 0;
@@ -112,6 +113,7 @@ public class Solution {
 				}
 				if (!found) {
 					energy += NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
+					fitness -= NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
 				}
 			}
 		}
