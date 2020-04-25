@@ -36,5 +36,18 @@ class SimulatedAnnealingTest {
         assertTrue(annealingSolution.getEnergy() < randSolution.getEnergy());
     }
 
+    @Test
+    void generate_no_constraint_violation() {
+        Solution solution = new SimulatedAnnealing().generate(projects, students);
+        for(Project project : projects){
+            if(solution.getAssignedStudents(project).size() > 1){
+                fail("A constraint in the Simulated Annealing Algorithm has been violated");
+            }
+        }
+    }
+
+
+
+
 
 }
