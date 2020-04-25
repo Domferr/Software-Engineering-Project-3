@@ -57,6 +57,45 @@ public class Solution {
 			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
 			int crossoverPoint = (int) (Math.random() * students.size());
 
+			/*StringBuilder bitCodingChild = new StringBuilder();
+			int projectBitsLength = Integer.toBinaryString(projects.size()).length();
+			for (int i = 0; i < students.size(); i++) {
+				Student student = students.get(i);
+				Project projectA = a.getAssignedProject(student);
+				Project projectB = b.getAssignedProject(student);
+				if (i < crossoverPoint) {
+					String binString = Integer.toBinaryString(projects.indexOf(projectA));
+					for (int j = 0; j < projectBitsLength - binString.length(); j++) {
+						bitCodingChild.append(0);
+					}
+					bitCodingChild.append(binString);
+					mapBuilder.put(a.getAssignedProject(student), student);
+				} else {
+					String binString = Integer.toBinaryString(projects.indexOf(projectB));
+					for (int j = 0; j < projectBitsLength - binString.length(); j++) {
+						bitCodingChild.append(0);
+					}
+					bitCodingChild.append(binString);
+					mapBuilder.put(b.getAssignedProject(student), student);
+				}
+				if (Math.random() < 0.05) {
+					char last = bitCodingChild.charAt(bitCodingChild.length()-1);
+					bitCodingChild.setCharAt(bitCodingChild.length()-1, last == '0'?'1':'0');
+				}
+			}
+			int studentIndex = 0;
+			for (int i = 0; i < projectBitsLength; i++) {
+				int start = i*projectBitsLength;
+				String bitsStr = "";
+				for (int j = 0; j < projectBitsLength; j++) {
+					bitsStr += bitCodingChild.charAt(start+j);
+				}
+				int projectIndex = Math.min(projects.size()-1, Integer.parseInt(bitsStr, 10));
+				Project project = projects.get(projectIndex);
+				mapBuilder.put(project, students.get(studentIndex));
+				studentIndex++;
+			}*/
+
 			for (int i = 0; i < students.size(); i++) {
 				Student student = students.get(i);
 				if (Math.random() <= MUTATION_PROBABILITY) {

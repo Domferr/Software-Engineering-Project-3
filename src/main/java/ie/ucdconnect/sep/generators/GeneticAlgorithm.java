@@ -12,15 +12,15 @@ import java.util.List;
 public class GeneticAlgorithm implements SolutionGenerationStrategy {
 
     // The number of solutions in each generation.
-    private static final int GENERATION_SIZE = 1000;    //P
+    private static final int GENERATION_SIZE = 800;    //P
     // The number of "good" solutions that are allowed to mate and reproduce
-    private static final int TOP_SOLUTIONS = 180;       //N
+    private static final int TOP_SOLUTIONS = 100;       //N
     // The number of "bad" solutions that will be removed at the end of each generation.
-    private static final int GENERATION_CULL = 480;     //M
+    private static final int GENERATION_CULL = 680;     //M
     // Number of no consecutive improvements to terminate the algorithm
     private static final int MAX_PLATEAU = 100;          //R
     // The probability of a gene to be mutated
-    private static final double MUTATION_PROBABILITY = 0.004;
+    private static final double MUTATION_PROBABILITY = 0.002;
 
     @Override
     public Solution generate(List<Project> projects, List<Student> students) {
@@ -29,11 +29,9 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         int genCounter = 0;
         Solution lastBest = solutions.get(0);            //The best solution of the last generation
         while (plateau < MAX_PLATEAU) {
-            solutions.sort(SolutionAcceptor::compareByEnergy); // Energy low to high
-            cullBottom(solutions);  //Cull the bottom - Culling
-            solutions.sort(SolutionAcceptor::compareByFitness); // Fitness high to low
-            List<Solution> reproduced = reproduce(solutions, projects, students);
-            solutions.addAll(reproduced);
+            solutions.sort(SolutionAcceptor::compareByEnergy); // Sorts best to worst
+            // Reproduces the top solution and substitutes the bad solutions
+            reproduce(solutions, projects, students);
 
             Solution currentBest = solutions.get(0); //Best solution of this generation
             plateau = lastBest.getFitness() >= currentBest.getFitness() ? plateau+1 : 0;
@@ -46,20 +44,16 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
         return solutions.get(0);
     }
 
-    /** Replace the worst solutions with a given list best solutioms */
-    private void cullBottom(List<Solution> solutions) {
-        for (int i = GENERATION_SIZE - GENERATION_CULL; i < GENERATION_SIZE; i++) {
-            solutions.remove(solutions.size() - 1);
-        }
-    }
-
-    private List<Solution> reproduce(List<Solution> solutions, List<Project> projects, List<Student> students) {
-        List<Solution> reproduced = reproduceTop(solutions, projects, students);
+    /** Reproduces and then substitutes the bad solutions with the new generation */
+    private void reproduce(List<Solution> solutions, List<Project> projects, List<Student> students) {
+        int index = 1;
         //Randomly mate and reproduce
-        while (reproduced.size() < GENERATION_CULL) {
-            reproduced.add(reproduceRandomly(solutions, projects, students));
+        while (index <= GENERATION_CULL && index < solutions.size()) {
+            Solution children = reproduceRandomly(solutions, projects, students);
+            //Replace bad solution with the new generation
+            solutions.set(solutions.size()-index, children);
+            index++;
         }
-        return reproduced;
     }
 
     /** Reproduces the TOP_SOLUTIONS and returns the created list */
@@ -82,28 +76,12 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
 
     private Solution reproduceRandomly(List<Solution> solutions, List<Project> projects, List<Student> students) {
         int secondIndex;
-        int firstIndex = getRandomInteger(0, TOP_SOLUTIONS);
+        int firstIndex = Utils.getRandomInteger(0, TOP_SOLUTIONS);
         if (firstIndex == TOP_SOLUTIONS - 1 || Math.random() < 0.5)
-            secondIndex = getRandomInteger(0, firstIndex);
+            secondIndex = Utils.getRandomInteger(0, firstIndex);
         else
-            secondIndex = getRandomInteger(firstIndex+1, TOP_SOLUTIONS);
+            secondIndex = Utils.getRandomInteger(firstIndex+1, TOP_SOLUTIONS);
 
         return Solution.SolutionFactory.createByMating(solutions.get(firstIndex), solutions.get(secondIndex), projects, students, MUTATION_PROBABILITY);
-    }
-
-    /** Returns a random integer between min (included) and max (excluded) */
-    private int getRandomInteger(int min, int max) {
-        return (int) (Math.random() * (max-min)) + min;
-    }
-
-    /** Mutates the given list of solutions */
-    private void mutate(List<Solution> solutions, List<Project> projects) {
-        while (solutions.size() < GENERATION_SIZE) {
-            int randomIndex = (int) (Math.random() * solutions.size());
-            Solution randomSolution = solutions.get(randomIndex);
-            Solution mutatedSolution = Solution.SolutionFactory.createByMutating(randomSolution, projects);
-
-            solutions.add(mutatedSolution);
-        }
     }
 }
