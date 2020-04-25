@@ -12,15 +12,15 @@ import java.util.List;
 public class GeneticAlgorithm implements SolutionGenerationStrategy {
 
     // The number of solutions in each generation.
-    private static final int GENERATION_SIZE = 800;    //P
+    private static final int GENERATION_SIZE = 1000;    //P
     // The number of "good" solutions that are allowed to mate and reproduce
-    private static final int TOP_SOLUTIONS = 100;       //N
+    private static final int TOP_SOLUTIONS = 150;       //N
     // The number of "bad" solutions that will be removed at the end of each generation.
-    private static final int GENERATION_CULL = 680;     //M
+    private static final int GENERATION_CULL = 450;     //M
     // Number of no consecutive improvements to terminate the algorithm
-    private static final int MAX_PLATEAU = 100;          //R
+    private static final int MAX_PLATEAU = 120;          //R
     // The probability of a gene to be mutated
-    private static final double MUTATION_PROBABILITY = 0.002;
+    private static final double MUTATION_PROBABILITY = 0.005;
 
     @Override
     public Solution generate(List<Project> projects, List<Student> students) {
