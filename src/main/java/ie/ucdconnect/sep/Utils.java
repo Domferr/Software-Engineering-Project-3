@@ -17,6 +17,11 @@ import java.util.stream.Collectors;
  */
 public class Utils {
 
+	/** Returns a random integer between min (included) and max (excluded) */
+	public static int getRandomInteger(int min, int max) {
+		return (int) (Math.random() * (max-min)) + min;
+	}
+
 	/** Returns a list of the given size o=f random generated solutions */
 	public static List<Solution> getRandomSolutionList(List<Project> projects, List<Student> students, int size) {
 		List<Solution> solutions = new ArrayList<>();

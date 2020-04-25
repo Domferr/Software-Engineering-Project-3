@@ -53,18 +53,22 @@ public class Solution {
 		}
 
 		/** Create a new solution by taking the best from the two given solutions */
-		public static Solution createByMating(Solution a, Solution b, List<Project> projects, List<Student> students) {
+		public static Solution createByMating(Solution a, Solution b, List<Project> projects, List<Student> students, double MUTATION_PROBABILITY) {
 			ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
-			Random random = new Random(System.currentTimeMillis());
-			for (Student student : students) {
-				if (random.nextFloat() <= MUTATE_CHANCE) {
-					mapBuilder.put(projects.get(random.nextInt(projects.size())), student);
-				} else if (random.nextBoolean()) {
+			int crossoverPoint = (int) (Math.random() * students.size());
+
+			for (int i = 0; i < students.size(); i++) {
+				Student student = students.get(i);
+				if (Math.random() <= MUTATION_PROBABILITY) {
+					Project newProject = projects.get((int) (Math.random()*(projects.size())));
+					mapBuilder.put(newProject, student);
+				} else if (i < crossoverPoint) {
 					mapBuilder.put(a.getAssignedProject(student), student);
 				} else {
 					mapBuilder.put(b.getAssignedProject(student), student);
 				}
 			}
+
 			return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
 		}
 	 }
@@ -92,6 +96,7 @@ public class Solution {
 			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
 			if (assignedStudents.size() > 1) {
 				energy += CONSTRAINT_VIOLATION_PENALTY;
+				fitness -= CONSTRAINT_VIOLATION_PENALTY;
 			}
 			for (Student student : assignedStudents.asList()) {
 				int i = 0;
@@ -108,6 +113,7 @@ public class Solution {
 				}
 				if (!found) {
 					energy += NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
+					fitness -= NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
 				}
 			}
 		}
