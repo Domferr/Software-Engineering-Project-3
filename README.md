@@ -7,9 +7,7 @@ Alex Ng 17409754
 TASK 6
 We added the GeneticAlgorithm class which performs the genetic algorithm on a solution. Initially we create P (GENERATION_SIZE) 
 random solutions. The fitness of each solution is evaluated by the evaluate function in the solution class. We order the population
-of solutions according to energy (which is just the opposite of fitness). The reproduce method selects the fittest M members
-(GENERATION_CULL) for mating and culls all but the fittest P solutions. Then the reproduceRandomly method is called which 
-performs a mating on two solutions and returns a new solution. This is done in the solution factory class by calling createByMating. 
+of solutions by their energy. The reproduce method replaces the worst M (GENERATION_CULL) members with new solutions. Then the reproduceRandomly method is called which performs a mating on two solutions from the top P (TOP_SOLUTIONS) of the population and returns a new solution. This is done in the solution factory class by calling createByMating. 
 Here a mutation probability is introduced where the mutation only has a certain chance of taking place.
 The new offspring is added to the population. We stop the algorithm once it reaches a plateau, i.e. no more significant improvements 
 are made by the mating process. In the unit tests we test to make sure that the constraint are not violated by the new solution produced.
