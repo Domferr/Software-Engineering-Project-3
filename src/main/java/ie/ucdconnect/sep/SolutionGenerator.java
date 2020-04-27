@@ -32,13 +32,13 @@ public class SolutionGenerator {
 		System.out.printf("Final energy: %.2f. Final fitness: %.2f\n", solution.getEnergy(), solution.getFitness());
 
 		//Save generated solution into resources dir
-		saveSolution(solution, test_size);
+	//	saveSolution(solution, test_size);
 	}
 
 	/**
 	 * Write the given solution into a file.
 	 */
-	private static void saveSolution(Solution solution, int size) throws IOException {
+	public void saveSolution(Solution solution, int size) throws IOException {
 		String dirName = Config.getInstance().getTestcaseDirName();
 		File testCaseDir = new File(dirName);
 		if (!testCaseDir.exists())

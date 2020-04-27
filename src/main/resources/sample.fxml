@@ -1,4 +1,14 @@
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Label?>
 <GridPane fx:controller="ie.ucdconnect.sep.Controllers.Controller"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="0" text="Load" onAction="#load" prefWidth="150"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="1" text="Simulated Annealing" onAction="#doSA" prefWidth="150"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="2" text="Genetic Algorithm" onAction="#doGA" prefWidth="150"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="3" text="Save To Disk" onAction="#saveResults" prefWidth="150"/>
+    <Label text="GPA Importance" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+    <Slider fx:id="gpaSlider" onDragDetected="#gpaSliderChange" GridPane.columnIndex="1" GridPane.rowIndex="5" showTickLabels="true" snapToTicks="true" showTickMarks="true" value="100" />
 </GridPane>
