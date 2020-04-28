@@ -67,7 +67,7 @@
           <AnchorPane id="Content" prefHeight="545.0" prefWidth="430.0">
               <TabPane prefHeight="550.0" prefWidth="670.0" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="100.0" tabMinWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <Tab closable="false" text="Solution">
-                      <TableView fx:id="solutionTable">
+                      <TableView fx:id="solutionTableView">
                           <columns>
                               <TableColumn fx:id="solutionStudentColumn" minWidth="-1.0" prefWidth="-1.0" text="Student" />
                               <TableColumn fx:id="solutionProjectColumn" prefWidth="75.0" text="Assigned Project" />
@@ -79,12 +79,7 @@
                   </Tab>
                   <Tab text="Students">
                      <content>
-                        <TableView fx:id="studentsTable">
-                           <columns>
-                              <TableColumn fx:id="studentFirstnameColumn" prefWidth="75.0" text="First name" />
-                              <TableColumn fx:id="studentLastnameColumn" prefWidth="75.0" text="Last name" />
-                              <TableColumn fx:id="studentNumberColumn" minWidth="-1.0" prefWidth="-1.0" text="Student number" />
-                           </columns>
+                        <TableView fx:id="studentsTableView">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
@@ -93,12 +88,7 @@
                   </Tab>
                   <Tab text="Projects">
                      <content>
-                        <TableView fx:id="projectsTable">
-                           <columns>
-                              <TableColumn fx:id="projectSupervisorColumn" minWidth="-1.0" prefWidth="-1.0" text="Supervisor" />
-                              <TableColumn fx:id="projectTitleColumn" prefWidth="75.0" text="Title" />
-                              <TableColumn fx:id="projectTypeColumn" prefWidth="75.0" text="Type" />
-                           </columns>
+                        <TableView fx:id="projectsTableView">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>

@@ -23,38 +23,28 @@ import java.util.Map;
 
 public class Main2Controller {
 
+    public Solution solution;
     private List<Project> projects;
     private List<Student> students;
     private int test_size;
-    public Solution solution;
     private SolutionGenerationStrategy generationStrategy;
+    private StudentsTable studentsTable;
+    private ProjectsTable projectsTable;
 
     @FXML
     Slider gpaSlider;
     @FXML
     ChoiceBox<String> algorithmChoiceBox;
     @FXML
-    TableView<Solution> solutionTable;
+    TableView<Solution> solutionTableView;
     @FXML
     TableColumn<Map.Entry<Project, Student>, String> solutionStudentColumn;
     @FXML
     TableColumn<ImmutableCollection<Map.Entry<Project, Student>>, String> solutionProjectColumn;
     @FXML
-    TableView<Student> studentsTable;
+    TableView<Student> studentsTableView;
     @FXML
-    TableColumn<Student, String> studentNumberColumn;
-    @FXML
-    TableColumn<Student, String> studentFirstnameColumn;
-    @FXML
-    TableColumn<Student, String> studentLastnameColumn;
-    @FXML
-    TableView<Project> projectsTable;
-    @FXML
-    TableColumn<Project, String> projectSupervisorColumn;
-    @FXML
-    TableColumn<Project, String> projectTitleColumn;
-    @FXML
-    TableColumn<Project, String> projectTypeColumn;
+    TableView<Project> projectsTableView;
 
     @FXML
     public void initialize() {
@@ -62,6 +52,7 @@ public class Main2Controller {
         setUpAlgorithmChoiceBox(FXCollections.observableArrayList(SimulatedAnnealing.DISPLAY_NAME, GeneticAlgorithm.DISPLAY_NAME, AsexualGeneticAlgorithm.DISPLAY_NAME, RandomGeneration.DISPLAY_NAME));
         setUpStudentsTable("Nothing to display.\n You can press the \"Load Students\" button on the left to load the students.");
         setUpProjectsTable("Nothing to display.\n You can press the \"Load Projects\" button on the left to load the projects.");
+
         setUpSolutionTable("Nothing to display.\n You can press the \"generate\" button on the left to generate a solution. Remember to select the algorithm and how much importance the student GPA has.");
         try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
@@ -72,12 +63,8 @@ public class Main2Controller {
         } catch (IOException e){
             e.printStackTrace();
         }
-        studentsTable.getItems().addAll(students);
-        projectsTable.getItems().addAll(projects);
-        //Sort by first name
-        studentsTable.getSortOrder().add(studentFirstnameColumn);
-        //Sort by supervisor
-        projectsTable.getSortOrder().add(projectSupervisorColumn);
+        studentsTable.showStudents(students);
+        projectsTable.showProjects(projects);
     }
 
     private Label getTableViewPlaceholder(String placeholderText) {
@@ -89,22 +76,17 @@ public class Main2Controller {
     }
 
     private void setUpProjectsTable(String placeholderText) {
-        projectsTable.setPlaceholder(getTableViewPlaceholder(placeholderText));
-        projectSupervisorColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getSupervisor().getName()));
-        projectTitleColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getTitle()));
-        projectTypeColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getType().toString()));
+        projectsTableView.setPlaceholder(getTableViewPlaceholder(placeholderText));
+        projectsTable = new ProjectsTable(projectsTableView);
     }
 
     private void setUpStudentsTable(String placeholderText) {
-        studentsTable.setPlaceholder(getTableViewPlaceholder(placeholderText));
-        studentNumberColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getStudentNumber()));
-        studentFirstnameColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getFirstName()));
-        studentLastnameColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getLastName()));
-
+        studentsTableView.setPlaceholder(getTableViewPlaceholder(placeholderText));
+        studentsTable = new StudentsTable(studentsTableView);
     }
 
     private void setUpSolutionTable(String placeholderText) {
-        solutionTable.setPlaceholder(getTableViewPlaceholder(placeholderText));
+        solutionTableView.setPlaceholder(getTableViewPlaceholder(placeholderText));
         //TODO set up the solution table and update it each time a new solution is generated
         //solutionStudentColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getValue().getFullName()));
     }
