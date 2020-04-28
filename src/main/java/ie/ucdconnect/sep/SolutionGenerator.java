@@ -38,7 +38,7 @@ public class SolutionGenerator {
 	/**
 	 * Write the given solution into a file.
 	 */
-	public void saveSolution(Solution solution, int size) throws IOException {
+	public static void saveSolution(Solution solution, int size) throws IOException {
 		String dirName = Config.getInstance().getTestcaseDirName();
 		File testCaseDir = new File(dirName);
 		if (!testCaseDir.exists())

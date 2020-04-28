@@ -15,17 +15,16 @@ public class Controller {
 
     private List<Project> projects;
     private List<Student> students;
-    private Solution solution;
     private int test_size;
-    private Alert alert;
+
+    // The latest solution computed, or null if no solution has been computed
+    public Solution solution;
 
     @FXML
     Slider gpaSlider;
 
     @FXML
     public void initialize(){
-        alert = new Alert(Alert.AlertType.INFORMATION);
-
         setUpSlider(0,1,0.5);
         try{
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
@@ -74,28 +73,39 @@ public class Controller {
 
     @FXML
     public void doSA(){
-        solution = new SimulatedAnnealing().generate(projects, students);
-        alert.setHeaderText("Simulated Annealing finished.");
-        alert.setContentText("Make sure to save the results!");
-        alert.showAndWait();
+        runGeneration(new SimulatedAnnealing());
     }
 
     @FXML
     public void doGA(){
-        solution = new GeneticAlgorithm().generate(projects, students);
-        alert.setHeaderText("Simulated Annealing finished.");
-        alert.setContentText("Make sure to save the results!");
-        alert.showAndWait();
+        runGeneration(new GeneticAlgorithm());
+    }
+
+    private void runGeneration(SolutionGenerationStrategy generationStrategy) {
+        GeneratorTask generatorTask = new GeneratorTask(generationStrategy, projects, students);
+        generatorTask.setOnSucceeded(e -> {
+            Solution returnedSolution = generatorTask.getValue();
+            // TODO: Instead it may be nicer to display a new window that shows the result, and an option to save it inside that new window.
+            solution = returnedSolution;
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Solution generation finished.");
+            alert.setContentText("Fitness: " + solution.getFitness() + ". Energy: " + solution.getEnergy());
+            alert.showAndWait();
+
+        });
+        new Thread(generatorTask).start();
     }
 
     @FXML
     public void saveResults() throws IOException{
         if(solution == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("No Solution Found!");
             alert.setContentText("A solution must be generated before results can be saved");
             alert.showAndWait();
         }else{
-            new SolutionGenerator().saveSolution(solution, test_size);
+            SolutionGenerator.saveSolution(solution, test_size);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Results saved!");
             alert.setContentText("You can view and download the results!");
             alert.showAndWait();
