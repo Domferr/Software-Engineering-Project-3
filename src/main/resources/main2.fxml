@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -15,7 +16,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ie.ucdconnect.sep.controllers.Main2Controller">
@@ -30,12 +30,15 @@
                   <VBox.margin>
                       <Insets bottom="8.0" />
                   </VBox.margin>
-                  <Circle fill="#46ff1e" radius="6.0" stroke="BLACK" strokeType="INSIDE">
-                      <HBox.margin>
-                      <Insets top="3.0" />
-                      </HBox.margin>
-                  </Circle>
-                  <Label alignment="CENTER" style="&#10;" text="Ready" textAlignment="CENTER" textFill="#1dda00">
+                  <ProgressIndicator fx:id="progressIndicator" prefHeight="16.0" prefWidth="16.0" progress="1.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="-24.0" />
+                     </padding>
+                  </ProgressIndicator>
+                  <Label fx:id="statusLabel" alignment="CENTER" style="&#10;" text="Ready" textAlignment="CENTER" textFill="#1dda00">
                       <HBox.margin>
                       <Insets />
                       </HBox.margin>
@@ -112,7 +115,7 @@
               </textFill>
           </Label>
           <Pane HBox.hgrow="ALWAYS" />
-          <Label font="$x3" text="Status" textFill="$x4" HBox.hgrow="NEVER" />
+          <Label fx:id="bottomBarStatusLabel" font="$x3" text="Status" textFill="$x4" HBox.hgrow="NEVER" />
       </HBox>
   </children>
 </VBox>

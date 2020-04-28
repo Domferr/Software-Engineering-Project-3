@@ -23,9 +23,9 @@ import java.util.Map;
 
 public class Main2Controller {
 
-    public Solution solution;
-    private List<Project> projects;
-    private List<Student> students;
+    public Solution solution;   //Generated solution
+    private List<Project> projects; //Loaded projects
+    private List<Student> students; //Loaded students
     private int test_size;
     private SolutionGenerationStrategy generationStrategy;
     private StudentsTable studentsTable;
@@ -36,11 +36,17 @@ public class Main2Controller {
     @FXML
     ChoiceBox<String> algorithmChoiceBox;
     @FXML
-    TableView<Solution> solutionTableView;
+    ProgressIndicator progressIndicator;
+    @FXML
+    Label statusLabel;
+    @FXML
+    Label bottomBarStatusLabel;
+    @FXML
+    TableView<Map.Entry<Project, Student>> solutionTableView;
     @FXML
     TableColumn<Map.Entry<Project, Student>, String> solutionStudentColumn;
     @FXML
-    TableColumn<ImmutableCollection<Map.Entry<Project, Student>>, String> solutionProjectColumn;
+    TableColumn<Map.Entry<Project, Student>, String> solutionProjectColumn;
     @FXML
     TableView<Student> studentsTableView;
     @FXML
@@ -48,6 +54,7 @@ public class Main2Controller {
 
     @FXML
     public void initialize() {
+        setStatusToReady();
         setUpSlider(0,1,0.5);
         setUpAlgorithmChoiceBox(FXCollections.observableArrayList(SimulatedAnnealing.DISPLAY_NAME, GeneticAlgorithm.DISPLAY_NAME, AsexualGeneticAlgorithm.DISPLAY_NAME, RandomGeneration.DISPLAY_NAME));
         setUpStudentsTable("Nothing to display.\n You can press the \"Load Students\" button on the left to load the students.");
@@ -65,6 +72,20 @@ public class Main2Controller {
         }
         studentsTable.showStudents(students);
         projectsTable.showProjects(projects);
+    }
+
+    private void setStatusToBusy(String text) {
+        progressIndicator.setPadding(new Insets(0,0,0,0));
+        progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        statusLabel.setText(text);
+        bottomBarStatusLabel.setText(text);
+    }
+
+    private void setStatusToReady() {
+        progressIndicator.setPadding(new Insets(0,0,-24,0));
+        progressIndicator.setProgress(1);
+        statusLabel.setText("Ready");
+        bottomBarStatusLabel.setText("Ready");
     }
 
     private Label getTableViewPlaceholder(String placeholderText) {
@@ -88,7 +109,8 @@ public class Main2Controller {
     private void setUpSolutionTable(String placeholderText) {
         solutionTableView.setPlaceholder(getTableViewPlaceholder(placeholderText));
         //TODO set up the solution table and update it each time a new solution is generated
-        //solutionStudentColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getValue().getFullName()));
+        solutionStudentColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getValue().getFullName()));
+        solutionProjectColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getKey().getTitle()));
     }
 
     private void setUpAlgorithmChoiceBox(ObservableList<String> algorithmsName) {
@@ -153,9 +175,10 @@ public class Main2Controller {
 
     @FXML
     private void generateSolution() {
+        setStatusToBusy("Running "+generationStrategy.getDisplayName());
         GeneratorTask generatorTask = new GeneratorTask(generationStrategy, projects, students);
         generatorTask.setOnSucceeded(e -> {
-            // TODO: Instead it may be nicer to display a new window that shows the result, and an option to save it inside that new window.
+            setStatusToReady();
             solution = generatorTask.getValue();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Solution generation finished.");
@@ -186,11 +209,13 @@ public class Main2Controller {
     @FXML
     public void loadProjects(){
         //TODO
+        //After loading call projectsTable.showProjects(projects);
     }
 
     @FXML
     public void loadStudents(){
         //TODO
+        //After loading call studentsTable.showStudents(students);
     }
 }
 
