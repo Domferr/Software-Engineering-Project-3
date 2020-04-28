@@ -4,6 +4,8 @@ import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -29,6 +31,9 @@ public class Controller {
     @FXML
     public void initialize(){
         alert = new Alert(Alert.AlertType.INFORMATION);
+        gpaSlider.setMax(100);
+        gpaSlider.setMin(0);
+        gpaSlider.valueProperty().addListener((observableValue, number, t1) -> gpaImportance = gpaSlider.getValue() / 100);
         try{
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
@@ -38,7 +43,6 @@ public class Controller {
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -70,12 +74,6 @@ public class Controller {
             alert.showAndWait();
         }
 
-    }
-
-    @FXML
-    public void gpaSliderChange(){
-        gpaImportance = gpaSlider.getValue() / 100;
-        System.out.println("GPA IMPORTANCE: " + gpaImportance);
     }
 
     @FXML
