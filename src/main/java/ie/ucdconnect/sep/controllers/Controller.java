@@ -1,10 +1,17 @@
-package ie.ucdconnect.sep.controllers;
+package ie.ucdconnect.sep.Controllers;
 
 import ie.ucdconnect.sep.*;
+import ie.ucdconnect.sep.generators.AsexualGeneticAlgorithm;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 
@@ -18,24 +25,53 @@ public class Controller {
     private Solution solution;
     private int test_size;
     private Alert alert;
+    //Algorithm that will be run
+    private SolutionGenerationStrategy generationStrategy;
 
     @FXML
     Slider gpaSlider;
+    @FXML
+    ChoiceBox<String> algorithmChoiceBox;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         alert = new Alert(Alert.AlertType.INFORMATION);
 
         setUpSlider(0,1,0.5);
-        try{
+        setUpAlgorithmChoiceBox(FXCollections.observableArrayList(SimulatedAnnealing.DISPLAY_NAME, GeneticAlgorithm.DISPLAY_NAME, AsexualGeneticAlgorithm.DISPLAY_NAME));
+
+        try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
             List<StaffMember> staffMembers = Utils.readStaffMembers();
             projects = Utils.readProjects(staffMembers, test_size);
             students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void setUpAlgorithmChoiceBox(ObservableList<String> algorithmsName) {
+        algorithmChoiceBox.setItems(algorithmsName);
+        algorithmChoiceBox.setValue(SimulatedAnnealing.DISPLAY_NAME);
+        generationStrategy = new SimulatedAnnealing();
+        algorithmChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number newIndex) {
+                switch (algorithmChoiceBox.getItems().get((Integer) newIndex)) {
+                    case SimulatedAnnealing.DISPLAY_NAME:
+                        generationStrategy = new SimulatedAnnealing();
+                        break;
+                    case GeneticAlgorithm.DISPLAY_NAME:
+                        generationStrategy = new GeneticAlgorithm();
+                        break;
+                    case AsexualGeneticAlgorithm.DISPLAY_NAME:
+                        generationStrategy = new AsexualGeneticAlgorithm();
+                        break;
+                }
+                System.out.println("Algorithm selected: "+generationStrategy.getDisplayName());
+            }
+        });
     }
 
     private void setUpSlider(double sliderMin, double sliderMax, double sliderValue) {
@@ -73,17 +109,9 @@ public class Controller {
     }
 
     @FXML
-    public void doSA(){
-        solution = new SimulatedAnnealing().generate(projects, students);
-        alert.setHeaderText("Simulated Annealing finished.");
-        alert.setContentText("Make sure to save the results!");
-        alert.showAndWait();
-    }
-
-    @FXML
-    public void doGA(){
-        solution = new GeneticAlgorithm().generate(projects, students);
-        alert.setHeaderText("Simulated Annealing finished.");
+    public void generateSolution(){
+        solution = generationStrategy.generate(projects, students);
+        alert.setHeaderText(generationStrategy.getDisplayName()+" finished.");
         alert.setContentText("Make sure to save the results!");
         alert.showAndWait();
     }

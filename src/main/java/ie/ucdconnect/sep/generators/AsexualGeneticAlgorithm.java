@@ -10,7 +10,6 @@ import java.util.List;
  *  */
 
 public class AsexualGeneticAlgorithm implements SolutionGenerationStrategy {
-
     // The number of solutions in each generation.
     private static final int GENERATION_SIZE = 1000;    //P
     // The number of "good" solutions that are allowed to mate and reproduce
@@ -19,6 +18,7 @@ public class AsexualGeneticAlgorithm implements SolutionGenerationStrategy {
     private static final int GENERATION_CULL = 200;     //M
     // Number of no consecutive improvements to terminate the algorithm
     private static final int MAX_PLATEAU = 180;          //R
+    public static final String DISPLAY_NAME = "Asexual Genetic Algorithm";
 
     @Override
     public Solution generate(List<Project> projects, List<Student> students) {
@@ -41,6 +41,11 @@ public class AsexualGeneticAlgorithm implements SolutionGenerationStrategy {
 
         solutions.sort(SolutionAcceptor::compareByEnergy);
         return solutions.get(0);
+    }
+
+    @Override
+    public String getDisplayName() {
+        return DISPLAY_NAME;
     }
 
     /** Replace the worst solutions with a given list best solutioms */

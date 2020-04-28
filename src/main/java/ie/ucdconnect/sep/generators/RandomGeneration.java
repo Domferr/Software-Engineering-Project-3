@@ -16,6 +16,7 @@ import java.util.Random;
  *  method to run the algorithm.
  *  */
 public class RandomGeneration implements SolutionGenerationStrategy {
+
     @Override
     public Solution generate(List<Project> projects, List<Student> students) {
         ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();
@@ -29,5 +30,10 @@ public class RandomGeneration implements SolutionGenerationStrategy {
         }
 
         return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Random Generation";
     }
 }
