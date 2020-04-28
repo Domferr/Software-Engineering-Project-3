@@ -15,7 +15,7 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        scene = new Scene(loadFXML("/sample"));
+        scene = new Scene(loadFXML("/main"));
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(scene);

@@ -18,7 +18,7 @@ import javafx.util.StringConverter;
 import java.io.IOException;
 import java.util.List;
 
-public class Controller {
+public class MainController {
 
     private List<Project> projects;
     private List<Student> students;
