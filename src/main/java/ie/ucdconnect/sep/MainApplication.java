@@ -19,6 +19,9 @@ public class MainApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setWidth(300);
+        primaryStage.setHeight(300);
         primaryStage.show();
     }
 
