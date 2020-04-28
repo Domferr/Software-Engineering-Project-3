@@ -17,6 +17,8 @@ import java.util.Random;
  *  */
 public class RandomGeneration implements SolutionGenerationStrategy {
 
+    public static final String DISPLAY_NAME = "Random Generation";
+
     @Override
     public Solution generate(List<Project> projects, List<Student> students) {
         ImmutableMultimap.Builder<Project, Student> mapBuilder = ImmutableMultimap.builder();

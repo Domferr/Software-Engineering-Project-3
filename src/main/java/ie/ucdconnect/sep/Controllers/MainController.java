@@ -3,6 +3,7 @@ package ie.ucdconnect.sep.Controllers;
 import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.AsexualGeneticAlgorithm;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
+import ie.ucdconnect.sep.generators.RandomGeneration;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,7 +39,7 @@ public class MainController {
         alert = new Alert(Alert.AlertType.INFORMATION);
 
         setUpSlider(0,1,0.5);
-        setUpAlgorithmChoiceBox(FXCollections.observableArrayList(SimulatedAnnealing.DISPLAY_NAME, GeneticAlgorithm.DISPLAY_NAME, AsexualGeneticAlgorithm.DISPLAY_NAME));
+        setUpAlgorithmChoiceBox(FXCollections.observableArrayList(SimulatedAnnealing.DISPLAY_NAME, GeneticAlgorithm.DISPLAY_NAME, AsexualGeneticAlgorithm.DISPLAY_NAME, RandomGeneration.DISPLAY_NAME));
 
         try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
@@ -67,6 +68,9 @@ public class MainController {
                         break;
                     case AsexualGeneticAlgorithm.DISPLAY_NAME:
                         generationStrategy = new AsexualGeneticAlgorithm();
+                        break;
+                    case RandomGeneration.DISPLAY_NAME:
+                        generationStrategy = new RandomGeneration();
                         break;
                 }
                 System.out.println("Algorithm selected: "+generationStrategy.getDisplayName());
@@ -111,6 +115,7 @@ public class MainController {
     @FXML
     public void generateSolution(){
         solution = generationStrategy.generate(projects, students);
+        System.out.printf("Generated solution -> energy: %.2f\tfitness: %.2f\n", solution.getEnergy(), solution.getFitness());
         alert.setHeaderText(generationStrategy.getDisplayName()+" finished.");
         alert.setContentText("Make sure to save the results!");
         alert.showAndWait();
