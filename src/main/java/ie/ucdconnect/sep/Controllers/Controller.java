@@ -23,7 +23,6 @@ public class Controller {
     private Solution solution;
     private int test_size;
     private Alert alert;
-    private double gpaImportance;
 
     @FXML
     Slider gpaSlider;
@@ -33,7 +32,7 @@ public class Controller {
         alert = new Alert(Alert.AlertType.INFORMATION);
         gpaSlider.setMax(100);
         gpaSlider.setMin(0);
-        gpaSlider.valueProperty().addListener((observableValue, number, t1) -> gpaImportance = gpaSlider.getValue() / 100);
+        gpaSlider.valueProperty().addListener((observableValue, number, t1) -> Solution.GPA_IMPORTANCE = gpaSlider.getValue() / 100);
         try{
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];

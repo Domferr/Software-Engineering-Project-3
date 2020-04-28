@@ -76,7 +76,8 @@ public class Solution {
 	//Penalties for hard constraint violation
 	private static final int CONSTRAINT_VIOLATION_PENALTY = 100;
 	private static final int NONPREFERENCE_PROJECT_VIOLATION_PENALTY = 15;
-	private static final double GPA_IMPORTANCE = 1;
+
+	public static double GPA_IMPORTANCE = 1;
 
 	private ImmutableMultimap<Project, Student> projectMapping;
 	private double energy, fitness;
