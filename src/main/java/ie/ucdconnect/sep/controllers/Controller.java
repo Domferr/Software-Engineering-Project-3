@@ -1,19 +1,13 @@
-package ie.ucdconnect.sep.Controllers;
+package ie.ucdconnect.sep.controllers;
 
 import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,6 +25,7 @@ public class Controller {
     @FXML
     public void initialize(){
         alert = new Alert(Alert.AlertType.INFORMATION);
+
         setUpSlider(0,1,0.5);
         try{
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
@@ -49,8 +44,12 @@ public class Controller {
         gpaSlider.setValue(sliderValue);
         gpaSlider.setShowTickMarks(false);
         gpaSlider.setShowTickLabels(true);
-        gpaSlider.valueProperty().addListener((observableValue, number, t1) -> Solution.GPA_IMPORTANCE = gpaSlider.getValue() / sliderMax);
-
+        gpaSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!gpaSlider.isValueChanging() || newValue.doubleValue() == sliderMax || newValue.doubleValue() == sliderMin) {
+                Solution.GPA_IMPORTANCE = newValue.doubleValue() / sliderMax;
+                System.out.println("Updated GPA_IMPORTANCE: " + Solution.GPA_IMPORTANCE);
+            }
+        });
         gpaSlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
             public String toString(Double n) {
@@ -108,6 +107,6 @@ public class Controller {
     public void load(){
         //TODO
     }
-    
+
 }
 
