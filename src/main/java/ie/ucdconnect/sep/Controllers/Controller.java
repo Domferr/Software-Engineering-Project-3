@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Slider;
+import javafx.util.StringConverter;
 
 import java.awt.*;
 import java.io.IOException;
@@ -30,9 +31,7 @@ public class Controller {
     @FXML
     public void initialize(){
         alert = new Alert(Alert.AlertType.INFORMATION);
-        gpaSlider.setMax(100);
-        gpaSlider.setMin(0);
-        gpaSlider.valueProperty().addListener((observableValue, number, t1) -> Solution.GPA_IMPORTANCE = gpaSlider.getValue() / 100);
+        setUpSlider(0,1,0.5);
         try{
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
@@ -42,6 +41,36 @@ public class Controller {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void setUpSlider(double sliderMin, double sliderMax, double sliderValue) {
+        gpaSlider.setMax(sliderMax);
+        gpaSlider.setMin(sliderMin);
+        gpaSlider.setValue(sliderValue);
+        gpaSlider.setShowTickMarks(false);
+        gpaSlider.setShowTickLabels(true);
+        gpaSlider.valueProperty().addListener((observableValue, number, t1) -> Solution.GPA_IMPORTANCE = gpaSlider.getValue() / sliderMax);
+
+        gpaSlider.setLabelFormatter(new StringConverter<Double>() {
+            @Override
+            public String toString(Double n) {
+                if (n == sliderMin) return "Low";
+                else if (n == sliderMax) return "High";
+                return n.toString();
+            }
+
+            @Override
+            public Double fromString(String s) {
+                switch (s) {
+                    case "Low":
+                        return sliderMin;
+                    case "High":
+                        return sliderMax;
+                    default:
+                        return Double.parseDouble(s);
+                }
+            }
+        });
     }
 
     @FXML
