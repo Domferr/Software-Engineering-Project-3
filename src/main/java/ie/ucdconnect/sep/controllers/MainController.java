@@ -1,40 +1,76 @@
 package ie.ucdconnect.sep.controllers;
 
 import ie.ucdconnect.sep.*;
+import ie.ucdconnect.sep.generators.AsexualGeneticAlgorithm;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
+import ie.ucdconnect.sep.generators.RandomGeneration;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 
 import java.io.IOException;
 import java.util.List;
 
-public class Controller {
+public class MainController {
 
     private List<Project> projects;
     private List<Student> students;
     private int test_size;
-
-    // The latest solution computed, or null if no solution has been computed
     public Solution solution;
+    private SolutionGenerationStrategy generationStrategy;
 
     @FXML
     Slider gpaSlider;
+    @FXML
+    ChoiceBox<String> algorithmChoiceBox;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         setUpSlider(0,1,0.5);
-        try{
+        setUpAlgorithmChoiceBox(FXCollections.observableArrayList(SimulatedAnnealing.DISPLAY_NAME, GeneticAlgorithm.DISPLAY_NAME, AsexualGeneticAlgorithm.DISPLAY_NAME, RandomGeneration.DISPLAY_NAME));
+
+        try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
             List<StaffMember> staffMembers = Utils.readStaffMembers();
             projects = Utils.readProjects(staffMembers, test_size);
             students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
-        }catch (IOException e){
+        } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void setUpAlgorithmChoiceBox(ObservableList<String> algorithmsName) {
+        algorithmChoiceBox.setItems(algorithmsName);
+        algorithmChoiceBox.setValue(SimulatedAnnealing.DISPLAY_NAME);
+        generationStrategy = new SimulatedAnnealing();
+        algorithmChoiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number newIndex) {
+                switch (algorithmChoiceBox.getItems().get((Integer) newIndex)) {
+                    case SimulatedAnnealing.DISPLAY_NAME:
+                        generationStrategy = new SimulatedAnnealing();
+                        break;
+                    case GeneticAlgorithm.DISPLAY_NAME:
+                        generationStrategy = new GeneticAlgorithm();
+                        break;
+                    case AsexualGeneticAlgorithm.DISPLAY_NAME:
+                        generationStrategy = new AsexualGeneticAlgorithm();
+                        break;
+                    case RandomGeneration.DISPLAY_NAME:
+                        generationStrategy = new RandomGeneration();
+                        break;
+                }
+                System.out.println("Algorithm selected: "+generationStrategy.getDisplayName());
+            }
+        });
     }
 
     private void setUpSlider(double sliderMin, double sliderMax, double sliderValue) {
@@ -72,16 +108,7 @@ public class Controller {
     }
 
     @FXML
-    public void doSA(){
-        runGeneration(new SimulatedAnnealing());
-    }
-
-    @FXML
-    public void doGA(){
-        runGeneration(new GeneticAlgorithm());
-    }
-
-    private void runGeneration(SolutionGenerationStrategy generationStrategy) {
+    private void generateSolution() {
         GeneratorTask generatorTask = new GeneratorTask(generationStrategy, projects, students);
         generatorTask.setOnSucceeded(e -> {
             Solution returnedSolution = generatorTask.getValue();
@@ -97,7 +124,7 @@ public class Controller {
     }
 
     @FXML
-    public void saveResults() throws IOException{
+    public void saveResults() throws IOException {
         if(solution == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("No Solution Found!");
@@ -117,6 +144,5 @@ public class Controller {
     public void load(){
         //TODO
     }
-
 }
 

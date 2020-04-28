@@ -10,12 +10,14 @@ import java.util.List;
  *  so call the generate() method to run the algorithm.
  *  */
 public class SimulatedAnnealing implements SolutionGenerationStrategy {
+
     // How much the starting temperature should be higher or less than the maxEnergyDelta
     private static final double STARTING_TEMPERATURE_MODIFIER = 400;
     // How much the temperature will be lowered
     private static final double COOLING_RATE = 0.42;
     // The lowest value that the temperature can reach
     private static final double MINIMUM_TEMPERATURE = 1;
+    public static final String DISPLAY_NAME = "Simulated Annealing";
 
     /** Runs the Simulated Annealing Algorithm and returns the generated solution */
     @Override
@@ -51,6 +53,11 @@ public class SimulatedAnnealing implements SolutionGenerationStrategy {
         }
 
         return bestSolution;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return DISPLAY_NAME;
     }
 
     /** Returns the max energy delta calculated from the given list of solutions */

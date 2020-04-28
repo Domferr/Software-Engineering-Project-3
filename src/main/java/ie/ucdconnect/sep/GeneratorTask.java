@@ -1,6 +1,5 @@
 package ie.ucdconnect.sep;
 
-import ie.ucdconnect.sep.controllers.Controller;
 import javafx.concurrent.Task;
 
 import java.util.List;

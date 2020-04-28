@@ -21,6 +21,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
     private static final int MAX_PLATEAU = 120;          //R
     // The probability of a gene to be mutated
     private static final double MUTATION_PROBABILITY = 0.005;
+    public static final String DISPLAY_NAME = "Genetic Algorithm";
 
     @Override
     public Solution generate(List<Project> projects, List<Student> students) {
@@ -42,6 +43,11 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
 
         solutions.sort(SolutionAcceptor::compareByEnergy);
         return solutions.get(0);
+    }
+
+    @Override
+    public String getDisplayName() {
+        return DISPLAY_NAME;
     }
 
     /** Reproduces and then substitutes the bad solutions with the new generation */
