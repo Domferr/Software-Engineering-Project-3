@@ -9,13 +9,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
-public class MainController {
+public class Controller {
 
     private List<Project> projects;
     private List<Student> students;
@@ -74,8 +73,8 @@ public class MainController {
     }
 
     @FXML
-    public void gpaSliderChange(MouseEvent mouseEvent){
-        gpaImportance = gpaSlider.getValue();
+    public void gpaSliderChange(){
+        gpaImportance = gpaSlider.getValue() / 100;
         System.out.println("GPA IMPORTANCE: " + gpaImportance);
     }
 
@@ -83,5 +82,6 @@ public class MainController {
     public void load(){
         //TODO
     }
+    
 }
 
