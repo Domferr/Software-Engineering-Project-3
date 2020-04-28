@@ -32,7 +32,12 @@ public class Controller {
         alert = new Alert(Alert.AlertType.INFORMATION);
         gpaSlider.setMax(100);
         gpaSlider.setMin(0);
-        gpaSlider.valueProperty().addListener((observableValue, number, t1) -> Solution.GPA_IMPORTANCE = gpaSlider.getValue() / 100);
+        gpaSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            if (!gpaSlider.isValueChanging() || newValue.doubleValue() == gpaSlider.getMax() || newValue.doubleValue() == gpaSlider.getMin()) {
+                Solution.GPA_IMPORTANCE = newValue.doubleValue() / 100;
+                System.out.println("Updated GPA_IMPORTANCE: " + Solution.GPA_IMPORTANCE);
+            }
+        });
         try{
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
@@ -79,6 +84,6 @@ public class Controller {
     public void load(){
         //TODO
     }
-    
+
 }
 
