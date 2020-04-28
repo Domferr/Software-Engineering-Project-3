@@ -14,8 +14,11 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,7 @@ import java.util.Map;
 public class Main2Controller {
 
     public Solution solution;   //Generated solution
+    private List<StaffMember> staffMembers;
     private List<Project> projects; //Loaded projects
     private List<Student> students; //Loaded students
     private int test_size;
@@ -30,6 +34,8 @@ public class Main2Controller {
     private StudentsTable studentsTable;
     private ProjectsTable projectsTable;
     private SolutionTable solutionTable;
+
+    private FileChooser fileChooser;
 
     //Settings
     @FXML
@@ -62,17 +68,21 @@ public class Main2Controller {
         setUpProjectsTable("Nothing to display.\n You can press the \"Load Projects\" button on the left to load the projects.");
         setUpSolutionTable("Nothing to display.\n You can press the \"generate\" button on the left to generate a solution. Remember to select the algorithm and how much importance the student GPA has.");
 
+        fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("CSV", "*.csv"));
+
         try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
-            List<StaffMember> staffMembers = Utils.readStaffMembers();
-            projects = Utils.readProjects(staffMembers, test_size);
-            students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
+            staffMembers = Utils.readStaffMembers();
+        //    projects = Utils.readProjects(staffMembers, test_size);
+        //    students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
         } catch (IOException e){
             e.printStackTrace();
         }
-        studentsTable.showStudents(students);
-        projectsTable.showProjects(projects);
+     //   studentsTable.showStudents(students);
+     //   projectsTable.showProjects(projects);
     }
 
     private void setStatusToBusy(String text) {
@@ -208,14 +218,54 @@ public class Main2Controller {
 
     @FXML
     public void loadProjects(){
-        //TODO
-        //After loading call projectsTable.showProjects(projects);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        fileChooser.setTitle("Choose project file");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        try{
+            String fileContent = Utils.readFile(file.toPath());
+            projects = Project.fromCSV(fileContent, staffMembers);
+            projectsTable.showProjects(projects);
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (IllegalArgumentException e){
+            alert.setTitle("Error");
+            alert.setHeaderText("Input File Error");
+            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, focus, project]");
+            alert.showAndWait();
+        }catch (NullPointerException e){
+            alert.setTitle("Error");
+            alert.setHeaderText("No Staff Members found");
+            alert.setContentText("Upload Staff Members First"); //TODO
+            alert.showAndWait();
+        }
     }
 
     @FXML
     public void loadStudents(){
-        //TODO
-        //After loading call studentsTable.showStudents(students);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        fileChooser.setTitle("Choose student file");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        try{
+            String fileContent = Utils.readFile(file.toPath());
+            students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
+            studentsTable.showStudents(students);
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (IllegalArgumentException e){
+            alert.setTitle("Error");
+            alert.setHeaderText("Input File Error");
+            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [student no., first name, last name, gpa, stream, 10 project preferences each seperated by ,]");
+            alert.showAndWait();
+        }
+        catch (NullPointerException e){
+            alert.setTitle("Error");
+            alert.setHeaderText("No Projects found");
+            alert.setContentText("Upload Projects first");
+            alert.showAndWait();
+        }
     }
 }
 
