@@ -1,18 +1,12 @@
-package ie.ucdconnect.sep.Controllers;
+package ie.ucdconnect.sep.controllers;
 
 import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Slider;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
