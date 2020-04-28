@@ -8,7 +8,8 @@
 
     <Button GridPane.columnIndex="1" GridPane.rowIndex="0" text="Load" onAction="#load" prefWidth="150"/>
     <ChoiceBox fx:id="algorithmChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="1" prefWidth="150.0"/>
-    <Button GridPane.columnIndex="1" GridPane.rowIndex="2" text="Save To Disk" onAction="#saveResults" prefWidth="150"/>
-    <Label text="GPA Importance" GridPane.rowIndex="3" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
-    <Slider fx:id="gpaSlider" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="2" text="Generate Solution" onAction="#generateSolution" prefWidth="150"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="3" text="Save To Disk" onAction="#saveResults" prefWidth="150"/>
+    <Label text="GPA Importance" GridPane.rowIndex="4" GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+    <Slider fx:id="gpaSlider" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 </GridPane>
