@@ -1,6 +1,5 @@
 package ie.ucdconnect.sep.controllers;
 
-import com.google.common.collect.ImmutableCollection;
 import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.AsexualGeneticAlgorithm;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
@@ -30,23 +29,25 @@ public class Main2Controller {
     private SolutionGenerationStrategy generationStrategy;
     private StudentsTable studentsTable;
     private ProjectsTable projectsTable;
+    private SolutionTable solutionTable;
 
+    //Settings
     @FXML
     Slider gpaSlider;
     @FXML
     ChoiceBox<String> algorithmChoiceBox;
+
+    //Status
     @FXML
     ProgressIndicator progressIndicator;
     @FXML
     Label statusLabel;
     @FXML
     Label bottomBarStatusLabel;
+
+    // Table views
     @FXML
     TableView<Map.Entry<Project, Student>> solutionTableView;
-    @FXML
-    TableColumn<Map.Entry<Project, Student>, String> solutionStudentColumn;
-    @FXML
-    TableColumn<Map.Entry<Project, Student>, String> solutionProjectColumn;
     @FXML
     TableView<Student> studentsTableView;
     @FXML
@@ -59,8 +60,8 @@ public class Main2Controller {
         setUpAlgorithmChoiceBox(FXCollections.observableArrayList(SimulatedAnnealing.DISPLAY_NAME, GeneticAlgorithm.DISPLAY_NAME, AsexualGeneticAlgorithm.DISPLAY_NAME, RandomGeneration.DISPLAY_NAME));
         setUpStudentsTable("Nothing to display.\n You can press the \"Load Students\" button on the left to load the students.");
         setUpProjectsTable("Nothing to display.\n You can press the \"Load Projects\" button on the left to load the projects.");
-
         setUpSolutionTable("Nothing to display.\n You can press the \"generate\" button on the left to generate a solution. Remember to select the algorithm and how much importance the student GPA has.");
+
         try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
@@ -108,9 +109,7 @@ public class Main2Controller {
 
     private void setUpSolutionTable(String placeholderText) {
         solutionTableView.setPlaceholder(getTableViewPlaceholder(placeholderText));
-        //TODO set up the solution table and update it each time a new solution is generated
-        solutionStudentColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getValue().getFullName()));
-        solutionProjectColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getKey().getTitle()));
+        solutionTable = new SolutionTable(solutionTableView);
     }
 
     private void setUpAlgorithmChoiceBox(ObservableList<String> algorithmsName) {
@@ -180,6 +179,7 @@ public class Main2Controller {
         generatorTask.setOnSucceeded(e -> {
             setStatusToReady();
             solution = generatorTask.getValue();
+            solutionTable.showSolution(solution);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Solution generation finished.");
             alert.setContentText("Fitness: " + solution.getFitness() + ". Energy: " + solution.getEnergy());

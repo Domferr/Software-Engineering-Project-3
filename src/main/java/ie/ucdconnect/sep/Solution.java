@@ -16,9 +16,6 @@ public class Solution {
 	/** Factory class for the Solution class */
 	public static class SolutionFactory {
 
-		// The chance for an entry in a solution to mutate;
-		private static final float MUTATE_CHANCE = 0.05f;
-
 		/** Creates a solution object without evaluating energy and fitness.
 		 *  This is the most efficient and should be used when the energy and fitness values are not needed. */
 		public static Solution create(ImmutableMultimap<Project, Student> projectMapping) {
