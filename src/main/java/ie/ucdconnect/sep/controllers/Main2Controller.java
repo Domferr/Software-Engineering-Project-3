@@ -60,6 +60,13 @@ public class Main2Controller {
     TableView<Project> projectsTableView;
 
     @FXML
+    Button loadStudentsBtn;
+    @FXML
+    Button loadProjectsBtn;
+    @FXML
+    Button loadStaffBtn;
+
+    @FXML
     public void initialize() {
         setStatusToReady();
         setUpSlider(0,1,0.5);
@@ -72,10 +79,12 @@ public class Main2Controller {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("CSV", "*.csv"));
 
+        loadStudentsBtn.setDisable(true);
+        loadProjectsBtn.setDisable(true);
         try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
-            staffMembers = Utils.readStaffMembers();
+        //    staffMembers = Utils.readStaffMembers();
         //    projects = Utils.readProjects(staffMembers, test_size);
         //    students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
         } catch (IOException e){
@@ -222,21 +231,18 @@ public class Main2Controller {
         fileChooser.setTitle("Choose project file");
         File file = fileChooser.showOpenDialog(new Stage());
 
+
         try{
             String fileContent = Utils.readFile(file.toPath());
             projects = Project.fromCSV(fileContent, staffMembers);
             projectsTable.showProjects(projects);
+            loadStudentsBtn.setDisable(false);
         }catch (IOException e){
             e.printStackTrace();
         }catch (IllegalArgumentException e){
             alert.setTitle("Error");
             alert.setHeaderText("Input File Error");
             alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, focus, project]");
-            alert.showAndWait();
-        }catch (NullPointerException e){
-            alert.setTitle("Error");
-            alert.setHeaderText("No Staff Members found");
-            alert.setContentText("Upload Staff Members First"); //TODO
             alert.showAndWait();
         }
     }
@@ -260,10 +266,24 @@ public class Main2Controller {
             alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [student no., first name, last name, gpa, stream, 10 project preferences each seperated by ,]");
             alert.showAndWait();
         }
-        catch (NullPointerException e){
+    }
+    @FXML
+    public void loadStaffMembers(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        fileChooser.setTitle("Choose Staff file");
+        File file = fileChooser.showOpenDialog(new Stage());
+
+        try{
+            String fileContent = Utils.readFile(file.toPath());
+            staffMembers = StaffMember.fromCSV(fileContent);
+            loadProjectsBtn.setDisable(false);
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (IllegalArgumentException e){
             alert.setTitle("Error");
-            alert.setHeaderText("No Projects found");
-            alert.setContentText("Upload Projects first");
+            alert.setHeaderText("Input File Error");
+            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, research activity, research area, special focus]");
             alert.showAndWait();
         }
     }
