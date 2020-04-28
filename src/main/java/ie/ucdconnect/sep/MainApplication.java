@@ -15,13 +15,13 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        scene = new Scene(loadFXML("/main"));
+        scene = new Scene(loadFXML("/main2"));
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
+        /*primaryStage.setResizable(false);
         primaryStage.setWidth(300);
-        primaryStage.setHeight(300);
+        primaryStage.setHeight(300);*/
         primaryStage.show();
     }
 

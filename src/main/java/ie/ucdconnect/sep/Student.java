@@ -153,6 +153,18 @@ public class Student implements CSVRow {
 		this.gpa = gpa;
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getFullName() {
+		return firstName+" "+lastName;
+	}
+
 	@Override
 	public String toString() {
 		return firstName + " " + lastName + " " + studentNumber + " " + focus + " " + preferences.toString();
