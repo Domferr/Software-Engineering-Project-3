@@ -111,9 +111,8 @@ public class MainController {
     private void generateSolution() {
         GeneratorTask generatorTask = new GeneratorTask(generationStrategy, projects, students);
         generatorTask.setOnSucceeded(e -> {
-            Solution returnedSolution = generatorTask.getValue();
             // TODO: Instead it may be nicer to display a new window that shows the result, and an option to save it inside that new window.
-            solution = returnedSolution;
+            solution = generatorTask.getValue();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Solution generation finished.");
             alert.setContentText("Fitness: " + solution.getFitness() + ". Energy: " + solution.getEnergy());
