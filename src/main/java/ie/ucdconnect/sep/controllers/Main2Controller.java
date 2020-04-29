@@ -190,6 +190,20 @@ public class Main2Controller {
 
     @FXML
     private void generateSolution() {
+        if (projects == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Project data has not been loaded.");
+            alert.setContentText("Please load project data before generating a solution.");
+            alert.showAndWait();
+            return;
+        }
+        if (students == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Student data has not been loaded.");
+            alert.setContentText("Please load student data before generating a solution.");
+            alert.showAndWait();
+            return;
+        }
         setStatusToBusy("Running "+generationStrategy.getDisplayName());
         GeneratorTask generatorTask = new GeneratorTask(generationStrategy, projects, students);
         generatorTask.setOnSucceeded(e -> {
