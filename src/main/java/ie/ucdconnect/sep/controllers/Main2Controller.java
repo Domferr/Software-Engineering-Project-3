@@ -76,6 +76,7 @@ public class Main2Controller {
         setUpSolutionTable("Nothing to display.\n You can press the \"generate\" button on the left to generate a solution. Remember to select the algorithm and how much importance the student GPA has.");
 
         fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("."));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("CSV", "*.csv"));
 
@@ -84,14 +85,9 @@ public class Main2Controller {
         try {
             int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
             test_size = testSetsStudentsSize[1];
-        //    staffMembers = Utils.readStaffMembers();
-        //    projects = Utils.readProjects(staffMembers, test_size);
-        //    students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
         } catch (IOException e){
             e.printStackTrace();
         }
-     //   studentsTable.showStudents(students);
-     //   projectsTable.showProjects(projects);
     }
 
     private void setStatusToBusy(String text) {
