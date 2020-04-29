@@ -164,10 +164,7 @@ public class Main2Controller {
         gpaSlider.setShowTickMarks(false);
         gpaSlider.setShowTickLabels(true);
         gpaSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            if (!gpaSlider.isValueChanging() || newValue.doubleValue() == sliderMax || newValue.doubleValue() == sliderMin) {
-                Solution.GPA_IMPORTANCE = newValue.doubleValue() / sliderMax;
-                System.out.println("Updated GPA_IMPORTANCE: " + Solution.GPA_IMPORTANCE);
-            }
+            Solution.GPA_IMPORTANCE = newValue.doubleValue() / sliderMax;
         });
         gpaSlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
