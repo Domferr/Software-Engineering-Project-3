@@ -2,10 +2,12 @@ package ie.ucdconnect.sep;
 
 import javafx.application.Application;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -19,9 +21,12 @@ public class MainApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(scene);
-        /*primaryStage.setResizable(false);
-        primaryStage.setWidth(300);
-        primaryStage.setHeight(300);*/
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                System.exit(0);
+            }
+        });
         primaryStage.show();
     }
 

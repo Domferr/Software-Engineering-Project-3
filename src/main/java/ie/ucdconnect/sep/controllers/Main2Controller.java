@@ -80,6 +80,7 @@ public class Main2Controller {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("CSV", "*.csv"));
 
+        // Projects will be enabled after staff are loaded, and students after projects
         loadStudentsBtn.setDisable(true);
         loadProjectsBtn.setDisable(true);
         try {
