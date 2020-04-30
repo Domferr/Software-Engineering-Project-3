@@ -10,6 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -213,7 +214,16 @@ public class Main2Controller {
             alert.showAndWait();
 
         });
+        generatorTask.setOnCancelled(this::onTaskCancel);
+        generatorTask.setOnFailed(this::onTaskCancel);
         new Thread(generatorTask).start();
+    }
+
+    private void onTaskCancel(WorkerStateEvent workerStateEvent) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Solution generation failed/canceled.");
+        alert.setContentText("Please try again.");
+        alert.showAndWait();
     }
 
     @FXML
@@ -245,6 +255,10 @@ public class Main2Controller {
             projects = Project.fromCSV(fileContent, staffMembers);
             projectsTable.showProjects(projects);
             loadStudentsBtn.setDisable(false);
+            if (students != null) {
+                students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
+                studentsTable.showStudents(students);
+            }
         }catch (IOException e){
             e.printStackTrace();
         }catch (IllegalArgumentException e){
