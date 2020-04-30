@@ -220,6 +220,9 @@ public class Main2Controller {
     }
 
     private void onTaskCancel(WorkerStateEvent workerStateEvent) {
+        if (workerStateEvent.getSource().getException() != null) {
+            workerStateEvent.getSource().getException().printStackTrace();
+        }
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("Solution generation failed/canceled.");
         alert.setContentText("Please try again.");
@@ -234,6 +237,7 @@ public class Main2Controller {
             alert.setContentText("A solution must be generated before results can be saved");
             alert.showAndWait();
         }else{
+            // TODO: We should use a different method to save as a custom name, use a file chooser.
             SolutionGenerator.saveSolution(solution, test_size);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Results saved!");
