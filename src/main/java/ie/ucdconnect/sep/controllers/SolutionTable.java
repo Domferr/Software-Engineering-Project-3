@@ -36,4 +36,5 @@ public class SolutionTable {
         List<Map.Entry<Project, Student>> entriesList = new ArrayList<>(solution.getEntries());
         solutionTableView.setItems(FXCollections.observableList(entriesList));
     }
+
 }

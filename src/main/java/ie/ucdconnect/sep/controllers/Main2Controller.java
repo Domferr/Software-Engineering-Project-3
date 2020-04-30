@@ -238,7 +238,7 @@ public class Main2Controller {
             alert.showAndWait();
         }else{
             // TODO: We should use a different method to save as a custom name, use a file chooser.
-            SolutionGenerator.saveSolution(solution, test_size);
+            SolutionGenerator.saveSolution(solution, solution.getEntries().size());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Results saved!");
             alert.setContentText("You can view and download the results!");
@@ -246,6 +246,7 @@ public class Main2Controller {
         }
 
     }
+
 
     @FXML
     public void loadProjects(){

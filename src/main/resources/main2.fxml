@@ -67,6 +67,9 @@
               <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="8.0">
                   <Button mnemonicParsing="false" onAction="#generateSolution" prefWidth="208.0" text="Generate" />
               </HBox>
+              <HBox  alignment="BASELINE_CENTER" prefWidth="200.00" spacing="8.0">
+                  <Button fx:id="saveBtn" text="Save" prefWidth="104.00" onAction="#saveResults"/>
+              </HBox>
           </VBox>
           <AnchorPane id="Content" prefHeight="545.0" prefWidth="430.0">
               <TabPane prefHeight="550.0" prefWidth="670.0" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="100.0" tabMinWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
