@@ -19,7 +19,7 @@ public class MainApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         scene = new Scene(loadFXML("/main"));
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("SEP 3");
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

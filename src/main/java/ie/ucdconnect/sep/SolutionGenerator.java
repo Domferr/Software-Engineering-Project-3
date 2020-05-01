@@ -44,12 +44,8 @@ public class SolutionGenerator {
 		if (!testCaseDir.exists())
 			testCaseDir.mkdir();
 
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(dirName + "solutionFor" + size + "Students.csv"));
-			writer.write(solution.toCSV());
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		BufferedWriter writer = new BufferedWriter(new FileWriter(dirName + "solutionFor" + size + "Students.csv"));
+		writer.write(solution.toCSV());
+		writer.close();
 	}
 }

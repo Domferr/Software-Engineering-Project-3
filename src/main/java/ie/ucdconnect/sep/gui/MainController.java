@@ -18,7 +18,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -29,21 +31,23 @@ public class MainController {
     private List<StaffMember> staffMembers;
     private List<Project> projects; //Loaded projects
     private List<Student> students; //Loaded students
-    private int test_size;
     private SolutionGenerationStrategy generationStrategy;
     private StudentsTable studentsTable;
     private ProjectsTable projectsTable;
     private SolutionTable solutionTable;
 
+    // File chooser and supported extensions
     private FileChooser fileChooser;
+    private final FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV file", "*.csv");
+    private final FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Text file", "*.txt");
 
-    //Settings
+    // Algorithm Settings
     @FXML
     Slider gpaSlider;
     @FXML
     ChoiceBox<String> algorithmChoiceBox;
 
-    //Status
+    // Status
     @FXML
     ProgressIndicator progressIndicator;
     @FXML
@@ -59,12 +63,15 @@ public class MainController {
     @FXML
     TableView<Project> projectsTableView;
 
+    // Buttons
     @FXML
     Button loadStudentsBtn;
     @FXML
     Button loadProjectsBtn;
     @FXML
     Button loadStaffBtn;
+    @FXML
+    Button saveSolutionBtn;
 
     @FXML
     public void initialize() {
@@ -76,19 +83,12 @@ public class MainController {
         setUpSolutionTable("Nothing to display.\n You can press the \"generate\" button on the left to generate a solution. Remember to select the algorithm and how much importance the student GPA has.");
 
         fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("."));
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CSV", "*.csv"));
+        fileChooser.setInitialDirectory(new File("./"));
+        fileChooser.getExtensionFilters().addAll(csvFilter, txtFilter);
 
-        // Projects will be enabled after staff are loaded, and students after projects
+        // Projects will be enabled after staff members are loaded, and students after projects
         loadStudentsBtn.setDisable(true);
         loadProjectsBtn.setDisable(true);
-        try {
-            int [] testSetsStudentsSize = Config.getInstance().getTestSetsStudentsSize();
-            test_size = testSetsStudentsSize[1];
-        } catch (IOException e){
-            e.printStackTrace();
-        }
     }
 
     private void setStatusToBusy(String text) {
@@ -125,7 +125,7 @@ public class MainController {
 
     private void setUpSolutionTable(String placeholderText) {
         solutionTableView.setPlaceholder(getTableViewPlaceholder(placeholderText));
-        solutionTable = new SolutionTable(solutionTableView);
+        solutionTable = new SolutionTable(solutionTableView, saveSolutionBtn);
     }
 
     private void setUpAlgorithmChoiceBox(ObservableList<String> algorithmsName) {
@@ -229,19 +229,33 @@ public class MainController {
     }
 
     @FXML
-    public void saveResults() throws IOException {
-        if(solution == null){
+    public void saveSolution() throws IOException {
+        if (solution == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("No Solution Found!");
             alert.setContentText("A solution must be generated before results can be saved");
             alert.showAndWait();
-        }else{
-            // TODO: We should use a different method to save as a custom name, use a file chooser.
-            SolutionGenerator.saveSolution(solution, solution.getEntries().size());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Results saved!");
-            alert.setContentText("You can view and download the results!");
-            alert.showAndWait();
+        } else {
+            //Show save file dialog
+            File file = fileChooser.showSaveDialog(new Stage());
+            if (file != null) {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                try {
+                    FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
+                    //Save in CSV format for both .csv and .txt
+                    if (csvFilter.equals(selectedExtension) ||
+                            txtFilter.equals(selectedExtension)) {
+                        writer.write(solution.toCSV());
+                    }
+                    writer.close();
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setHeaderText("Results saved!");
+                    alert.setContentText("You have saved this solution!");
+                    alert.showAndWait();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
 
     }
@@ -252,20 +266,31 @@ public class MainController {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         fileChooser.setTitle("Choose project file");
         File file = fileChooser.showOpenDialog(new Stage());
-
-
-        try{
+        if (file == null) {
+            System.out.println("No file selected");
+            return;
+        }
+        try {
             String fileContent = Utils.readFile(file.toPath());
-            projects = Project.fromCSV(fileContent, staffMembers);
+            FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
+            //Load in CSV format for both .csv and .txt
+            if (csvFilter.equals(selectedExtension) ||
+                    txtFilter.equals(selectedExtension)) {
+                projects = Project.fromCSV(fileContent, staffMembers);
+            }
             projectsTable.showProjects(projects);
             loadStudentsBtn.setDisable(false);
             if (students != null) {
-                students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
+                //Load in CSV format for both .csv and .txt
+                if (csvFilter.equals(selectedExtension) ||
+                        txtFilter.equals(selectedExtension)) {
+                    students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
+                }
                 studentsTable.showStudents(students);
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             alert.setTitle("Error");
             alert.setHeaderText("Input File Error");
             alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, focus, project]");
@@ -274,39 +299,56 @@ public class MainController {
     }
 
     @FXML
-    public void loadStudents(){
+    public void loadStudents() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         fileChooser.setTitle("Choose student file");
         File file = fileChooser.showOpenDialog(new Stage());
-
-        try{
+        if (file == null) {
+            System.out.println("No file selected");
+            return;
+        }
+        try {
             String fileContent = Utils.readFile(file.toPath());
-            students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
+            FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
+            //Load in CSV format for both .csv and .txt
+            if (csvFilter.equals(selectedExtension) ||
+                    txtFilter.equals(selectedExtension)) {
+                students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
+            }
             studentsTable.showStudents(students);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             alert.setTitle("Error");
             alert.setHeaderText("Input File Error");
             alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [student no., first name, last name, gpa, stream, 10 project preferences each seperated by ,]");
             alert.showAndWait();
         }
     }
+
     @FXML
-    public void loadStaffMembers(){
+    public void loadStaffMembers() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
-        fileChooser.setTitle("Choose Staff file");
+        fileChooser.setTitle("Choose staff members file");
         File file = fileChooser.showOpenDialog(new Stage());
-
-        try{
+        if (file == null) {
+            System.out.println("No file selected");
+            return;
+        }
+        try {
             String fileContent = Utils.readFile(file.toPath());
-            staffMembers = StaffMember.fromCSV(fileContent);
+            FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
+            //Load in CSV format for both .csv and .txt
+            if (csvFilter.equals(selectedExtension) ||
+                    txtFilter.equals(selectedExtension)) {
+                staffMembers = StaffMember.fromCSV(fileContent);
+            }
             loadProjectsBtn.setDisable(false);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e){
             alert.setTitle("Error");
             alert.setHeaderText("Input File Error");
             alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, research activity, research area, special focus]");
