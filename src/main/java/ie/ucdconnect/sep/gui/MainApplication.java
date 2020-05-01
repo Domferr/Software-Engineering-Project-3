@@ -1,4 +1,4 @@
-package ie.ucdconnect.sep;
+package ie.ucdconnect.sep.gui;
 
 import javafx.application.Application;
 
@@ -17,7 +17,7 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        scene = new Scene(loadFXML("/main2"));
+        scene = new Scene(loadFXML("/main"));
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(scene);

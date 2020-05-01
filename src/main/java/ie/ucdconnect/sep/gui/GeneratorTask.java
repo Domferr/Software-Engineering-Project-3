@@ -1,5 +1,9 @@
-package ie.ucdconnect.sep;
+package ie.ucdconnect.sep.gui;
 
+import ie.ucdconnect.sep.Project;
+import ie.ucdconnect.sep.Solution;
+import ie.ucdconnect.sep.SolutionGenerationStrategy;
+import ie.ucdconnect.sep.Student;
 import javafx.concurrent.Task;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package ie.ucdconnect.sep.controllers;
+package ie.ucdconnect.sep.gui;
 
 import ie.ucdconnect.sep.Project;
 import ie.ucdconnect.sep.Solution;

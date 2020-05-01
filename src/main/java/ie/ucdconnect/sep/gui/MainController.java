@@ -1,11 +1,10 @@
-package ie.ucdconnect.sep.controllers;
+package ie.ucdconnect.sep.gui;
 
 import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.AsexualGeneticAlgorithm;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
 import ie.ucdconnect.sep.generators.RandomGeneration;
 import ie.ucdconnect.sep.generators.SimulatedAnnealing;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,7 +23,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class Main2Controller {
+public class MainController {
 
     public Solution solution;   //Generated solution
     private List<StaffMember> staffMembers;
