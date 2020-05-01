@@ -25,12 +25,10 @@ public class RandomGeneration implements SolutionGenerationStrategy {
 
         List<Student> studentsCopy = new ArrayList<>(students);
         Collections.shuffle(studentsCopy);
-        System.out.println("Looping");
         for (Student student : studentsCopy) {
             int randomIndex = new Random().nextInt(projects.size());
             mapBuilder.put(projects.get(randomIndex), student);
         }
-        System.out.println("Done");
         return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
     }
 

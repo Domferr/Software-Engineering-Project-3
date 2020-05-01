@@ -27,11 +27,12 @@ import java.util.Map;
 
 public class MainController {
 
-    public Solution solution;   //Generated solution
-    private List<StaffMember> staffMembers;
-    private List<Project> projects; //Loaded projects
-    private List<Student> students; //Loaded students
-    private SolutionGenerationStrategy generationStrategy;
+    private Solution solution;              //Generated solution
+    private List<StaffMember> staffMembers; //Loaded staff members
+    private List<Project> projects;         //Loaded projects
+    private List<Student> students;         //Loaded students
+    private SolutionGenerationStrategy generationStrategy;  //Algorithm used for generating solution
+    // Tables to show data
     private StudentsTable studentsTable;
     private ProjectsTable projectsTable;
     private SolutionTable solutionTable;
@@ -270,24 +271,23 @@ public class MainController {
             System.out.println("No file selected");
             return;
         }
+        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
         try {
-            String fileContent = Utils.readFile(file.toPath());
-            FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
-            //Load in CSV format for both .csv and .txt
-            if (csvFilter.equals(selectedExtension) ||
-                    txtFilter.equals(selectedExtension)) {
-                projects = Project.fromCSV(fileContent, staffMembers);
+            if (csvFilter.equals(selectedExtension)) {
+                projects = FileLoader.loadProjectsFromCSV(file, staffMembers);
+                if (students != null) {
+                    students = FileLoader.loadStudentsFromCSV(file, Utils.generateProjectsMap(projects));
+                    studentsTable.showStudents(students);
+                }
+            } else if (txtFilter.equals(selectedExtension)) {
+                projects = FileLoader.loadProjectsFromTXT(file, staffMembers);
+                if (students != null) {
+                    students = FileLoader.loadStudentsFromTXT(file, Utils.generateProjectsMap(projects));
+                    studentsTable.showStudents(students);
+                }
             }
             projectsTable.showProjects(projects);
             loadStudentsBtn.setDisable(false);
-            if (students != null) {
-                //Load in CSV format for both .csv and .txt
-                if (csvFilter.equals(selectedExtension) ||
-                        txtFilter.equals(selectedExtension)) {
-                    students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
-                }
-                studentsTable.showStudents(students);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
@@ -308,22 +308,21 @@ public class MainController {
             System.out.println("No file selected");
             return;
         }
+        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
         try {
-            String fileContent = Utils.readFile(file.toPath());
-            FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
-            //Load in CSV format for both .csv and .txt
-            if (csvFilter.equals(selectedExtension) ||
-                    txtFilter.equals(selectedExtension)) {
-                students = Student.fromCSV(fileContent, Utils.generateProjectsMap(projects));
+            if (csvFilter.equals(selectedExtension)) {
+                students = FileLoader.loadStudentsFromCSV(file, Utils.generateProjectsMap(projects));
+            } else if (txtFilter.equals(selectedExtension)) {
+                students = FileLoader.loadStudentsFromTXT(file, Utils.generateProjectsMap(projects));
             }
             studentsTable.showStudents(students);
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (IllegalArgumentException e) {
             alert.setTitle("Error");
             alert.setHeaderText("Input File Error");
             alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [student no., first name, last name, gpa, stream, 10 project preferences each seperated by ,]");
             alert.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -337,13 +336,12 @@ public class MainController {
             System.out.println("No file selected");
             return;
         }
+        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
         try {
-            String fileContent = Utils.readFile(file.toPath());
-            FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
-            //Load in CSV format for both .csv and .txt
-            if (csvFilter.equals(selectedExtension) ||
-                    txtFilter.equals(selectedExtension)) {
-                staffMembers = StaffMember.fromCSV(fileContent);
+            if (csvFilter.equals(selectedExtension)) {
+                staffMembers = FileLoader.loadStaffMembersFromCSV(file);
+            } else if (txtFilter.equals(selectedExtension)) {
+                staffMembers = FileLoader.loadStaffMembersFromTXT(file);
             }
             loadProjectsBtn.setDisable(false);
         } catch (IOException e) {
