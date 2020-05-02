@@ -21,12 +21,7 @@ public class MainApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setTitle("SEP 3");
         primaryStage.setScene(scene);
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent windowEvent) {
-                System.exit(0);
-            }
-        });
+        primaryStage.setOnCloseRequest(windowEvent -> System.exit(0));
         primaryStage.show();
     }
 

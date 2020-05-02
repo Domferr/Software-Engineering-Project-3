@@ -240,15 +240,15 @@ public class MainController {
             //Show save file dialog
             File file = fileChooser.showSaveDialog(new Stage());
             if (file != null) {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
+
                 try {
-                    FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
                     //Save in CSV format for both .csv and .txt
-                    if (csvFilter.equals(selectedExtension) ||
-                            txtFilter.equals(selectedExtension)) {
-                        writer.write(solution.toCSV());
+                    if (csvFilter.equals(selectedExtension)) {
+                        FileSaver.saveSolutionAsCSV(file, solution);
+                    } else if (txtFilter.equals(selectedExtension)) {
+                        FileSaver.saveSolutionAsTXT(file, solution);
                     }
-                    writer.close();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setHeaderText("Results saved!");
                     alert.setContentText("You have saved this solution!");
