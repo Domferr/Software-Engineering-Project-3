@@ -43,7 +43,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>ie.ucdconnect.sep.gui.MainApplication</mainClass>
+                            <mainClass>ie.ucdconnect.sep.gui.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
