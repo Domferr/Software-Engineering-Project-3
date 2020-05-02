@@ -1,0 +1,3 @@
+The executable jar file is located in target/miskatonic-project-matcher-1.0-SNAPSHOT-jar-with-dependencies.jar
+To rebuild the jar run: mvn clean compile assembly:single
+Jar was build using Java 8 on Windows 10.
