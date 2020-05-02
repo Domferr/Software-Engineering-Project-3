@@ -11,6 +11,7 @@ import javafx.scene.control.TableView;
 
 import java.util.*;
 
+/** Class that manages the solution into a table view */
 public class SolutionTable {
 
     TableView<Map.Entry<Project, Student>> solutionTableView;
