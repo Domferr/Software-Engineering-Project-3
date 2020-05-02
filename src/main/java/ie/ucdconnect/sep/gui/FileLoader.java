@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /** Class with all the methods needed to load projects, students or solution from a file with a specific extension.
- *  .txt files are written like .csv files. */
+ *  .txt files are read like .csv files. */
 public class FileLoader {
 
     public static List<StaffMember> loadStaffMembersFromCSV(File file) throws IOException {

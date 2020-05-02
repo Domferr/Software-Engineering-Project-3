@@ -45,13 +45,13 @@
               </HBox>
                <HBox alignment="TOP_CENTER" prefWidth="300.0" spacing="8.0">
                   <children>
-                    <Button fx:id="loadStaffBtn" mnemonicParsing="false" onAction="#loadStaffMembers" prefWidth="125.0" text="Load Staff Members" />
+                    <Button fx:id="loadStaffBtn" mnemonicParsing="false" onAction="#loadStaffMembersOnClick" prefWidth="125.0" text="Load Staff Members" />
                   </children>
                </HBox>
               <HBox alignment="TOP_CENTER" prefWidth="300.0" spacing="8.0">
 
-                  <Button fx:id="loadStudentsBtn" mnemonicParsing="false" onAction="#loadStudents" prefWidth="100.0" text="Load Students" />
-                  <Button fx:id="loadProjectsBtn" mnemonicParsing="false" onAction="#loadProjects" prefWidth="100.0" text="Load Projects" />
+                  <Button fx:id="loadStudentsBtn" mnemonicParsing="false" onAction="#loadStudentsOnClick" prefWidth="100.0" text="Load Students" />
+                  <Button fx:id="loadProjectsBtn" mnemonicParsing="false" onAction="#loadProjectsOnClick" prefWidth="100.0" text="Load Projects" />
               </HBox>
               <VBox alignment="TOP_CENTER" spacing="8.0">
                   <VBox.margin>
@@ -69,7 +69,7 @@
                   </Slider>
               </VBox>
               <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="8.0">
-                  <Button mnemonicParsing="false" onAction="#generateSolution" prefWidth="208.0" text="Generate" />
+                  <Button mnemonicParsing="false" onAction="#generateSolutionOnClick" prefWidth="208.0" text="Generate" />
               </HBox>
               <HBox alignment="BASELINE_CENTER" prefWidth="200.00" spacing="8.0" />
           </VBox>
@@ -83,7 +83,7 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                 </columnResizePolicy>
                             </TableView>
-                           <Button fx:id="saveSolutionBtn" alignment="BOTTOM_RIGHT" onAction="#saveSolution" text="Save" StackPane.alignment="BOTTOM_RIGHT">
+                           <Button fx:id="saveSolutionBtn" alignment="BOTTOM_RIGHT" onAction="#saveSolutionOnClick" text="Save" StackPane.alignment="BOTTOM_RIGHT">
                               <StackPane.margin>
                                  <Insets bottom="16.0" right="16.0" />
                               </StackPane.margin>

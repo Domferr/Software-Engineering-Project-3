@@ -8,6 +8,8 @@ import javafx.concurrent.Task;
 
 import java.util.List;
 
+/** Task that generates a solution by running the given generation algorithm.
+ *  Generation will be done in a separate thread rather than the UI thread. */
 public class GeneratorTask extends Task<Solution> {
 
 	private SolutionGenerationStrategy generationStrategy;
@@ -21,7 +23,7 @@ public class GeneratorTask extends Task<Solution> {
 	}
 
 	@Override
-	protected Solution call() throws Exception {
+	protected Solution call() {
 		return generationStrategy.generate(projects, students);
 	}
 }

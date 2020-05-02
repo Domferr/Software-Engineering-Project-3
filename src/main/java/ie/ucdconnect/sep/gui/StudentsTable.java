@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 
 import java.util.List;
 
+/** Class that manages students into a table view */
 public class StudentsTable {
 
     private TableView<Student> studentsTableView;

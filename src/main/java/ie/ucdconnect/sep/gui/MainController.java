@@ -18,9 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -186,8 +184,9 @@ public class MainController {
         });
     }
 
+    /** Method invoked when the button for generating a solution is clicked.  */
     @FXML
-    private void generateSolution() {
+    private void generateSolutionOnClick() {
         if (projects == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Project data has not been loaded.");
@@ -214,12 +213,13 @@ public class MainController {
             alert.showAndWait();
 
         });
-        generatorTask.setOnCancelled(this::onTaskCancel);
-        generatorTask.setOnFailed(this::onTaskCancel);
+        generatorTask.setOnCancelled(this::onGenerationCancel);
+        generatorTask.setOnFailed(this::onGenerationCancel);
         new Thread(generatorTask).start();
     }
 
-    private void onTaskCancel(WorkerStateEvent workerStateEvent) {
+    /** Method invoked is the generator task fails for some reason. */
+    private void onGenerationCancel(WorkerStateEvent workerStateEvent) {
         if (workerStateEvent.getSource().getException() != null) {
             workerStateEvent.getSource().getException().printStackTrace();
         }
@@ -229,8 +229,9 @@ public class MainController {
         alert.showAndWait();
     }
 
+    /** Method invoked when the button for saving the solution is clicked.  */
     @FXML
-    public void saveSolution() throws IOException {
+    public void saveSolutionOnClick() {
         if (solution == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("No Solution Found!");
@@ -261,9 +262,9 @@ public class MainController {
 
     }
 
-
+    /** Method invoked when the button for loading projects is clicked.  */
     @FXML
-    public void loadProjects(){
+    public void loadProjectsOnClick() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         fileChooser.setTitle("Choose project file");
         File file = fileChooser.showOpenDialog(new Stage());
@@ -298,8 +299,9 @@ public class MainController {
         }
     }
 
+    /** Method invoked when the button for loading students is clicked.  */
     @FXML
-    public void loadStudents() {
+    public void loadStudentsOnClick() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         fileChooser.setTitle("Choose student file");
@@ -326,8 +328,9 @@ public class MainController {
         }
     }
 
+    /** Method invoked when the button for loading staff members is clicked.  */
     @FXML
-    public void loadStaffMembers() {
+    public void loadStaffMembersOnClick() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
 
         fileChooser.setTitle("Choose staff members file");

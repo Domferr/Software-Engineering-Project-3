@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 
 import java.util.List;
 
+/** Class that manages projects into a table view */
 public class ProjectsTable {
 
     private TableView<Project> projectsTableView;
