@@ -4,6 +4,22 @@ Martynas Jagutis 17424866
 Domenico Ferraro 19203549
 Alex Ng 17409754
 
+TASK 7
+We decided to use JavaFx to implement the gui of the application. We used MVC principles where the view is main.fxml file,
+the controller is MainController.java and the model are the classes that produce the solution. When loading the files we 
+accept .csv and .txt files. First you need to load the staff members which is the 'Miskatonic Staff Members.csv' file in 
+our project. Then we load the projects file generated such as the projectsFor120Students.csv file in our project. Finally
+we load the students file such as the students120.csv file in our project. After loading the projects and students the
+will appear in the gui which can be seen by selecting the appropriate tabs. Then the user must choose the algorithm they
+wish to use in order to generate the solution which is provided in the form of a checkbox. A slider allows the user to 
+adjust the minor constraint variable, gpaImportance. Once all this is done the generate button will generate the solution
+and display it in the gui once it is finished. The save button at the bottom right corner of the solution tab will allow 
+the user to save the solution to a file. We perform appropriate checks in order to make sure that correctly structured files
+are uploaded and that actions such as generate or save are not performed before files are uploaded. If this is the case
+we catch them as an exception and throw an error dialog to let the user know what they have done wrong. We make sure the
+files are uploaded in the correct order by disabling appropriate buttons such as projects before staff members are uploaded.
+
+
 TASK 6
 We added the GeneticAlgorithm class which performs the genetic algorithm on a solution. Initially we create P (GENERATION_SIZE) 
 random solutions. The fitness of each solution is evaluated by the evaluate function in the solution class. We order the population
