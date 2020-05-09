@@ -79,6 +79,8 @@ public class Solution {
 	private ImmutableMultimap<Project, Student> projectMapping;
 	private double energy, fitness;
 
+	private Map<Integer, Integer> preferenceResults = new TreeMap<>();
+
 	private Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
 	}
@@ -106,12 +108,22 @@ public class Solution {
 						fitness += fitnessDelta + fitnessDelta * gpaWeight;
 						energy += i + i * gpaWeight;
 						found = true;
+						if(!preferenceResults.containsKey(i)){
+							preferenceResults.put(i, 1);
+						}else{
+							preferenceResults.put(i, preferenceResults.get(i)+1);
+						}
 					}
 					i++;
 				}
 				if (!found) {
 					energy += NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
 					fitness -= NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
+					if(!preferenceResults.containsKey(-1)){
+						preferenceResults.put(-1, 1);
+					}else{
+						preferenceResults.put(-1, preferenceResults.get(-1)+1);
+					}
 				}
 			}
 		}
@@ -209,6 +221,10 @@ public class Solution {
 
 	public ImmutableCollection<Map.Entry<Project, Student>> getEntries() {
 		return projectMapping.entries();
+	}
+
+	public Map<Integer, Integer> getPreferenceResults() {
+		return preferenceResults;
 	}
 
 	@Override

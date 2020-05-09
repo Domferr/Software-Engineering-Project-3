@@ -20,6 +20,8 @@ import javafx.util.StringConverter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -187,6 +189,8 @@ public class MainController {
     /** Method invoked when the button for generating a solution is clicked.  */
     @FXML
     private void generateSolutionOnClick() {
+        final String[] ORDINALS ={"st", "nd", "rd", "th"};
+
         if (projects == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("Project data has not been loaded.");
@@ -204,12 +208,26 @@ public class MainController {
         setStatusToBusy("Running "+generationStrategy.getDisplayName());
         GeneratorTask generatorTask = new GeneratorTask(generationStrategy, projects, students);
         generatorTask.setOnSucceeded(e -> {
+            StringBuilder alertText = new StringBuilder();
             setStatusToReady();
             solution = generatorTask.getValue();
             solutionTable.showSolution(solution);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Solution generation finished.");
-            alert.setContentText("Fitness: " + solution.getFitness() + ". Energy: " + solution.getEnergy());
+            alertText.append("Fitness: " + solution.getFitness() + ". Energy: " + solution.getEnergy() + "\n");
+            alertText.append("Report of Preferences of Students\n");
+
+            for(int key : solution.getPreferenceResults().keySet()){
+                if (key == -1){
+                    alertText.append("No Preference: " + solution.getPreferenceResults().get(key) + "\n");
+                }
+                else if(key >= 0 && key <= 3){
+                    alertText.append((key+1) + ORDINALS[key] + " Preference: " + solution.getPreferenceResults().get(key) + "\n");
+                }else {
+                    alertText.append((key+1) + ORDINALS[3] + " Preference: " + solution.getPreferenceResults().get(key) + "\n");
+                }
+            }
+            alert.setContentText(alertText.toString());
             alert.showAndWait();
 
         });
