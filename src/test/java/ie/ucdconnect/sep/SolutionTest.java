@@ -20,12 +20,12 @@ class SolutionTest {
 
 	@BeforeEach
 	void setup() {
-		List<Project> preferences = new ArrayList<Project>();
+		List<String> preferences = new ArrayList<>();
 		StaffMember csStaffMember = new StaffMember("Name2", null, null, null, false);
 		csProject = new Project("Creating a web interface for running a movie studio", csStaffMember, Project.Type.CS);
 		csdsProject = new Project("Building a service to help writing modern fiction", csStaffMember, Project.Type.CSDS);
-		preferences.add(csProject);
-		preferences.add(csdsProject);
+		preferences.add(csProject.getTitle());
+		preferences.add(csdsProject.getTitle());
 		student = new Student("Nigel", "Mooney", "12345678", 3.8, Student.Focus.CS, preferences);
 		ImmutableMultimap<Project, Student> projectMapping = new ImmutableMultimap.Builder<Project, Student>().put(csdsProject, student).build();
 		solution = Solution.SolutionFactory.createAndEvaluate(projectMapping);

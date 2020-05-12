@@ -21,7 +21,7 @@ class GeneticAlgorithmTest {
         int test_size = testSetsStudentsSize[1];
         List<StaffMember> staffMembers = Utils.readStaffMembers();
         projects = Utils.readProjects(staffMembers, test_size);
-        students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
+        students = Utils.readStudents(test_size);
     }
 
     @Test

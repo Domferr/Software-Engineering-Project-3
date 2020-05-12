@@ -32,12 +32,12 @@ public class FileLoader {
         return loadProjectsFromCSV(file, staffMembers);
     }
 
-    public static List<Student> loadStudentsFromCSV(File file, Map<String, Project> projectsMap) throws IOException {
+    public static List<Student> loadStudentsFromCSV(File file) throws IOException {
         String fileContent = Utils.readFile(file.toPath());
-        return Student.fromCSV(fileContent, projectsMap);
+        return Student.fromCSV(fileContent);
     }
 
-    public static List<Student> loadStudentsFromTXT(File file, Map<String, Project> projectsMap) throws IOException {
-        return loadStudentsFromCSV(file, projectsMap);
+    public static List<Student> loadStudentsFromTXT(File file) throws IOException {
+        return loadStudentsFromCSV(file);
     }
 }

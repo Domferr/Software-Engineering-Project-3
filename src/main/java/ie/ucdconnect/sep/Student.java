@@ -3,37 +3,41 @@ package ie.ucdconnect.sep;
 import com.opencsv.CSVParser;
 
 import java.io.IOException;
+import java.sql.PseudoColumnUsage;
 import java.util.*;
 
 public class Student implements CSVRow {
 	public enum Focus {
+		UNKNOWN,
 		CS,
 		DS
 	}
 
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String studentNumber;
 	private Focus focus;
-	private List<Project> preferences;
+	private List<String> preferences;
 	private double gpa;
 
 	public Student() {
 
 	}
 
-	public Student(String firstName, String lastName, String studentNumber, double gpa, Focus focus, List<Project> preferences) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Student(String name, String studentNumber, double gpa, Focus focus, List<String> preferences) {
+		this.name = name;
 		this.studentNumber = studentNumber;
 		this.gpa = gpa;
 		this.focus = focus;
 		this.preferences = preferences;
 	}
 
+	public Student(String firstName, String lastName, String studentNumber, double gpa, Focus focus, List<String> preferences) {
+		this(firstName + " " + lastName, studentNumber, gpa, focus, preferences);
+	}
+
 	@Override
 	public String toCSVRow() {
-		return String.join(",", studentNumber, firstName, lastName, Double.toString(gpa), focus.toString(), createPreferencesCSVEntry());
+		return String.join(",", studentNumber, name, Double.toString(gpa), focus.toString(), createPreferencesCSVEntry());
 	}
 
 	private String createPreferencesCSVEntry() {
@@ -43,7 +47,7 @@ public class Student implements CSVRow {
 			if (i != 0) {
 				sb.append(",");
 			}
-			sb.append(preferences.get(i).getTitle());
+			sb.append(preferences.get(i));
 		}
 		sb.append("\"");
 		return sb.toString();
@@ -52,11 +56,11 @@ public class Student implements CSVRow {
 	/**
 	 * Creates a list of {@link Project} from {@code csvFile}.
 	 */
-	public static List<Student> fromCSV(String csvFile, Map<String, Project> projects) {
+	public static List<Student> fromCSV(String csvFile) {
 		List<Student> students = new LinkedList<>();
 		String[] rows = csvFile.split("\n");
 		for (String row : rows) {
-			students.add(fromCSVRow(row, projects));
+			students.add(fromCSVRow(row));
 		}
 		return students;
 	}
@@ -67,19 +71,19 @@ public class Student implements CSVRow {
 	 *
 	 * @return the created {@link Student}, or null if an error occurred.
 	 */
-	public static Student fromCSVRow(String row, Map<String, Project> projects) {
+	public static Student fromCSVRow(String row) {
 		try {
 			String[] parts = new CSVParser().parseLine(row);
 
-			List<Project> projectPreferences = new ArrayList<>();
-			if (parts.length != 6) {
+			if (parts.length != 5) {
 				throw new IllegalArgumentException("Expected 6 values, found " + parts.length);
 			}
-			String[] preferences = parts[5].split(",");
+			String[] preferences = parts[4].split(",");
+			List<String> projectPreferences = new ArrayList<>();
 			for (String preference : preferences) {
-				projectPreferences.add(projects.get(preference));
+				projectPreferences.add(preference);
 			}
-			return new Student(parts[1], parts[2], parts[0], Double.parseDouble(parts[3]), Focus.valueOf(parts[4]), projectPreferences);
+			return new Student(parts[1], parts[0], Double.parseDouble(parts[2]), Focus.valueOf(parts[3]), projectPreferences);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -105,8 +109,7 @@ public class Student implements CSVRow {
 	}
 
 	public void setFullName(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.name = firstName + " " + lastName;
 	}
 
 	public String getStudentNumber() {
@@ -125,23 +128,27 @@ public class Student implements CSVRow {
 		this.focus = focus;
 	}
 
-	public List<Project> getPreferences() {
+	public List<String> getPreferences() {
 		return preferences;
 	}
 
 	public boolean hasPreference(Project project) {
-		return preferences.contains(project);
+		return hasPreference(project.getTitle());
 	}
 
 	public boolean hasPreference(String projectTitle) {
-		for (Project preference : preferences) {
-			if (preference.getTitle().equals(projectTitle))
+		for (String preference : preferences) {
+			if (projectTitle.equals(preference))
 				return true;
 		}
 		return false;
 	}
 
-	public void setPreferences(List<Project> preferences) {
+	public String getName() {
+		return name;
+	}
+
+	public void setPreferences(List<String> preferences) {
 		this.preferences = preferences;
 	}
 
@@ -153,20 +160,8 @@ public class Student implements CSVRow {
 		this.gpa = gpa;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public String getFullName() {
-		return firstName+" "+lastName;
-	}
-
 	@Override
 	public String toString() {
-		return firstName + " " + lastName + " " + studentNumber + " " + focus + " " + preferences.toString();
+		return name +  " " + studentNumber + " " + focus + " " + preferences.toString();
 	}
 }

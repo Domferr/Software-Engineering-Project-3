@@ -25,7 +25,7 @@ public class SolutionGenerator {
 		//Read test set
 		List<StaffMember> staffMembers = Utils.readStaffMembers();
 		List<Project> projects = Utils.readProjects(staffMembers, test_size);
-		List<Student> students = Utils.readStudents(Utils.generateProjectsMap(projects), test_size);
+		List<Student> students = Utils.readStudents(test_size);
 
 		//Run simulated annealing
 		Solution solution = new GeneticAlgorithm().generate(projects, students);

@@ -12,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudentTest {
 
 	private Student student;
-	private List<Project> preferences;
+	private List<String> preferences;
 	private StaffMember csStaffMember;
 	private Project csProject;
 	private Project csdsProject;
 
 	@BeforeEach
 	void setup() {
-		preferences = new ArrayList<Project>();
+		preferences = new ArrayList<String>();
 
 		String[] researchAreas = {"Acting", "Hollywood", "Serious Acting"};
 		String[] researchActivities = {"performing serious acting", "winning Oscars"};
@@ -29,8 +29,8 @@ class StudentTest {
 		csProject = new Project("Creating a web interface for running a movie studio", csStaffMember, Project.Type.CS);
 		csdsProject = new Project("Building a service to help writing modern fiction", csStaffMember, Project.Type.CSDS);
 
-		preferences.add(csProject);
-		preferences.add(csdsProject);
+		preferences.add(csProject.getTitle());
+		preferences.add(csdsProject.getTitle());
 
 		student = new Student("Nigel", "Mooney", "12345678", 3.8, Student.Focus.CS, preferences);
 	}
@@ -53,10 +53,7 @@ class StudentTest {
 
 	@Test
 	void fromCSVRow() {
-		HashMap<String, Project> map = new HashMap<>();
-		map.put("Creating a web interface for running a movie studio", csProject);
-		map.put("Building a service to help writing modern fiction", csdsProject);
-		Student parsedStudent = Student.fromCSVRow("89457781,Michel,Owen,4.2,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", map);
+		Student parsedStudent = Student.fromCSVRow("89457781,Michel,Owen,4.2,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"");
 		assertEquals("89457781", parsedStudent.getStudentNumber());
 		assertEquals(Student.Focus.CS, parsedStudent.getFocus());
 		assertEquals("[Creating a web interface for running a movie studio, Building a service to help writing modern fiction]", parsedStudent.getPreferences().toString());
@@ -64,26 +61,17 @@ class StudentTest {
 
 	@Test
 	void fromCSVRow_tooFewColumns() {
-		HashMap<String, Project> map = new HashMap<>();
-		map.put("Creating a web interface for running a movie studio", csProject);
-		map.put("Building a service to help writing modern fiction", csdsProject);
-		assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,\"Michel,Owen\",1,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\"", map));
+		assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,\"Michel,Owen\",1,CS,\"Creating a web interface for running a movie studio,Building a service to help writing modern fiction\""));
 	}
 
 	@Test
 	void fromCSVRow_tooManyColumns() {
-		HashMap<String, Project> map = new HashMap<>();
-		map.put("Creating a web interface for running a movie studio", csProject);
-		map.put("Building a service to help writing modern fiction", csdsProject);
-		assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,Michel,Owen,0.2,CS,Creating a web interface for running a movie studio,Building a service to help writing modern fiction", map));
+		assertThrows(IllegalArgumentException.class, () -> Student.fromCSVRow("89457781,Michel,Owen,0.2,CS,Creating a web interface for running a movie studio,Building a service to help writing modern fiction"));
 	}
 
 	@Test
 	void fromCSV() {
-		HashMap<String, Project> map = new HashMap<>();
-		map.put("Creating a web interface for running a movie studio", csProject);
-		map.put("Building a service to help writing modern fiction", csdsProject);
-		List<Student> parsedStudents = Student.fromCSV("89457781,Michel,Owen,1,CS,\"Creating a web interface for running a movie studio\"\n28859293,Nigel,Mooney,2,CS,\"Building a service to help writing modern fiction\"", map);
+		List<Student> parsedStudents = Student.fromCSV("89457781,Michel,Owen,1,CS,\"Creating a web interface for running a movie studio\"\n28859293,Nigel,Mooney,2,CS,\"Building a service to help writing modern fiction\"");
 		assertEquals(2, parsedStudents.size());
 		Student student1 = parsedStudents.get(0);
 		Student student2 = parsedStudents.get(1);

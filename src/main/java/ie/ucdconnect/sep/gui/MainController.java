@@ -22,6 +22,7 @@ import javafx.util.StringConverter;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MainController {
 
@@ -293,13 +294,13 @@ public class MainController {
             if (csvFilter.equals(selectedExtension)) {
                 projects = FileLoader.loadProjectsFromCSV(file, staffMembers);
                 if (students != null) {
-                    students = FileLoader.loadStudentsFromCSV(file, Utils.generateProjectsMap(projects));
+                    students = FileLoader.loadStudentsFromCSV(file);
                     studentsTable.showStudents(students);
                 }
             } else if (txtFilter.equals(selectedExtension)) {
                 projects = FileLoader.loadProjectsFromTXT(file, staffMembers);
                 if (students != null) {
-                    students = FileLoader.loadStudentsFromTXT(file, Utils.generateProjectsMap(projects));
+                    students = FileLoader.loadStudentsFromTXT(file);
                     studentsTable.showStudents(students);
                 }
             }
@@ -329,9 +330,9 @@ public class MainController {
         FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
         try {
             if (csvFilter.equals(selectedExtension)) {
-                students = FileLoader.loadStudentsFromCSV(file, Utils.generateProjectsMap(projects));
+                students = FileLoader.loadStudentsFromCSV(file);
             } else if (txtFilter.equals(selectedExtension)) {
-                students = FileLoader.loadStudentsFromTXT(file, Utils.generateProjectsMap(projects));
+                students = FileLoader.loadStudentsFromTXT(file);
             }
             studentsTable.showStudents(students);
         } catch (IllegalArgumentException e) {
@@ -385,19 +386,13 @@ public class MainController {
             System.out.println("No file selected");
             return;
         }
-        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
         try {
-                projects = fromCSVProjects(Utils.readFile(file.toPath()));
-                students = fromCSVStudents(Utils.readFile(file.toPath()), Utils.generateProjectsMap(projects));
-              //  projectsTable.showProjects(projects);
-                studentsTable.showStudents(students);
-
-        } /*catch (IllegalArgumentException e) {
-            alert.setTitle("Error");
-            alert.setHeaderText("Input File Error");
-            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [student no., first name, last name, gpa, stream, 10 project preferences each seperated by ,]");
-            alert.showAndWait();
-        }*/ catch (IOException e){
+            DataLoader dataLoader = new DataLoader();
+            dataLoader.loadData(file);
+            dataLoader.displayWarnings();
+            students = dataLoader.getStudents();
+            studentsTable.showStudents(students);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -428,7 +423,7 @@ public class MainController {
         return projects;
     }
 
-    public static List<Student> fromCSVStudents(String csvFile, Map<String, Project> projects) {
+    public static List<Student> fromCSVStudents(String csvFile) {
         List<Student> students = new LinkedList<>();
         String[] rows = csvFile.split("\n");
 
@@ -436,11 +431,10 @@ public class MainController {
             System.out.println(row);
             try {
                 String[] parts = new CSVParser().parseLine(row);
-                List<Project> projectPreferences = new ArrayList<>();
+                List<String> projectPreferences = new ArrayList<>();
                 Student student = new Student();
                 for (int i = 4; i < parts.length && parts[i] !=null; i++) {
-
-                    projectPreferences.add(projects.get(parts[i]));
+                    projectPreferences.add(parts[i]);
                 }
                 System.out.println(parts[2]);
                 if(!parts[0].equals(""))

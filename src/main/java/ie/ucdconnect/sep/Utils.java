@@ -71,11 +71,11 @@ public class Utils {
 	/**
 	 * Reads the students test set file with the given test set size
 	 */
-	public static List<Student> readStudents(Map<String, Project> projectsMap, int test_size) throws IOException {
+	public static List<Student> readStudents(int test_size) throws IOException {
 		File studentsFile = getStudentsFile(test_size);
 		String fileContent = readFile(studentsFile.toPath());
 
-		return Student.fromCSV(fileContent, projectsMap);
+		return Student.fromCSV(fileContent);
 	}
 
 	/**

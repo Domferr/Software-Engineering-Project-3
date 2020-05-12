@@ -242,8 +242,8 @@ public class TestCaseGenerator {
 	/**
 	 * Assign list of project preferences to students
 	 */
-	private static List<Project> assignPreferences(List<Project> projects, Student.Focus studentFocus) {
-		List<Project> projectPreferences = new ArrayList<>();
+	private static List<String> assignPreferences(List<Project> projects, Student.Focus studentFocus) {
+		List<String> projectPreferences = new ArrayList<>();
 		while (projectPreferences.size() < MAX_STUDENT_PREFERENCES) {
 			// https://stackoverflow.com/questions/54712600/what-is-the-true-maximum-and-minimum-value-of-random-nextgaussian
 			// This stackoverflow answer calculated the min/max values of nextGaussian().
@@ -255,7 +255,7 @@ public class TestCaseGenerator {
 			Project randomProject = projects.get(projectIndex);
 			if (randomProject.matchesFocus(studentFocus)) {
 				randomProject.totalPicks++;
-				projectPreferences.add(randomProject);
+				projectPreferences.add(randomProject.getTitle());
 			}
 		}
 

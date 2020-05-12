@@ -29,7 +29,7 @@ public class SolutionTable {
     }
 
     private void setUp() {
-        studentColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getValue().getFullName()));
+        studentColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getValue().getName()));
         assignedProjectColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getKey().getTitle()));
         solutionTableView.getColumns().setAll(studentColumn, assignedProjectColumn);
         //Sort by students

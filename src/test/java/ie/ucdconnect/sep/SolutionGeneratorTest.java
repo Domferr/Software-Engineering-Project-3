@@ -36,7 +36,7 @@ class SolutionGeneratorTest {
 		//Read the test set from resources
 		List<Project> projects = Utils.readProjects(staffMembers, testSetSize);
 		Map<String, Project> projectsMap = Utils.generateProjectsMap(projects);
-		List<Student> students = Utils.readStudents(projectsMap, testSetSize);
+		List<Student> students = Utils.readStudents(testSetSize);
 
 		//Read the solution
 		Solution solution = Utils.readSolution(projectsMap, students, testSetSize);

@@ -13,24 +13,21 @@ public class StudentsTable {
 
     private TableView<Student> studentsTableView;
     private TableColumn<Student, String> studentNumberColumn;
-    private TableColumn<Student, String> studentFirstnameColumn;
-    private TableColumn<Student, String> studentLastnameColumn;
+    private TableColumn<Student, String> studentNameColumn;
 
     public StudentsTable(TableView<Student> studentsTableView) {
         this.studentsTableView = studentsTableView;
         studentNumberColumn = new TableColumn<>("Student Number");
-        studentFirstnameColumn = new TableColumn<>("First Name");
-        studentLastnameColumn = new TableColumn<>("Last Name");
+        studentNameColumn = new TableColumn<>("Name");
         setUp();
     }
 
     private void setUp() {
         studentNumberColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getStudentNumber()));
-        studentFirstnameColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getFirstName()));
-        studentLastnameColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getLastName()));
-        studentsTableView.getColumns().setAll(studentFirstnameColumn, studentLastnameColumn, studentNumberColumn);
+        studentNameColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getName()));
+        studentsTableView.getColumns().setAll(studentNameColumn, studentNumberColumn);
         //Sort by first name
-        studentsTableView.getSortOrder().add(studentFirstnameColumn);
+        studentsTableView.getSortOrder().add(studentNameColumn);
     }
 
     public void showStudents(List<Student> studentList) {
