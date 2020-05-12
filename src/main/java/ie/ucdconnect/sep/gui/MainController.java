@@ -212,17 +212,17 @@ public class MainController {
             solutionTable.showSolution(solution);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Solution generation finished.");
-            alertText.append("Fitness: " + solution.getFitness() + ". Energy: " + solution.getEnergy() + "\n");
+            alertText.append("Fitness: ").append(solution.getFitness()).append(". Energy: ").append(solution.getEnergy()).append("\n");
             alertText.append("Report of Preferences of Students\n");
 
             for(int key : solution.getPreferenceResults().keySet()){
                 if (key == -1){
-                    alertText.append("No Preference: " + solution.getPreferenceResults().get(key) + "\n");
+                    alertText.append("No Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
                 }
                 else if(key >= 0 && key <= 3){
-                    alertText.append((key+1) + ORDINALS[key] + " Preference: " + solution.getPreferenceResults().get(key) + "\n");
+                    alertText.append(key + 1).append(ORDINALS[key]).append(" Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
                 }else {
-                    alertText.append((key+1) + ORDINALS[3] + " Preference: " + solution.getPreferenceResults().get(key) + "\n");
+                    alertText.append(key + 1).append(ORDINALS[3]).append(" Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
                 }
             }
             alert.setContentText(alertText.toString());
