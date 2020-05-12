@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class MainApplication extends Application {
         primaryStage.setTitle("SEP 3");
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(windowEvent -> System.exit(0));
+        primaryStage.getIcons().add(new Image("images/logo.jpg"));
         primaryStage.show();
     }
 
