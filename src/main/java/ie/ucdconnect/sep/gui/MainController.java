@@ -1,5 +1,6 @@
 package ie.ucdconnect.sep.gui;
 
+import com.opencsv.CSVParser;
 import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.AsexualGeneticAlgorithm;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
@@ -20,10 +21,7 @@ import javafx.util.StringConverter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MainController {
 
@@ -41,7 +39,7 @@ public class MainController {
     private FileChooser fileChooser;
     private final FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV file", "*.csv");
     private final FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Text file", "*.txt");
-
+    private final FileChooser.ExtensionFilter xlsxFilter = new FileChooser.ExtensionFilter("XLSX file", "*.xlsx");
     // Algorithm Settings
     @FXML
     Slider gpaSlider;
@@ -85,7 +83,7 @@ public class MainController {
 
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
-        fileChooser.getExtensionFilters().addAll(csvFilter, txtFilter);
+        fileChooser.getExtensionFilters().addAll(csvFilter, txtFilter, xlsxFilter);
 
         // Projects will be enabled after staff members are loaded, and students after projects
         loadStudentsBtn.setDisable(true);
@@ -373,6 +371,93 @@ public class MainController {
             alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, research activity, research area, special focus]");
             alert.showAndWait();
         }
+    }
+
+
+    //TODO READ THE SAMPLE FILE PROVIDED. NOT FULLY WORKING/COMPLETE YET
+    @FXML
+    private void readContent() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        fileChooser.setTitle("Choose file");
+        File file = fileChooser.showOpenDialog(new Stage());
+        if (file == null) {
+            System.out.println("No file selected");
+            return;
+        }
+        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
+        try {
+                projects = fromCSVProjects(Utils.readFile(file.toPath()));
+                students = fromCSVStudents(Utils.readFile(file.toPath()), Utils.generateProjectsMap(projects));
+              //  projectsTable.showProjects(projects);
+                studentsTable.showStudents(students);
+
+        } /*catch (IllegalArgumentException e) {
+            alert.setTitle("Error");
+            alert.setHeaderText("Input File Error");
+            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [student no., first name, last name, gpa, stream, 10 project preferences each seperated by ,]");
+            alert.showAndWait();
+        }*/ catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Project> fromCSVProjects(String csvFile) {
+        Vector<String> projectAdded = new Vector<>();
+        List<Project> projects= new LinkedList<>();
+        String[] rows = csvFile.split("\n");
+
+        for (String row : rows) {
+            try {
+                String[] parts = new CSVParser().parseLine(row);
+                for (int i = 4; i < parts.length&& parts[i] != null; i++) {
+                    if (!projectAdded.contains(parts[i])) {
+                        projectAdded.add(parts[i]);
+                        Project project = new Project();
+                        project.setTitle(parts[i]);
+                        project.setSupervisor(new StaffMember());
+                        projects.add(project);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+          //  throw new IllegalArgumentException("Could not parse: " + row);
+        }
+
+        return projects;
+    }
+
+    public static List<Student> fromCSVStudents(String csvFile, Map<String, Project> projects) {
+        List<Student> students = new LinkedList<>();
+        String[] rows = csvFile.split("\n");
+
+        for (String row : rows) {
+            System.out.println(row);
+            try {
+                String[] parts = new CSVParser().parseLine(row);
+                List<Project> projectPreferences = new ArrayList<>();
+                Student student = new Student();
+                for (int i = 4; i < parts.length && parts[i] !=null; i++) {
+
+                    projectPreferences.add(projects.get(parts[i]));
+                }
+                System.out.println(parts[2]);
+                if(!parts[0].equals(""))
+                    student.setFullName(parts[0], parts[0]);
+                student.setPreferences(projectPreferences);
+                if(!parts[2].equals(""))
+                    student.setGpa(Double.parseDouble(parts[2]));
+                if(!parts[1].equals(""))
+                    student.setStudentNumber(parts[1]);
+                students.add(student);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        //    throw new IllegalArgumentException("Could not parse: " + row);
+        }
+        return students;
     }
 }
 

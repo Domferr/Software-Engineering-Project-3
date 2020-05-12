@@ -53,6 +53,10 @@
                   <Button fx:id="loadStudentsBtn" mnemonicParsing="false" onAction="#loadStudentsOnClick" prefWidth="100.0" text="Load Students" />
                   <Button fx:id="loadProjectsBtn" mnemonicParsing="false" onAction="#loadProjectsOnClick" prefWidth="100.0" text="Load Projects" />
               </HBox>
+              <HBox alignment="TOP_CENTER" prefWidth="300.0" spacing="8.0">
+
+                  <Button mnemonicParsing="false" onAction="#readContent" prefWidth="100.0" text="Temp" />
+              </HBox>
               <VBox alignment="TOP_CENTER" spacing="8.0">
                   <VBox.margin>
                       <Insets />

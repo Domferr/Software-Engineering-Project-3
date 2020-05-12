@@ -19,6 +19,11 @@ public class Project implements CSVRow {
 	private Type type;
 	public int totalPicks = 0;
 
+
+	public Project(){
+
+	}
+
 	public Project(String title, StaffMember supervisor, Type type) {
 		this.title = title;
 		this.supervisor = supervisor;
