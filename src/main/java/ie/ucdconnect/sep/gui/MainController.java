@@ -63,13 +63,6 @@ public class MainController {
     @FXML
     TableView<Project> projectsTableView;
 
-    // Buttons
-    @FXML
-    Button loadStudentsBtn;
-    @FXML
-    Button loadProjectsBtn;
-    @FXML
-    Button loadStaffBtn;
     @FXML
     Button saveSolutionBtn;
 
@@ -85,10 +78,6 @@ public class MainController {
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(csvFilter, txtFilter, xlsxFilter);
-
-        // Projects will be enabled after staff members are loaded, and students after projects
-        loadStudentsBtn.setDisable(true);
-        loadProjectsBtn.setDisable(true);
     }
 
     private void setStatusToBusy(String text) {
@@ -279,105 +268,8 @@ public class MainController {
 
     }
 
-    /** Method invoked when the button for loading projects is clicked.  */
     @FXML
-    public void loadProjectsOnClick() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        fileChooser.setTitle("Choose project file");
-        File file = fileChooser.showOpenDialog(new Stage());
-        if (file == null) {
-            System.out.println("No file selected");
-            return;
-        }
-        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
-        try {
-            if (csvFilter.equals(selectedExtension)) {
-                projects = FileLoader.loadProjectsFromCSV(file, staffMembers);
-                if (students != null) {
-                    students = FileLoader.loadStudentsFromCSV(file);
-                    studentsTable.showStudents(students);
-                }
-            } else if (txtFilter.equals(selectedExtension)) {
-                projects = FileLoader.loadProjectsFromTXT(file, staffMembers);
-                if (students != null) {
-                    students = FileLoader.loadStudentsFromTXT(file);
-                    studentsTable.showStudents(students);
-                }
-            }
-            projectsTable.showProjects(projects);
-            loadStudentsBtn.setDisable(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            alert.setTitle("Error");
-            alert.setHeaderText("Input File Error");
-            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, focus, project]");
-            alert.showAndWait();
-        }
-    }
-
-    /** Method invoked when the button for loading students is clicked.  */
-    @FXML
-    public void loadStudentsOnClick() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-
-        fileChooser.setTitle("Choose student file");
-        File file = fileChooser.showOpenDialog(new Stage());
-        if (file == null) {
-            System.out.println("No file selected");
-            return;
-        }
-        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
-        try {
-            if (csvFilter.equals(selectedExtension)) {
-                students = FileLoader.loadStudentsFromCSV(file);
-            } else if (txtFilter.equals(selectedExtension)) {
-                students = FileLoader.loadStudentsFromTXT(file);
-            }
-            studentsTable.showStudents(students);
-        } catch (IllegalArgumentException e) {
-            alert.setTitle("Error");
-            alert.setHeaderText("Input File Error");
-            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [student no., first name, last name, gpa, stream, 10 project preferences each seperated by ,]");
-            alert.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /** Method invoked when the button for loading staff members is clicked.  */
-    @FXML
-    public void loadStaffMembersOnClick() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-
-        fileChooser.setTitle("Choose staff members file");
-        File file = fileChooser.showOpenDialog(new Stage());
-        if (file == null) {
-            System.out.println("No file selected");
-            return;
-        }
-        FileChooser.ExtensionFilter selectedExtension = fileChooser.getSelectedExtensionFilter();
-        try {
-            if (csvFilter.equals(selectedExtension)) {
-                staffMembers = FileLoader.loadStaffMembersFromCSV(file);
-            } else if (txtFilter.equals(selectedExtension)) {
-                staffMembers = FileLoader.loadStaffMembersFromTXT(file);
-            }
-            loadProjectsBtn.setDisable(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e){
-            alert.setTitle("Error");
-            alert.setHeaderText("Input File Error");
-            alert.setContentText("Make sure the files are correctly formatted.\nCSV ROW: [name, research activity, research area, special focus]");
-            alert.showAndWait();
-        }
-    }
-
-
-    //TODO READ THE SAMPLE FILE PROVIDED. NOT FULLY WORKING/COMPLETE YET
-    @FXML
-    private void readContent() {
+    private void loadData() {
 
         fileChooser.setTitle("Choose file");
         File file = fileChooser.showOpenDialog(new Stage());
