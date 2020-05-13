@@ -76,7 +76,7 @@ public class Student implements CSVRow {
 			String[] parts = new CSVParser().parseLine(row);
 
 			if (parts.length != 5) {
-				throw new IllegalArgumentException("Expected 6 values, found " + parts.length);
+				throw new IllegalArgumentException("Expected 5 values, found " + parts.length);
 			}
 			String[] preferences = parts[4].split(",");
 			List<String> projectPreferences = new ArrayList<>();
