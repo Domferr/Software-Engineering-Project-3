@@ -75,12 +75,12 @@ public class DataLoader {
 		if (headerInformation[1].isBound()) { // second name
 			name += " " + headerInformation[1].get(line);
 		}
-		if (headerInformation[2].isBound()) { // second name
+		if (headerInformation[2].isBound()) { // student number
 			studentNumber = headerInformation[2].get(line);
 		}
 		List<String> preferences = new ArrayList<>();
 		if (headerInformation[4].isBound() && isSupervisor(headerInformation[4].get(line))) { // Student or proposer differentiator. If not bound is assumed to be a student.
-			for (int i = 5; i < 25; i++) { // Preferences 10 - 20;
+			for (int i = 5; i < 25; i++) { // Preferences 1 - 20;
 				String title = headerInformation[i].get(line);
 				if (title.length() > 1) {
 					projects.add(new Project(title, name));
