@@ -378,7 +378,6 @@ public class MainController {
     //TODO READ THE SAMPLE FILE PROVIDED. NOT FULLY WORKING/COMPLETE YET
     @FXML
     private void readContent() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
 
         fileChooser.setTitle("Choose file");
         File file = fileChooser.showOpenDialog(new Stage());
@@ -392,6 +391,11 @@ public class MainController {
             dataLoader.displayWarnings();
             students = dataLoader.getStudents();
             studentsTable.showStudents(students);
+        } catch (DataLoaderException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Data error");
+            alert.setHeaderText("An error occurred while loading the data.");
+            alert.setContentText(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }

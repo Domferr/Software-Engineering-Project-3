@@ -48,7 +48,7 @@ public class DataLoader {
 	private int blankLines = 0;
 	private List<Student> students = new ArrayList<>();
 
-	public void loadData(File file) throws IOException {
+	public void loadData(File file) throws IOException, DataLoaderException {
 		CSVParser parser = new CSVParser();
 		String content = Utils.readFile(file.toPath());
 		String[] lines = content.split("\n");
@@ -97,15 +97,15 @@ public class DataLoader {
 		return true;
 	}
 
-	private void checkHeaders() {
+	private void checkHeaders() throws DataLoaderException {
 		for (HeaderInfo headerInfo : headerInformation) {
 			if (headerInfo.isRequired && !headerInfo.isBound()) {
-				throw new IllegalArgumentException("Header not found: " + Arrays.toString(headerInfo.possibleNames));
+				throw new DataLoaderException("Header not found: " + Arrays.toString(headerInfo.possibleNames));
 			}
 		}
 	}
 
-	private void parseHeaders() {
+	private void parseHeaders() throws DataLoaderException {
 		for (int i = 0; i < rawHeaders.length; i++) {
 			String header = rawHeaders[i];
 			boolean found = false;
@@ -132,28 +132,22 @@ public class DataLoader {
 	}
 
 	public void displayWarnings() {
+		String content = "";
 		if (unusedHeaders.size() > 0) {
-			Alert unusedHeadersAlert = new Alert(Alert.AlertType.INFORMATION);
-			String joinedText = String.join("\n", unusedHeaders);
-			unusedHeadersAlert.setTitle("Unused headers");
-			unusedHeadersAlert.setHeaderText("Data contained unused headers:");
-			unusedHeadersAlert.setContentText(joinedText);
-			unusedHeadersAlert.showAndWait();
+			String joinedText = String.join(", ", unusedHeaders);
+			content += "Data contained unused headers: " + joinedText + "\n";
 		}
 		if (blankHeaders > 0) {
-			Alert unusedHeadersAlert = new Alert(Alert.AlertType.INFORMATION);
-			String joinedText = String.join("\n", unusedHeaders);
-			unusedHeadersAlert.setTitle("Blank headers");
-			unusedHeadersAlert.setHeaderText("Data contained " + blankHeaders + " blank headers.");
-			unusedHeadersAlert.showAndWait();
+			content += "Data contained " + blankHeaders + " blank headers." + "\n";
 		}
 		if (blankLines > 0) {
-			Alert unusedHeadersAlert = new Alert(Alert.AlertType.INFORMATION);
-			String joinedText = String.join("\n", unusedHeaders);
-			unusedHeadersAlert.setTitle("Blank lines");
-			unusedHeadersAlert.setHeaderText("Data contained " + blankHeaders + " blank lines.");
-			unusedHeadersAlert.showAndWait();
+			content += "Data contained " + blankLines + " blank lines." + "\n";
 		}
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("Data Warning");
+		alert.setHeaderText("Data was loaded successfully but threw warnings");
+		alert.setContentText(content);
+		alert.showAndWait();
 	}
 
 	private static class HeaderInfo {
@@ -171,9 +165,9 @@ public class DataLoader {
 			return parts[boundIndex]; // Allow out of bounds to be thrown, as if they are it's not a user error.
 		}
 
-		public void bind(int index) {
+		public void bind(int index) throws DataLoaderException {
 			if (boundIndex != -1) {
-				throw new IllegalArgumentException("Header bound multiple times. Header #" + (boundIndex + 1) + " and #" + (index + 1) + ".");
+				throw new DataLoaderException("Header bound multiple times. Header #" + (boundIndex + 1) + " and #" + (index + 1) + ".");
 			}
 			boundIndex = index;
 		}
