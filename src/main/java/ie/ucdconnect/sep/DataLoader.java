@@ -124,7 +124,7 @@ public class DataLoader {
 	private void checkHeaders() throws DataLoaderException {
 		for (HeaderInfo headerInfo : headerInformation) {
 			if (headerInfo.isRequired && !headerInfo.isBound()) {
-				throw new DataLoaderException("Header not found: " + Arrays.toString(headerInfo.possibleNames));
+				throw new DataLoaderException("Header not found. Possible names: " + Arrays.toString(headerInfo.possibleNames));
 			}
 		}
 	}

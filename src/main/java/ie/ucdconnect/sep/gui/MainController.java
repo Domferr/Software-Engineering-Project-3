@@ -288,6 +288,7 @@ public class MainController {
             alert.setTitle("Data error");
             alert.setHeaderText("An error occurred while loading the data.");
             alert.setContentText(e.getMessage());
+            alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
