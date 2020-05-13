@@ -265,12 +265,10 @@ public class MainController {
                 }
             }
         }
-
     }
 
     @FXML
     private void loadData() {
-
         fileChooser.setTitle("Choose file");
         File file = fileChooser.showOpenDialog(new Stage());
         if (file == null) {
@@ -282,7 +280,7 @@ public class MainController {
             dataLoader.loadData(file);
             dataLoader.displayWarnings();
             students = dataLoader.getStudents();
-            projects = createProjects(students);
+            projects = dataLoader.getProjects();
             studentsTable.showStudents(students);
             projectsTable.showProjects(projects);
         } catch (DataLoaderException e) {
@@ -293,18 +291,6 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private List<Project> createProjects(List<Student> students) {
-        Set<String> projectTitles = new HashSet<>();
-        for (Student student : students) {
-            for (String title : student.getPreferences()) {
-                if (title.length() > 0) {
-                    projectTitles.add(title);
-                }
-            }
-        }
-        return projectTitles.stream().map(Project::new).collect(Collectors.toList());
     }
 }
 

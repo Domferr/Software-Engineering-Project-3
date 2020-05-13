@@ -30,6 +30,11 @@ public class Project implements CSVRow {
 		this.type = Type.UNKNOWN;
 	}
 
+	public Project(String title, String supervisorName) {
+		this.title = title;
+		this.supervisor = new StaffMember(supervisorName, null, null, null, false);
+		this.type = Type.UNKNOWN;
+	}
 
 	public Project(String title, StaffMember supervisor, Type type) {
 		this.title = title;

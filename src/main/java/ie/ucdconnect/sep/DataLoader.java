@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class DataLoader {
 
@@ -47,6 +48,7 @@ public class DataLoader {
 	private int blankHeaders = 0;
 	private int blankLines = 0;
 	private List<Student> students = new ArrayList<>();
+	private List<Project> projects = new ArrayList<>();
 
 	public void loadData(File file) throws IOException, DataLoaderException {
 		CSVParser parser = new CSVParser();
@@ -59,6 +61,7 @@ public class DataLoader {
 		for (String line : lines) {
 			parseLine(parser.parseLine(line));
 		}
+		// checkProjects();
 	}
 
 	private void parseLine(String[] line) {
@@ -75,14 +78,35 @@ public class DataLoader {
 		if (headerInformation[2].isBound()) { // second name
 			studentNumber = headerInformation[2].get(line);
 		}
-		if (headerInformation[4].isBound()) { // Student or proposer differentiator. If not bound is assumed to be a student.
-			// TODO: Load a staff member rather than a student
-		}
 		List<String> preferences = new ArrayList<>();
+		if (headerInformation[4].isBound() && isSupervisor(headerInformation[4].get(line))) { // Student or proposer differentiator. If not bound is assumed to be a student.
+			for (int i = 5; i < 25; i++) { // Preferences 10 - 20;
+				String title = headerInformation[i].get(line);
+				if (title.length() > 1) {
+					projects.add(new Project(title, name));
+				}
+			}
+			return;
+		}
 		for (int i = 5; i < 15; i++) { // Preferences 1 - 10;
 			preferences.add(headerInformation[i].get(line));
 		}
 		students.add(new Student(name, studentNumber, gpa, Student.Focus.UNKNOWN, preferences));
+	}
+
+	private boolean isSupervisor(String s) {
+		return s.equalsIgnoreCase("supervisor") || s.equalsIgnoreCase("lecturer");
+	}
+
+	private void checkProjects() throws DataLoaderException {
+		Map<String, Project> projectMap = Utils.generateProjectsMap(projects);
+		for (Student student : students) {
+			for (String preference : student.getPreferences()) {
+				if (!projectMap.containsKey(preference)) {
+					throw new DataLoaderException("Preference of student '" + student.getName() + "' '" + preference + "' does not exist.");
+				}
+			}
+		}
 	}
 
 	/**
@@ -129,6 +153,10 @@ public class DataLoader {
 
 	public List<Student> getStudents() {
 		return students;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
 	}
 
 	public void displayWarnings() {
