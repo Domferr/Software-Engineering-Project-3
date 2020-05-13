@@ -282,7 +282,9 @@ public class MainController {
             dataLoader.loadData(file);
             dataLoader.displayWarnings();
             students = dataLoader.getStudents();
+            projects = createProjects(students);
             studentsTable.showStudents(students);
+            projectsTable.showProjects(projects);
         } catch (DataLoaderException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Data error");
@@ -293,61 +295,16 @@ public class MainController {
         }
     }
 
-    public static List<Project> fromCSVProjects(String csvFile) {
-        Vector<String> projectAdded = new Vector<>();
-        List<Project> projects= new LinkedList<>();
-        String[] rows = csvFile.split("\n");
-
-        for (String row : rows) {
-            try {
-                String[] parts = new CSVParser().parseLine(row);
-                for (int i = 4; i < parts.length&& parts[i] != null; i++) {
-                    if (!projectAdded.contains(parts[i])) {
-                        projectAdded.add(parts[i]);
-                        Project project = new Project();
-                        project.setTitle(parts[i]);
-                        project.setSupervisor(new StaffMember());
-                        projects.add(project);
-                    }
+    private List<Project> createProjects(List<Student> students) {
+        Set<String> projectTitles = new HashSet<>();
+        for (Student student : students) {
+            for (String title : student.getPreferences()) {
+                if (title.length() > 0) {
+                    projectTitles.add(title);
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-          //  throw new IllegalArgumentException("Could not parse: " + row);
         }
-
-        return projects;
-    }
-
-    public static List<Student> fromCSVStudents(String csvFile) {
-        List<Student> students = new LinkedList<>();
-        String[] rows = csvFile.split("\n");
-
-        for (String row : rows) {
-            System.out.println(row);
-            try {
-                String[] parts = new CSVParser().parseLine(row);
-                List<String> projectPreferences = new ArrayList<>();
-                Student student = new Student();
-                for (int i = 4; i < parts.length && parts[i] !=null; i++) {
-                    projectPreferences.add(parts[i]);
-                }
-                System.out.println(parts[2]);
-                if(!parts[0].equals(""))
-                    student.setFullName(parts[0], parts[0]);
-                student.setPreferences(projectPreferences);
-                if(!parts[2].equals(""))
-                    student.setGpa(Double.parseDouble(parts[2]));
-                if(!parts[1].equals(""))
-                    student.setStudentNumber(parts[1]);
-                students.add(student);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        //    throw new IllegalArgumentException("Could not parse: " + row);
-        }
-        return students;
+        return projectTitles.stream().map(Project::new).collect(Collectors.toList());
     }
 }
 

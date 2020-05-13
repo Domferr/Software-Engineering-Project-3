@@ -25,12 +25,16 @@ public class ProjectsTable {
     }
 
     private void setUp() {
-        projectSupervisorColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getSupervisor().getName()));
+        projectSupervisorColumn.setCellValueFactory((p) -> new SimpleStringProperty(getSupervisor(p.getValue())));
         projectTitleColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getTitle()));
         projectTypeColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getType().toString()));
         projectsTableView.getColumns().setAll(projectSupervisorColumn, projectTitleColumn, projectTypeColumn);
         //Sort by supervisor
         projectsTableView.getSortOrder().add(projectSupervisorColumn);
+    }
+
+    private String getSupervisor(Project project) {
+        return project.getSupervisor() == null ? "N/A" : project.getSupervisor().getName();
     }
 
     public void showProjects(List<Project> projectList) {

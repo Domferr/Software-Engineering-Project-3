@@ -8,9 +8,10 @@ import java.util.List;
 
 public class Project implements CSVRow {
 	public enum Type {
+		UNKNOWN,
 		CS,
 		CSDS,
-		DS
+		DS;
 	}
 
 	private StaffMember supervisor;
@@ -23,6 +24,12 @@ public class Project implements CSVRow {
 	public Project(){
 
 	}
+
+	public Project(String title) {
+		this.title = title;
+		this.type = Type.UNKNOWN;
+	}
+
 
 	public Project(String title, StaffMember supervisor, Type type) {
 		this.title = title;
