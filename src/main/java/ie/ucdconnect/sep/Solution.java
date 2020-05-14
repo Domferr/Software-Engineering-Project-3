@@ -102,7 +102,7 @@ public class Solution {
 				student.setGotPreference(true);
 				int i = 0;
 				boolean found = false;
-				while (!found && i < 10) {
+				while (!found && i < student.getPreferences().size()) {
 					if (student.getPreferences().get(i).equals(project.getTitle())) {
 						int fitnessDelta = 10 - i;
 						double gpaWeight = student.getGpa() * GPA_IMPORTANCE;

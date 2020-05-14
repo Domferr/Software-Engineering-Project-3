@@ -41,16 +41,18 @@ public class SolutionTable {
                     Student student;
                     @Override
                     public void updateItem(String item, boolean empty){
-                        student = null;
                         super.updateItem(item, empty);
+                        student = null;
+                        this.setTextFill(Color.BLACK);
+
                         if(getIndex() < getTableView().getItems().size() && getIndex() != -1)
                              student = getTableView().getItems().get(getIndex()).getValue();
                         if(student!=null && !student.isGotPreference() && !empty ) {
                             this.setTextFill(Color.RED);
                         }
-                        else if (student!=null && student.isGotPreference() && !empty ){
-                            this.setTextFill(Color.BLACK);
-                        }
+
+
+
                         setText(item);
                     }
                 };
