@@ -1,6 +1,5 @@
 package ie.ucdconnect.sep.gui;
 
-import com.opencsv.CSVParser;
 import ie.ucdconnect.sep.*;
 import ie.ucdconnect.sep.generators.AsexualGeneticAlgorithm;
 import ie.ucdconnect.sep.generators.GeneticAlgorithm;
@@ -22,10 +21,11 @@ import javafx.util.StringConverter;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MainController {
 
+    private enum Status { READY, BUSY }
+    private Status status = Status.READY;
     private Solution solution;              //Generated solution
     private List<StaffMember> staffMembers; //Loaded staff members
     private List<Project> projects;         //Loaded projects
@@ -81,6 +81,7 @@ public class MainController {
     }
 
     private void setStatusToBusy(String text) {
+        status = Status.BUSY;
         progressIndicator.setPadding(new Insets(0,0,0,0));
         progressIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
         statusLabel.setText(text);
@@ -88,6 +89,7 @@ public class MainController {
     }
 
     private void setStatusToReady() {
+        status = Status.READY;
         progressIndicator.setPadding(new Insets(0,0,-24,0));
         progressIndicator.setProgress(1);
         statusLabel.setText("Ready");
@@ -150,7 +152,14 @@ public class MainController {
         gpaSlider.setShowTickMarks(false);
         gpaSlider.setShowTickLabels(true);
         gpaSlider.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            Solution.GPA_IMPORTANCE = newValue.doubleValue() / sliderMax;
+            if (status == Status.BUSY) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Generating the solution");
+                alert.setContentText("Please wait that the application finishes generating the solution.");
+                alert.showAndWait();
+            } else {
+                Solution.GPA_IMPORTANCE = newValue.doubleValue() / sliderMax;
+            }
         });
         gpaSlider.setLabelFormatter(new StringConverter<Double>() {
             @Override
@@ -177,6 +186,14 @@ public class MainController {
     /** Method invoked when the button for generating a solution is clicked.  */
     @FXML
     private void generateSolutionOnClick() {
+        if (status == Status.BUSY) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Generating another solution");
+            alert.setContentText("Please wait that the application finishes generating the solution before generating another one.");
+            alert.showAndWait();
+            return;
+        }
+
         final String[] ORDINALS ={"st", "nd", "rd", "th"};
 
         if (projects == null) {
@@ -238,6 +255,14 @@ public class MainController {
     /** Method invoked when the button for saving the solution is clicked.  */
     @FXML
     public void saveSolutionOnClick() {
+        if (status == Status.BUSY) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Generating the solution");
+            alert.setContentText("Please wait that the application finishes generating the solution.");
+            alert.showAndWait();
+            return;
+        }
+
         if (solution == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("No Solution Found!");
@@ -269,6 +294,13 @@ public class MainController {
 
     @FXML
     private void loadData() {
+        if (status == Status.BUSY) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Generating the solution");
+            alert.setContentText("Please wait that the application finishes generating the solution.");
+            alert.showAndWait();
+            return;
+        }
         fileChooser.setTitle("Choose file");
         File file = fileChooser.showOpenDialog(new Stage());
         if (file == null) {
