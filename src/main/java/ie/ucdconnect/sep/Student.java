@@ -31,8 +31,6 @@ public class Student implements CSVRow {
 		this.gpa = gpa;
 		this.focus = focus;
 		this.preferences = preferences;
-		System.out.println("Got preference? " + isGotPreference());
-
 	}
 
 	public Student(String firstName, String lastName, String studentNumber, double gpa, Focus focus, List<String> preferences) {

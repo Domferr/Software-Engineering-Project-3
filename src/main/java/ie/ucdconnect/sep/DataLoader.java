@@ -2,7 +2,6 @@ package ie.ucdconnect.sep;
 
 import com.opencsv.CSVParser;
 import javafx.scene.control.Alert;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +61,8 @@ public class DataLoader {
 			parseLine(parser.parseLine(line));
 		}
 		// checkProjects();
+		System.out.println("Loaded " + students.size() + " students.");
+		System.out.println("Loaded " + projects.size() + " projects.");
 	}
 
 	private void parseLine(String[] line) {
@@ -79,7 +80,7 @@ public class DataLoader {
 			studentNumber = headerInformation[2].get(line);
 		}
 		List<String> preferences = new ArrayList<>();
-		if (headerInformation[4].isBound() && isSupervisor(headerInformation[4].get(line))) { // Student or proposer differentiator. If not bound is assumed to be a student.
+		if (headerInformation[4].isBound() && isStudentProposed(headerInformation[4].get(line))) {
 			for (int i = 5; i < 25; i++) { // Preferences 1 - 20;
 				String title = headerInformation[i].get(line);
 				if (title.length() > 1) {
@@ -87,15 +88,22 @@ public class DataLoader {
 				}
 			}
 		//	return;
+		} else {
+			for (int i = 5; i < 25; i++) { // Preferences 1 - 20;
+				String title = headerInformation[i].get(line);
+				if (title.length() > 1) {
+					projects.add(new Project(title));
+				}
+			}
 		}
-		for (int i = 5; i < 25; i++) { // Preferences 1 - 10;
+		for (int i = 5; i < 25; i++) { // Preferences 1 - 20;
 			preferences.add(headerInformation[i].get(line));
 		}
 		students.add(new Student(name, studentNumber, gpa, Student.Focus.UNKNOWN, preferences));
 	}
 
-	private boolean isSupervisor(String s) {
-		return s.equalsIgnoreCase("supervisor") || s.equalsIgnoreCase("lecturer");
+	private boolean isStudentProposed(String s) {
+		return s.equalsIgnoreCase("student") || s.equalsIgnoreCase("self");
 	}
 
 	private void checkProjects() throws DataLoaderException {
