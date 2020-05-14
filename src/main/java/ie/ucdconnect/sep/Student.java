@@ -19,6 +19,8 @@ public class Student implements CSVRow {
 	private List<String> preferences;
 	private double gpa;
 
+	private boolean gotPreference = true;
+
 	public Student() {
 
 	}
@@ -29,6 +31,8 @@ public class Student implements CSVRow {
 		this.gpa = gpa;
 		this.focus = focus;
 		this.preferences = preferences;
+		System.out.println("Got preference? " + isGotPreference());
+
 	}
 
 	public Student(String firstName, String lastName, String studentNumber, double gpa, Focus focus, List<String> preferences) {
@@ -158,6 +162,14 @@ public class Student implements CSVRow {
 
 	public void setGpa(double gpa) {
 		this.gpa = gpa;
+	}
+
+	public boolean isGotPreference() {
+		return gotPreference;
+	}
+
+	public void setGotPreference(boolean gotPreference) {
+		this.gotPreference = gotPreference;
 	}
 
 	@Override

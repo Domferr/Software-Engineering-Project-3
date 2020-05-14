@@ -99,6 +99,7 @@ public class Solution {
 				fitness -= CONSTRAINT_VIOLATION_PENALTY;
 			}
 			for (Student student : assignedStudents.asList()) {
+				student.setGotPreference(true);
 				int i = 0;
 				boolean found = false;
 				while (!found && i < 10) {
@@ -124,6 +125,7 @@ public class Solution {
 					}else{
 						preferenceResults.put(-1, preferenceResults.get(-1)+1);
 					}
+					student.setGotPreference(false);
 				}
 			}
 		}

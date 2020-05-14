@@ -3,11 +3,13 @@ package ie.ucdconnect.sep.gui;
 import ie.ucdconnect.sep.Project;
 import ie.ucdconnect.sep.Solution;
 import ie.ucdconnect.sep.Student;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.util.*;
 
@@ -31,9 +33,34 @@ public class SolutionTable {
     private void setUp() {
         studentColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getValue().getName()));
         assignedProjectColumn.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue().getKey().getTitle()));
+
+        studentColumn.setCellFactory(new Callback<TableColumn<Map.Entry<Project, Student>, String>, TableCell<Map.Entry<Project, Student>, String>>() {
+            @Override
+            public TableCell<Map.Entry<Project, Student>, String> call(TableColumn<Map.Entry<Project, Student>, String> param) {
+                return new TableCell<Map.Entry<Project, Student>, String>(){
+                    Student student;
+                    @Override
+                    public void updateItem(String item, boolean empty){
+                        student = null;
+                        super.updateItem(item, empty);
+                        if(getIndex() < getTableView().getItems().size() && getIndex() != -1)
+                             student = getTableView().getItems().get(getIndex()).getValue();
+                        if(student!=null && !student.isGotPreference() && !empty ) {
+                            this.setTextFill(Color.RED);
+                        }
+                        else if (student!=null && student.isGotPreference() && !empty ){
+                            this.setTextFill(Color.BLACK);
+                        }
+                        setText(item);
+                    }
+                };
+            }
+
+        });
         solutionTableView.getColumns().setAll(studentColumn, assignedProjectColumn);
         //Sort by students
         solutionTableView.getSortOrder().add(studentColumn);
+
     }
 
     public void showSolution(Solution solution) {
@@ -41,6 +68,7 @@ public class SolutionTable {
             //This list is needed because the columns should be sorted by the user
             List<Map.Entry<Project, Student>> entriesList = new ArrayList<>(solution.getEntries());
             solutionTableView.setItems(FXCollections.observableList(entriesList));
+
             showSaveBtn();
         }
     }

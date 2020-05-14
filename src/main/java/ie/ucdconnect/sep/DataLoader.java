@@ -86,9 +86,9 @@ public class DataLoader {
 					projects.add(new Project(title, name));
 				}
 			}
-			return;
+		//	return;
 		}
-		for (int i = 5; i < 15; i++) { // Preferences 1 - 10;
+		for (int i = 5; i < 25; i++) { // Preferences 1 - 10;
 			preferences.add(headerInformation[i].get(line));
 		}
 		students.add(new Student(name, studentNumber, gpa, Student.Focus.UNKNOWN, preferences));
