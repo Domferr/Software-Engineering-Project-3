@@ -64,7 +64,10 @@
               <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="8.0">
                   <Button mnemonicParsing="false" onAction="#generateSolutionOnClick" prefWidth="208.0" text="Generate" />
               </HBox>
-              <HBox alignment="BASELINE_CENTER" prefWidth="200.00" spacing="8.0" />
+              <HBox alignment="BASELINE_CENTER" prefWidth="200.00" spacing="8.0">
+                  <children>
+                     <Button fx:id="saveSolutionBtn" mnemonicParsing="false" onAction="#loadData" prefWidth="100.0" text="Save" />
+                  </children></HBox>
           </VBox>
            <TabPane prefHeight="550.0" prefWidth="670.0" tabClosingPolicy="UNAVAILABLE" tabMaxWidth="100.0" tabMinWidth="100.0">
                <Tab closable="false" text="Solution">
@@ -76,11 +79,6 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                 </columnResizePolicy>
                             </TableView>
-                           <Button fx:id="saveSolutionBtn" alignment="BOTTOM_RIGHT" onAction="#saveSolutionOnClick" text="Save" StackPane.alignment="BOTTOM_RIGHT">
-                              <StackPane.margin>
-                                 <Insets bottom="16.0" right="16.0" />
-                              </StackPane.margin>
-                           </Button>
                         </children>
                      </StackPane>
                   </content>
