@@ -227,18 +227,10 @@ public class MainController {
 
     /** This method is invoked when the solution generation is successful */
     private void onGenerationSucceed(WorkerStateEvent workerStateEvent) {
-        StringBuilder alertText = new StringBuilder();
         setStatusToReady();
         solution = (Solution) workerStateEvent.getSource().getValue();
         solutionTable.showSolution(solution);
         algorithmStats.showStats(solution);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Solution generation finished.");
-        alertText.append("Fitness: ").append(solution.getFitness()).append(". Energy: ").append(solution.getEnergy()).append("\n");
-        alertText.append("Report of Preferences of Students\n");
-
-        alert.setContentText(alertText.toString());
-        alert.showAndWait();
     }
 
     /** Method invoked is the generator task fails for some reason. */
