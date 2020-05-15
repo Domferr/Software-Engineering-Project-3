@@ -3,8 +3,6 @@ package ie.ucdconnect.sep.gui;
 import ie.ucdconnect.sep.Project;
 import ie.ucdconnect.sep.Solution;
 import ie.ucdconnect.sep.Student;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
@@ -15,6 +13,8 @@ import java.util.*;
 
 /** Class that manages the solution into a table view */
 public class SolutionTable {
+
+    private final Tooltip noPreferenceTooltip = new Tooltip("No preference assigned");
 
     private TableView<Map.Entry<Project, Student>> solutionTableView;
     private TableColumn<Map.Entry<Project, Student>, String> studentColumn;
@@ -57,11 +57,12 @@ public class SolutionTable {
                             super.updateItem(item, empty);
                             student = null;
                             this.setTextFill(Color.BLACK);
-
+                            this.setTooltip(null);
                             if(getIndex() < getTableView().getItems().size() && getIndex() != -1)
                                 student = getTableView().getItems().get(getIndex()).getValue();
                             if(student!=null && !student.isGotPreference() && !empty ) {
                                 this.setTextFill(Color.RED);
+                                this.setTooltip(noPreferenceTooltip);
                             }
 
                             setText(item);
