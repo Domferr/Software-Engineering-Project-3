@@ -167,7 +167,7 @@ public class Solution {
 		StringBuilder s = new StringBuilder();
 		for (Project project : projectMapping.keySet()) {
 			String studentNumbers = projectMapping.get(project).stream().map(Student::getStudentNumber).collect(Collectors.joining(","));
-			s.append(project.getTitle()).append(",\"").append(studentNumbers).append("\"\n");
+			s.append("\"").append(project.getTitle()).append("\",\"").append(studentNumbers).append("\"\n");
 		}
 		return s.toString();
 	}
