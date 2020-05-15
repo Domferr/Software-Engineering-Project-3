@@ -84,7 +84,7 @@
                                <NumberAxis side="LEFT" />
                              </yAxis>
                            </BarChart>
-                           <BarChart fx:id="reportStudentsPreference" title="Report of preference of students">
+                           <BarChart fx:id="reportStudentsPreference" legendVisible="false" title="Report of preference of students">
                              <xAxis>
                                <CategoryAxis side="BOTTOM" />
                              </xAxis>

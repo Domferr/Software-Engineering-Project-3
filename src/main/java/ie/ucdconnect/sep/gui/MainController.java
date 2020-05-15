@@ -69,6 +69,8 @@ public class MainController {
     Button saveSolutionBtn;
     @FXML
     BarChart<String, Number> energyAndFitnessChart;
+    @FXML
+    BarChart<String, Number> reportStudentsPreference;
 
     @FXML
     public void initialize() {
@@ -78,7 +80,7 @@ public class MainController {
         setUpStudentsTable("Nothing to display.\n You can press the \"Load Students\" button on the left to load the students.");
         setUpProjectsTable("Nothing to display.\n You can press the \"Load Projects\" button on the left to load the projects.");
         setUpSolutionTable("Nothing to display.\n You can press the \"generate\" button on the left to generate a solution. Remember to select the algorithm and how much importance the student GPA has.");
-        algorithmStats = new AlgorithmStats(energyAndFitnessChart);
+        algorithmStats = new AlgorithmStats(energyAndFitnessChart, reportStudentsPreference);
 
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
@@ -225,7 +227,6 @@ public class MainController {
 
     /** This method is invoked when the solution generation is successful */
     private void onGenerationSucceed(WorkerStateEvent workerStateEvent) {
-        final String[] ORDINALS ={"st", "nd", "rd", "th"};
         StringBuilder alertText = new StringBuilder();
         setStatusToReady();
         solution = (Solution) workerStateEvent.getSource().getValue();
@@ -236,16 +237,6 @@ public class MainController {
         alertText.append("Fitness: ").append(solution.getFitness()).append(". Energy: ").append(solution.getEnergy()).append("\n");
         alertText.append("Report of Preferences of Students\n");
 
-        for(int key : solution.getPreferenceResults().keySet()){
-            if (key == -1){
-                alertText.append("No Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
-            }
-            else if(key >= 0 && key <= 3){
-                alertText.append(key + 1).append(ORDINALS[key]).append(" Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
-            }else {
-                alertText.append(key + 1).append(ORDINALS[3]).append(" Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
-            }
-        }
         alert.setContentText(alertText.toString());
         alert.showAndWait();
     }
