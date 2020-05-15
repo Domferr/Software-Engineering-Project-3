@@ -46,7 +46,7 @@
                   </Label>
               </HBox>
               <HBox alignment="TOP_CENTER" prefWidth="300.0" spacing="8.0">
-                  <Button mnemonicParsing="false" onAction="#loadData" prefWidth="100.0" text="Load Data" />
+                  <Button fx:id="loadData" mnemonicParsing="false" onAction="#loadData" prefWidth="100.0" text="Load Data" />
               </HBox>
               <VBox alignment="TOP_CENTER" spacing="8.0">
                   <VBox.margin>
@@ -64,7 +64,7 @@
                   </Slider>
               </VBox>
               <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="8.0">
-                  <Button mnemonicParsing="false" onAction="#generateSolutionOnClick" prefWidth="208.0" text="Generate" />
+                  <Button fx:id="generateSolution" mnemonicParsing="false" onAction="#generateSolutionOnClick" prefWidth="208.0" text="Generate" />
               </HBox>
               <HBox alignment="BASELINE_CENTER" prefWidth="200.00" spacing="8.0">
                   <children>
