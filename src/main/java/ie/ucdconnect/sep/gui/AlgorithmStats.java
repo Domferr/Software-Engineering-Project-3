@@ -2,8 +2,13 @@ package ie.ucdconnect.sep.gui;
 
 import ie.ucdconnect.sep.Solution;
 import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 
 /** Class that manages the chart that shows the algorithm performance */
 public class AlgorithmStats {
@@ -35,21 +40,35 @@ public class AlgorithmStats {
             seriesFitness.getData().clear();
             seriesEnergy.getData().clear();
             seriresPreferences.getData().clear();
+
             //Show new stats
-            seriesEnergy.getData().add(new XYChart.Data<>("", solution.getEnergy()));
-            seriesFitness.getData().add(new XYChart.Data<>("", solution.getFitness()));
+            seriesEnergy.getData().add(createXYData("", solution.getEnergy()));
+            seriesFitness.getData().add(createXYData("", solution.getFitness()));
+
             for (int key : solution.getPreferenceResults().keySet()) {
+                String label;
                 if (key == -1) {
-                    seriresPreferences.getData().add(new XYChart.Data<>("No preference", solution.getPreferenceResults().get(key)));
-                }
-                else if (key >= 0 && key <= 3) {
-                    String label = (key + 1) + ORDINALS[key] + " Preference";
-                    seriresPreferences.getData().add(new XYChart.Data<>(label, solution.getPreferenceResults().get(key)));
+                    label = "No preference";
+                } else if (key >= 0 && key <= 3) {
+                    label = (key + 1) + ORDINALS[key] + " Preference";
                 } else {
-                    String label = (key + 1) + ORDINALS[3] + " Preference";
-                    seriresPreferences.getData().add(new XYChart.Data<>(label, solution.getPreferenceResults().get(key)));
+                    label = (key + 1) + ORDINALS[3] + " Preference";
                 }
+                seriresPreferences.getData().add(createXYData(label, solution.getPreferenceResults().get(key)));
+
             }
         });
+    }
+
+    private XYChart.Data<String, Number> createXYData(String str, double value) {
+        StackPane stackPane = new StackPane();
+        Group main = new Group(new Label(((int)value)+""));
+        StackPane.setAlignment(main, Pos.CENTER);
+        StackPane.setMargin(main, new Insets(0, 0, 16, 0));
+        stackPane.getChildren().add(main);
+
+        XYChart.Data<String, Number> data =  new XYChart.Data<>(str, value);
+        data.setNode(stackPane);
+        return data;
     }
 }
