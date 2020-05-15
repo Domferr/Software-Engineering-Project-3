@@ -5,10 +5,7 @@ import javafx.scene.control.Alert;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataLoader {
 
@@ -47,6 +44,7 @@ public class DataLoader {
 	private int blankHeaders = 0;
 	private int blankLines = 0;
 	private List<Student> students = new ArrayList<>();
+	private Vector<String> uniqueProjects = new Vector<>();
 	private List<Project> projects = new ArrayList<>();
 
 	public void loadData(File file) throws IOException, DataLoaderException {
@@ -79,6 +77,7 @@ public class DataLoader {
 		if (headerInformation[2].isBound()) { // student number
 			studentNumber = headerInformation[2].get(line);
 		}
+
 		List<String> preferences = new ArrayList<>();
 		if (headerInformation[4].isBound() && isStudentProposed(headerInformation[4].get(line))) {
 			for (int i = 5; i < 25; i++) { // Preferences 1 - 20;
@@ -92,7 +91,11 @@ public class DataLoader {
 			for (int i = 5; i < 25; i++) { // Preferences 1 - 20;
 				String title = headerInformation[i].get(line);
 				if (title.length() > 1) {
-					projects.add(new Project(title));
+					if(!uniqueProjects.contains(title)){
+						uniqueProjects.add(title);
+						projects.add(new Project(title));
+					}
+
 				}
 			}
 		}

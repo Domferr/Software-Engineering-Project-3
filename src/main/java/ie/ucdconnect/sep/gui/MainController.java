@@ -216,7 +216,7 @@ public class MainController {
             StringBuilder alertText = new StringBuilder();
             setStatusToReady();
             solution = generatorTask.getValue();
-            solutionTable.showSolution(solution);
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText("Solution generation finished.");
             alertText.append("Fitness: ").append(solution.getFitness()).append(". Energy: ").append(solution.getEnergy()).append("\n");
@@ -234,11 +234,13 @@ public class MainController {
             }
             alert.setContentText(alertText.toString());
             alert.showAndWait();
+            solutionTable.showSolution(solution);
 
         });
         generatorTask.setOnCancelled(this::onGenerationCancel);
         generatorTask.setOnFailed(this::onGenerationCancel);
         new Thread(generatorTask).start();
+
     }
 
     /** Method invoked is the generator task fails for some reason. */
