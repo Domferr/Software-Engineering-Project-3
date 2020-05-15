@@ -79,7 +79,7 @@ public class Solution {
 	private ImmutableMultimap<Project, Student> projectMapping;
 	private double energy, fitness;
 
-	private Map<Integer, Integer> preferenceResults = new TreeMap<>();
+	private Map<Integer, Integer> preferenceResults;
 
 	private Solution(ImmutableMultimap<Project, Student> projectMapping) {
 		this.projectMapping = projectMapping;
@@ -91,6 +91,7 @@ public class Solution {
 	 * then the gpa is less important.
 	 */
 	public void evaluate() {
+		preferenceResults = new TreeMap<>();
 		energy = fitness = 0;
 		for (Project project : projectMapping.keySet()) {
 			ImmutableCollection<Student> assignedStudents = projectMapping.get(project);
@@ -102,7 +103,7 @@ public class Solution {
 				student.setGotPreference(true);
 				int i = 0;
 				boolean found = false;
-				while (!found && i < 10) {
+				while (!found && i < student.getPreferences().size()) {
 					if (student.getPreferences().get(i).equals(project.getTitle())) {
 						int fitnessDelta = 10 - i;
 						double gpaWeight = student.getGpa() * GPA_IMPORTANCE;
@@ -120,12 +121,12 @@ public class Solution {
 				if (!found) {
 					energy += NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
 					fitness -= NONPREFERENCE_PROJECT_VIOLATION_PENALTY;
+					student.setGotPreference(false);
 					if(!preferenceResults.containsKey(-1)){
 						preferenceResults.put(-1, 1);
 					}else{
 						preferenceResults.put(-1, preferenceResults.get(-1)+1);
 					}
-					student.setGotPreference(false);
 				}
 			}
 		}
