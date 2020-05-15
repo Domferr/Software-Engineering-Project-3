@@ -266,9 +266,9 @@ public class MainController {
                 try {
                     //Save in CSV format for both .csv and .txt
                     if (csvFilter.equals(selectedExtension)) {
-                        FileSaver.saveSolutionAsCSV(file, solution);
+                        SolutionSaver.saveSolutionAsCSV(file, solution);
                     } else if (txtFilter.equals(selectedExtension)) {
-                        FileSaver.saveSolutionAsTXT(file, solution);
+                        SolutionSaver.saveSolutionAsTXT(file, solution);
                     }
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setHeaderText("Results saved!");

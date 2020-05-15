@@ -67,13 +67,12 @@ public class AlgorithmStats {
     }
 
     private XYChart.Data<String, Number> createXYData(String str, double value) {
-        StackPane stackPane = new StackPane();
-        String label = ((int) value) + "";
-        Group group = new Group(new Label(label));
-        StackPane.setAlignment(group, Pos.CENTER);
+        Label label = new Label(((int) value) + "");
+        Group group = new Group(label);
+        StackPane stackPane = new StackPane(group);
+        stackPane.setAlignment(Pos.CENTER);
         StackPane.setMargin(group, new Insets(0, 0, 16, 0));
-        stackPane.getChildren().add(group);
-        
+
         XYChart.Data<String, Number> data =  new XYChart.Data<>(str, value);
         data.setNode(stackPane);
         return data;

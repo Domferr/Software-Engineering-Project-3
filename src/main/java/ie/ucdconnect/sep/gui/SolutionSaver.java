@@ -10,7 +10,7 @@ import java.nio.file.Files;
 /** Class with all the methods needed to save projects, students or solution from a file with a specific extension.
  *  For now it only implements the method for saving a solution.
  *  .txt files are written like .csv files. */
-public class FileSaver {
+public class SolutionSaver {
 
     public static void saveSolutionAsCSV(File file, Solution solution) throws IOException {
         BufferedWriter writer = Files.newBufferedWriter(file.toPath());
