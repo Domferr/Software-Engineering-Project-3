@@ -83,7 +83,11 @@ public class DataLoader {
 			for (int i = 5; i < 25; i++) { // Preferences 1 - 20;
 				String title = headerInformation[i].get(line);
 				if (title.length() > 1) {
-					projects.add(new Project(title, name));
+					if(!uniqueProjects.contains(title)){
+						uniqueProjects.add(title);
+						projects.add(new Project(title, name));
+					}
+
 				}
 			}
 		//	return;
