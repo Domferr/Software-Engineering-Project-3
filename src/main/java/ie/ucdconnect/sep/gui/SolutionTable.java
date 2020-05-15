@@ -47,10 +47,6 @@ public class SolutionTable {
             List<Map.Entry<Project, Student>> entriesList = new ArrayList<>(solution.getEntries());
             solutionTableView.setItems(FXCollections.observableList(entriesList));
 
-            for(Map.Entry<Project, Student> entry : entriesList){
-                System.out.println(entry.getValue().getName()+ " " + entry.getValue().isGotPreference() + "\n");
-            }
-
             studentColumn.setCellFactory(new Callback<TableColumn<Map.Entry<Project, Student>, String>, TableCell<Map.Entry<Project, Student>, String>>() {
                 @Override
                 public TableCell<Map.Entry<Project, Student>, String> call(TableColumn<Map.Entry<Project, Student>, String> param) {

@@ -42,7 +42,6 @@ public class MainController {
     private FileChooser fileChooser;
     private final FileChooser.ExtensionFilter csvFilter = new FileChooser.ExtensionFilter("CSV file", "*.csv");
     private final FileChooser.ExtensionFilter txtFilter = new FileChooser.ExtensionFilter("Text file", "*.txt");
-    private final FileChooser.ExtensionFilter xlsxFilter = new FileChooser.ExtensionFilter("XLSX file", "*.xlsx");
     // Algorithm Settings
     @FXML
     Slider gpaSlider;
@@ -84,7 +83,7 @@ public class MainController {
 
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
-        fileChooser.getExtensionFilters().addAll(csvFilter, txtFilter, xlsxFilter);
+        fileChooser.getExtensionFilters().addAll(csvFilter);
     }
 
     private void setStatusToBusy(String text) {

@@ -4,6 +4,16 @@ Martynas Jagutis 17424866
 Domenico Ferraro 19203549
 Alex Ng 17409754
 
+TASK 8
+As part of the visualisation we colour code the students that received no preference as red. This was done by adding
+a boolean isGotPreference to the student class and setting it to false or true during the evaluation of the solution.
+A statistics tab was also added to display the results of the solution, showing the energy of the solution and the 
+number of students receiving their respective preference. This was done in the AlgorithmStats class.
+A DataLoader class was added to read the new style of the CSV file provided. We accept CSV files such as the example 
+provided and make the appropriate checks to make sure the program does not break. We add all the preferences by all 
+proposers as projects. The initial gui of the application is tested using testfx. We also added our own designed icon
+to the project. 
+
 TASK 7
 We decided to use JavaFx to implement the gui of the application. We used MVC principles where the view is main.fxml file,
 the controller is MainController.java and the model are the classes that produce the solution. When loading the files we 

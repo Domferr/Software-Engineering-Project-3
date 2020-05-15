@@ -35,7 +35,7 @@ class MainControllerTest extends ApplicationTest {
         stage.show();
         stage.toFront();
     }
-    
+
     @BeforeEach
     void setUp() {
     }
