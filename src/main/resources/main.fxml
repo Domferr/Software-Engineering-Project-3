@@ -64,6 +64,9 @@
                   </Slider>
               </VBox>
               <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="8.0">
+                  <Button mnemonicParsing="false" onAction="#showInstructions" prefWidth="208.0" text="Instructions" />
+              </HBox>
+              <HBox alignment="TOP_CENTER" prefWidth="200.0" spacing="8.0">
                   <Button fx:id="generateSolution" mnemonicParsing="false" onAction="#generateSolutionOnClick" prefWidth="208.0" text="Generate" />
               </HBox>
               <HBox alignment="BASELINE_CENTER" prefWidth="200.00" spacing="8.0">

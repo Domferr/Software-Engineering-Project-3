@@ -316,5 +316,20 @@ public class MainController {
             e.printStackTrace();
         }
     }
+    @FXML
+    public void showInstructions(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Instructions");
+        StringBuilder content = new StringBuilder();
+        content.append("Upload a .CSV file\n" +
+                "Recommended Columns\n" +
+                "Column A: Student\n" +
+                "Column B: Student Number\n" +
+                "Column C: GPA\n" +
+                "Column D: Proposer\n" +
+                "Column E,D,..: 1,2,..");
+        alert.setContentText(content.toString());
+        alert.showAndWait();
+    }
 }
 
