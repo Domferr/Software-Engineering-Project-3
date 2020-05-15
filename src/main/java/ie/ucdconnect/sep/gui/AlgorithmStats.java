@@ -34,6 +34,7 @@ public class AlgorithmStats {
         this.reportStudentsPreference.getData().addAll(seriesPreferences);
     }
 
+    /** Shows the stats of the given solution */
     public void showStats(Solution solution) {
         Platform.runLater(() -> {
             //Clear previous data
@@ -60,6 +61,7 @@ public class AlgorithmStats {
         });
     }
 
+    /** Creates a custom XYChart.Data which has a label on top of it */
     private XYChart.Data<String, Number> createXYData(String str, double value) {
         Label label = new Label(((int) value) + "");
         Group group = new Group(label);

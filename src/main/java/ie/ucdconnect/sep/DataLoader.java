@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/** Class that loads and parses data that is choosen by the user. */
 public class DataLoader {
 
 	// ONLY ADD NEW ENTRIES TO THE BOTTOM OF THE ARRAY!
@@ -37,7 +38,7 @@ public class DataLoader {
 		new HeaderInfo(false, new String[]{"18", "18th", "eighteenth"}),
 		new HeaderInfo(false, new String[]{"19", "19th", "nineteenth"}),
 		new HeaderInfo(false, new String[]{"20", "20th", "twentieth"}),
-};
+	};
 
 	private String[] rawHeaders;
 	private List<String> unusedHeaders = new ArrayList<>();
@@ -47,6 +48,7 @@ public class DataLoader {
 	private Vector<String> uniqueProjects = new Vector<>();
 	private List<Project> projects = new ArrayList<>();
 
+	/** Loads data from a given file. */
 	public void loadData(File file) throws IOException, DataLoaderException {
 		CSVParser parser = new CSVParser();
 		String content = Utils.readFile(file.toPath());
@@ -63,6 +65,7 @@ public class DataLoader {
 		System.out.println("Loaded " + projects.size() + " projects.");
 	}
 
+	/** Parses one line of the data file */
 	private void parseLine(String[] line) {
 		if (checkLine(line)) {
 			blankLines++;
@@ -166,14 +169,17 @@ public class DataLoader {
 		}
 	}
 
+	/** Returns loaded students */
 	public List<Student> getStudents() {
 		return students;
 	}
 
+	/** Returns loaded projects */
 	public List<Project> getProjects() {
 		return projects;
 	}
 
+	/** Shows warnings as an alert */
 	public void displayWarnings() {
 		String content = "";
 		if (unusedHeaders.size() > 0) {

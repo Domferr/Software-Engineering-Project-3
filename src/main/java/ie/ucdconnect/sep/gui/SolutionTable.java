@@ -14,12 +14,13 @@ import java.util.*;
 /** Class that manages the solution into a table view */
 public class SolutionTable {
 
+    //Tooltip showed when the mouse goes on a student that has red text
     private final Tooltip noPreferenceTooltip = new Tooltip("No preference assigned");
 
     private TableView<Map.Entry<Project, Student>> solutionTableView;
     private TableColumn<Map.Entry<Project, Student>, String> studentColumn;
     private TableColumn<Map.Entry<Project, Student>, String> assignedProjectColumn;
-    private Button saveSolutionBtn;
+    private Button saveSolutionBtn; //Button to save this solution. Enabled only when the table is populated
 
     public SolutionTable(TableView<Map.Entry<Project, Student>> solutionTableView, Button saveSolutionBtn) {
         this.solutionTableView = solutionTableView;
@@ -39,8 +40,8 @@ public class SolutionTable {
 
     }
 
+    /** Shows the given solution into the table */
     public void showSolution(Solution solution) {
-
         if (solution != null) {
             solution.evaluate();
             //This list is needed because the columns should be sorted by the user
