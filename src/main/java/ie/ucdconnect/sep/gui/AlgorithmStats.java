@@ -8,13 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-
-import java.awt.*;
 
 /** Class that manages the chart that shows the algorithm performance */
 public class AlgorithmStats {
@@ -24,7 +18,7 @@ public class AlgorithmStats {
     private BarChart<String, Number> reportStudentsPreference;
     private XYChart.Series<String, Number> seriesEnergy;
     private XYChart.Series<String, Number> seriesFitness;
-    private XYChart.Series<String, Number> seriresPreferences;
+    private XYChart.Series<String, Number> seriesPreferences;
 
     public AlgorithmStats(BarChart<String, Number> energyAndFitnessChart, BarChart<String, Number> reportStudentsPreference) {
         this.energyAndFitness = energyAndFitnessChart;
@@ -33,11 +27,11 @@ public class AlgorithmStats {
         this.energyAndFitness.setAnimated(false);
         this.seriesEnergy = new XYChart.Series<>();
         this.seriesFitness = new XYChart.Series<>();
-        this.seriresPreferences = new XYChart.Series<>();
+        this.seriesPreferences = new XYChart.Series<>();
         seriesEnergy.setName("Energy");
         seriesFitness.setName("Fitness");
         this.energyAndFitness.getData().addAll(seriesEnergy, seriesFitness);
-        this.reportStudentsPreference.getData().addAll(seriresPreferences);
+        this.reportStudentsPreference.getData().addAll(seriesPreferences);
     }
 
     public void showStats(Solution solution) {
@@ -45,7 +39,7 @@ public class AlgorithmStats {
             //Clear previous data
             seriesFitness.getData().clear();
             seriesEnergy.getData().clear();
-            seriresPreferences.getData().clear();
+            seriesPreferences.getData().clear();
 
             //Show new stats
             seriesEnergy.getData().add(createXYData("", solution.getEnergy()));
@@ -60,7 +54,7 @@ public class AlgorithmStats {
                 } else {
                     label = (key + 1) + ORDINALS[3] + " Preference";
                 }
-                seriresPreferences.getData().add(createXYData(label, solution.getPreferenceResults().get(key)));
+                seriesPreferences.getData().add(createXYData(label, solution.getPreferenceResults().get(key)));
 
             }
         });

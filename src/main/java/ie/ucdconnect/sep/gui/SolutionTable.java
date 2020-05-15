@@ -16,10 +16,10 @@ import java.util.*;
 /** Class that manages the solution into a table view */
 public class SolutionTable {
 
-    TableView<Map.Entry<Project, Student>> solutionTableView;
-    TableColumn<Map.Entry<Project, Student>, String> studentColumn;
-    TableColumn<Map.Entry<Project, Student>, String> assignedProjectColumn;
-    Button saveSolutionBtn;
+    private TableView<Map.Entry<Project, Student>> solutionTableView;
+    private TableColumn<Map.Entry<Project, Student>, String> studentColumn;
+    private TableColumn<Map.Entry<Project, Student>, String> assignedProjectColumn;
+    private Button saveSolutionBtn;
 
     public SolutionTable(TableView<Map.Entry<Project, Student>> solutionTableView, Button saveSolutionBtn) {
         this.solutionTableView = solutionTableView;
