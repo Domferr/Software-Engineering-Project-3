@@ -68,7 +68,7 @@ public class Solution {
 
 			return Solution.SolutionFactory.createAndEvaluate(mapBuilder.build());
 		}
-	 }
+	}
 
 	//Penalties for hard constraint violation
 	private static final int CONSTRAINT_VIOLATION_PENALTY = 100;

@@ -20,7 +20,7 @@ public class GeneticAlgorithm implements SolutionGenerationStrategy {
     // Number of no consecutive improvements to terminate the algorithm
     private static final int MAX_PLATEAU = 120;          //R
     // The probability of a gene to be mutated
-    private static final double MUTATION_PROBABILITY = 0.005;
+    private static final double MUTATION_PROBABILITY = 0.05;
     public static final String DISPLAY_NAME = "Genetic Algorithm";
 
     @Override
