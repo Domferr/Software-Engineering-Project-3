@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
@@ -35,6 +36,7 @@ public class MainController {
     private StudentsTable studentsTable;
     private ProjectsTable projectsTable;
     private SolutionTable solutionTable;
+    private AlgorithmStats algorithmStats;
 
     // File chooser and supported extensions
     private FileChooser fileChooser;
@@ -65,6 +67,10 @@ public class MainController {
 
     @FXML
     Button saveSolutionBtn;
+    @FXML
+    BarChart<String, Number> energyAndFitnessChart;
+    @FXML
+    BarChart<String, Number> reportStudentsPreference;
 
     @FXML
     public void initialize() {
@@ -74,6 +80,7 @@ public class MainController {
         setUpStudentsTable("Nothing to display.\n You can press the \"Load Students\" button on the left to load the students.");
         setUpProjectsTable("Nothing to display.\n You can press the \"Load Projects\" button on the left to load the projects.");
         setUpSolutionTable("Nothing to display.\n You can press the \"generate\" button on the left to generate a solution. Remember to select the algorithm and how much importance the student GPA has.");
+        algorithmStats = new AlgorithmStats(energyAndFitnessChart, reportStudentsPreference);
 
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
@@ -212,35 +219,26 @@ public class MainController {
         }
         setStatusToBusy("Running "+generationStrategy.getDisplayName());
         GeneratorTask generatorTask = new GeneratorTask(generationStrategy, projects, students);
-        generatorTask.setOnSucceeded(e -> {
-            StringBuilder alertText = new StringBuilder();
-            setStatusToReady();
-            solution = generatorTask.getValue();
-            solutionTable.showSolution(solution);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Solution generation finished.");
-            alertText.append("Fitness: ").append(solution.getFitness()).append(". Energy: ").append(solution.getEnergy()).append("\n");
-            alertText.append("Report of Preferences of Students\n");
-
-            for(int key : solution.getPreferenceResults().keySet()){
-                if (key == -1){
-                    alertText.append("No Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
-                }
-                else if(key >= 0 && key <= 3){
-                    alertText.append(key + 1).append(ORDINALS[key]).append(" Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
-                }else {
-                    alertText.append(key + 1).append(ORDINALS[3]).append(" Preference: ").append(solution.getPreferenceResults().get(key)).append("\n");
-                }
-            }
-            alert.setContentText(alertText.toString());
-            alert.showAndWait();
-
-
-        });
+        generatorTask.setOnSucceeded(this::onGenerationSucceed);
         generatorTask.setOnCancelled(this::onGenerationCancel);
         generatorTask.setOnFailed(this::onGenerationCancel);
         new Thread(generatorTask).start();
+    }
 
+    /** This method is invoked when the solution generation is successful */
+    private void onGenerationSucceed(WorkerStateEvent workerStateEvent) {
+        StringBuilder alertText = new StringBuilder();
+        setStatusToReady();
+        solution = (Solution) workerStateEvent.getSource().getValue();
+        solutionTable.showSolution(solution);
+        algorithmStats.showStats(solution);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Solution generation finished.");
+        alertText.append("Fitness: ").append(solution.getFitness()).append(". Energy: ").append(solution.getEnergy()).append("\n");
+        alertText.append("Report of Preferences of Students\n");
+
+        alert.setContentText(alertText.toString());
+        alert.showAndWait();
     }
 
     /** Method invoked is the generator task fails for some reason. */
