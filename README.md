@@ -10,9 +10,9 @@ a boolean isGotPreference to the student class and setting it to false or true d
 A statistics tab was also added to display the results of the solution, showing the energy of the solution and the 
 number of students receiving their respective preference. This was done in the AlgorithmStats class.
 A DataLoader class was added to read the new style of the CSV file provided. We accept CSV files such as the example 
-provided and make the appropriate checks to make sure the program does not break. We add all the preferences by all 
-proposers as projects. The initial gui of the application is tested using testfx. We also added our own designed icon
-to the project. 
+provided and make the appropriate checks to make sure the program does not break. We also accept TXT files written in
+CSV format. We add all the preferences by all proposers as projects. The initial gui of the application is tested
+using testfx. We also added our own designed icon to the project. 
 
 TASK 7
 We decided to use JavaFx to implement the gui of the application. We used MVC principles where the view is main.fxml file,

@@ -23,8 +23,6 @@ public class AlgorithmStats {
     public AlgorithmStats(BarChart<String, Number> energyAndFitnessChart, BarChart<String, Number> reportStudentsPreference) {
         this.energyAndFitness = energyAndFitnessChart;
         this.reportStudentsPreference = reportStudentsPreference;
-        this.reportStudentsPreference.setAnimated(false);
-        this.energyAndFitness.setAnimated(false);
         this.seriesEnergy = new XYChart.Series<>();
         this.seriesFitness = new XYChart.Series<>();
         this.seriresPreferences = new XYChart.Series<>();

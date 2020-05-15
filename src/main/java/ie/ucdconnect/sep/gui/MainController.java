@@ -83,7 +83,7 @@ public class MainController {
 
         fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
-        fileChooser.getExtensionFilters().addAll(csvFilter);
+        fileChooser.getExtensionFilters().addAll(csvFilter, txtFilter);
     }
 
     private void setStatusToBusy(String text) {
@@ -199,8 +199,6 @@ public class MainController {
             alert.showAndWait();
             return;
         }
-
-        final String[] ORDINALS ={"st", "nd", "rd", "th"};
 
         if (projects == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
